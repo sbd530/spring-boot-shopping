@@ -1,0 +1,29 @@
+logging:
+  level:
+    root: info
+
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: a123
+    url: jdbc:mysql://localhost:3307/testschema?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    username: suzi
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    username: itwillproject1@gmail.com
+    password: fflfodpaiexxbnje
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 5000
