@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .frameOptions().disable()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/h2-console/**", "/static/**", "/auth/**")
+                    .antMatchers("/static/**", "/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated()
@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .logoutUrl("/users/logout")
                     .logoutSuccessUrl("/home")
-                .disable();
+                .permitAll();
 
     }
 }

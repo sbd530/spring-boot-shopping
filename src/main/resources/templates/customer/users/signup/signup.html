@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <link href="css/signup2.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
+    <style>
+        .designSettingElement.button {color:#ffffff !important;}
+    </style>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
+    <script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
+    <script src="js/webfont.js"></script>
+    <script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
+
+    <script>
+        $(function(){
+            $("#signupBtn").on("click", function() {
+               $.post("/users",
+                    {
+                        email: $("#email").val(),
+                        name: $("#name").val(),
+                        password: $("#password").val(),
+                        phoneNumber1: $("#phoneNumber1").val(),
+                        phoneNumber2: $("#phoneNumber2").val(),
+                        phoneNumber3: $("#phoneNumber3").val(),
+                        postNumber: $("#postNumber").val(),
+                        address1: $("#address1").val(),
+                        address2: $("#address2").val()
+                    }
+                ).done(function(data){
+                    alert(data);
+                    location.href = "http://localhost:8080/home";
+                }).fail(function(){
+                    alert("입력 정보가 올바르지 않습니다.");
+                });
+            });
+        });
+    </script>
+
+</head>
+<body class="display display-home display desktop">
+
+<div id="displayCanvas" class="desktop" data-viewport="desktop">
+
+<div id="signup" class="login wrapper">
+    <div class="column-wrapper one-column">
+        <div class="signup field">
+            <div class="header designSettingElement text-title">
+                <span class="title">회원 가입</span>
+            </div>
+            <div class="content designSettingElement text-body">
+
+                <div class="row">
+                    <span class="title">아이디 *</span>
+                    <input id="customerId" type="text" class="designSettingElement shape" autofocus
+                           placeholder="영문, 숫자 5자 이상 입력해주세요.">
+                </div>
+
+                <div class="row">
+                    <span class="title">이메일 *</span>
+                    <input id="email" type="email" class="designSettingElement shape" autofocus
+                           placeholder="이메일 형식에 맞게 입력해주세요.">
+                </div>
+
+                <div class="row name">
+                    <span class="title">이름 *</span>
+                    <input id="name" type="text" class="designSettingElement shape">
+                </div>
+
+                <div class="row">
+                    <span class="title">비밀번호 *</span>
+                    <input id="password" type="password" class="designSettingElement shape" autocomplete="off"
+                           placeholder="6자 이상 입력해주세요.">
+                </div>
+                <div class="row">
+                    <span class="title">비밀번호 확인 *</span>
+                    <input id="passwordCheck" type="password" class="designSettingElement shape" autocomplete="off">
+                </div>
+                <div class="row contact">
+                            <span class="title">휴대폰 번호</span>
+                    <input id="phoneNumber1" type="tel"
+                           class="phoneNumber designSettingElement shape js-inputOnlyNumber"
+                           maxlength="3"
+                    >
+                    <div class="element">-</div>
+                    <input id="phoneNumber2" type="tel" class="phoneNumber designSettingElement shape js-inputOnlyNumber" maxlength="4">
+                    <div class="element">-</div>
+                    <input id="phoneNumber3" type="tel" class="phoneNumber designSettingElement shape js-inputOnlyNumber" maxlength="4">
+                </div>
+
+                <!-- 주소 시작 -->
+                <div class="row post-code">
+                    <span class="title">우편번호</span>
+                    <div class="post-code-wrapper clearfix">
+                        <input id="postNumber" class="addressInfo designSettingElement shape" type="text"
+                               readonly="readonly">
+                        <button id="daumPostCode3" class="designSettingElement button outline"
+                                onclick="showDaumPostcode(4,'default')">검색하기
+                        </button>
+                    </div>
+
+                    <!-- daum postcode -->
+                    <div id="daum_postcode_layer" style="z-index: 1020">
+                        <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" class="hide"
+                             style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 100;"
+                             onclick="closeDaumPostcode()" alt="닫기 버튼">
+                    </div>
+<script>
+    var src = (location.protocol == "https:" ? "https://ssl.daumcdn.net/dmaps" : "http://dmaps.daum.net")
+        + "/map_js_init/postcode.v2.js?autoload=false";
+    var scriptTagElem = document.createElement("script");
+    scriptTagElem.setAttribute("type", "text/javascript");
+    scriptTagElem.setAttribute("src", src);
+    scriptTagElem.setAttribute("onerror", "require(['common/common'], function (common) { common.onErrorLoadPostcodeSdk(); });");
+    document.write(scriptTagElem.outerHTML);
+</script>
+<script>
+    // 우편번호 찾기 iframe을 넣을 element
+    var element = document.getElementById("daum_postcode_layer");
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element.style.display = 'none';
+        $("#btnCloseLayer").addClass("hide");
+    }
+
+    function showDaumPostcode(no, deviceType, layerNo, callbackFromRedesignPage) {
+        $("#btnCloseLayer").removeClass("hide");
+        if ($(event.target).hasClass("notWorkingButton")) {
+            return
+        }
+        if (deviceType != "mobile") {
+            try {
+                var top = window.getParentScrollTopMinusHeaderHeight ? getParentScrollTopMinusHeaderHeight() : 180;
+
+                $(element).css("top", top + "px");
+            } catch (e) {
+
+            }
+
+            if (layerNo == 1) {
+                document.getElementById("daum_postcode_layer_wrapper1").appendChild(element);
+            } else if (layerNo == 2) {
+                document.getElementById("daum_postcode_layer_wrapper2").appendChild(element);
+            }
+
+            daum.postcode.load(function () {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var fullAddr = data.address; // 최종 주소 변수
+                        var extraAddr = ''; // 조합형 주소 변수
+
+                        // 기본 주소가 도로명 타입일때 조합한다.
+                        if (data.addressType === 'R') {
+                            //법정동명이 있을 경우 추가한다.
+                            if (data.bname !== '') {
+                                extraAddr += data.bname;
+                            }
+                            // 건물명이 있을 경우 추가한다.
+                            if (data.buildingName !== '') {
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                            fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                        }
+
+                        if (no == 1) {
+                            require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "SENDER", false);
+
+                        } else if (no == 2) {
+                            if (callbackFromRedesignPage) {
+                                callbackFromRedesignPage(data.zonecode, fullAddr);
+                            } else {
+                                require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "RECIPIENT", false);
+                            }
+                        } else if (no == 3) {
+                            if ($("#shopOrderDetail #deliveryPrice").attr("value") == -1 || $(
+                                "#shopOrderDetailPage .payment-info #deliveryPrice").attr("value") == -1) {
+                                document.getElementById('post1').value = data.zonecode;
+                                document.getElementById('post2').value = fullAddr;
+
+                                $("#post3").focus();
+                            } else {
+                                require("common/common").commerce.checkDeliveryRemoteArea(
+                                    document.getElementById('post1').value, function (postArea) {
+                                        var beforePostArea = postArea;
+                                        require("common/common").commerce.checkDeliveryRemoteArea(data.zonecode,
+                                            function (postArea) {
+                                                var newPostArea = postArea;
+                                                if (beforePostArea == newPostArea) {
+                                                    document.getElementById('post1').value = data.zonecode;
+                                                    document.getElementById('post2').value = fullAddr;
+                                                    try {
+                                                        document.getElementById('showPost2').innerHTML = fullAddr;
+                                                    } catch (e) {
+                                                        // 방어코드 다른 페이지에 영향을 확인할 수 없어 추가함.
+                                                    }
+                                                    $("#post3").focus();
+                                                } else {
+                                                    alert("원래 주문과 배송비가 다른 지역으로 주소를 변경할 수 없습니다. 환불 후 다시 주문하시기 바랍니다.");
+                                                }
+                                            });
+                                    });
+                            }
+                        } else if (no == 4) {
+                            document.getElementById('post1').value = data.zonecode;
+                            document.getElementById('post2').value = fullAddr;
+                            $("#post3").focus();
+
+                        }
+                        // iframe을 넣은 element를 안보이게 한다.
+                        element.style.display = 'none';
+
+                    },
+                    width: '100%',
+                    height: '100%'
+                }).embed(element);
+                // iframe을 넣은 element를 보이게 한다.
+
+                element.style.display = 'block';
+            })
+
+        }
+    }
+</script>
+                </div>
+
+                <div class="row address">
+                    <span class="title">주소 </span>
+                    <input id="address1" class="addressInfo designSettingElement shape" type="text"
+                           readonly="readonly">
+                    <input id="address2" class="addressInfo designSettingElement shape" type="text"
+                           style="margin-top: 12px;">
+                </div>
+                <!-- 주소 끝 -->
+
+                <div class="checkbox-wrapper js-checkbox-agreement clearfix">
+                    <div class="checkbox">
+                        <input type="checkbox" name="agreeCheck" id="agreeCheck1">
+                    </div>
+                    <label for="agreeCheck1">
+                        (필수) <a href='/dhadbs2/policy' class="designSettingElement text-link" target="_blank">이용약관</a>과 <a href='/dhadbs2/signupPrivacy' class="designSettingElement text-link" target="_blank">개인정보 수집 및 이용</a>에 동의합니다.
+                    </label>
+                </div>
+                <div class="checkbox-wrapper js-checkbox-agreement clearfix">
+                    <div class="checkbox">
+                        <input type="checkbox" name="agreeCheck" id="agreeCheck2">
+                    </div>
+
+                    <label for="agreeCheck2">
+                        (필수) 만 14세 이상입니다.
+                        <br><span class="legal-representative-order-cancel-message">만 19세 미만의 미성년자가 결제 시 법정대리인이 거래를 취소할 수 있습니다.</span>
+                    </label>
+                </div>
+
+                <div id="loginSignupErrorMsg" class="error-msg"></div>
+                <div class="btn-wrapper">
+                    <button id="signupBtn" class="designSettingElement button"
+                            onclick="require('v2/mall/service/customer').signup('169271')">
+                        가입하기
+                    </button>
+                </div>
+
+            </div>
+
+            <form id="signupForm" action="/dhadbs2/signupComplete" method="post" style="display:none;">
+                <input type="text" name="shopCustomerNo"/>
+                <input type="text" name="buyNowCartNo"/>
+                <input type="text" name="orderType"/>
+                <input type="text" name="returnUrl" value="/dhadbs2/untitled-6"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

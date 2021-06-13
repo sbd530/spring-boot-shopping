@@ -4,14 +4,14 @@ import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import com.don.shopping.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/users/{userId}")
 public class MyPageController {
