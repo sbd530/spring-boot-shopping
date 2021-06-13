@@ -4,7 +4,6 @@ import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
 import com.don.shopping.domains.user.service.SignupRequestDto;
 import com.don.shopping.domains.user.service.UserService;
-import com.don.shopping.domains.user.service.UserValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,8 +26,6 @@ public class UserServiceTest {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private UserValidator userValidator;
 //    @Mock
 //    private CartService cartService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
