@@ -1,4 +1,4 @@
-package com.don.shopping.common.vo;
+package com.don.shopping.domains.user.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,10 +11,10 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Address {
+public class PhoneNumber {
 
-    private String postNumber;
-    private String address1;
-    private String address2;
+    private String phoneNumber1;
+    private String phoneNumber2;
+    private String phoneNumber3;
 
 }

@@ -1,20 +1,9 @@
-logging:
-  level:
-    root: info
-
 spring:
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: a123
     url: jdbc:mysql://localhost:3307/testschema?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: suzi
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
   mail:
     host: smtp.gmail.com
     username: itwillproject1@gmail.com
@@ -27,3 +16,25 @@ spring:
           starttls:
             enable: true
           timeout: 5000
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: trace
+    root: info
+
+servlet:
+  multipart:
+    maxFileSize: 10MB
+    maxRequestSize: 20MB

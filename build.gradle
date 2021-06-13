@@ -1,6 +1,8 @@
 plugins {
 	id 'org.springframework.boot' version '2.3.12.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	//querydsl 추가
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 	id 'java'
 }
 
@@ -15,6 +17,23 @@ configurations {
 	}
 }
 
+//querydsl 추가 시작
+def querydslSrcDir = "$buildDir/generated/querydsl"
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslSrcDir
+}
+sourceSets {
+	main.java.srcDirs querydslSrcDir
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝
+
 repositories {
 	mavenCentral()
 }
@@ -24,6 +43,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	//JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//QueryDSL
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	runtimeOnly 'mysql:mysql-connector-java'
 	//Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	//Spring Security
@@ -41,6 +65,11 @@ dependencies {
 	runtimeOnly 'org.webjars:bootstrap:4.5.0'
 	//COMMONS-IO
 	implementation 'commons-io:commons-io:2.6'
+	//validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//Cache(redis)
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
