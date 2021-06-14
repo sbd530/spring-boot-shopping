@@ -8,7 +8,7 @@
     <style>
         .designSettingElement.button {color:#ffffff !important;}
     </style>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
     <script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
     <script src="js/webfont.js"></script>
@@ -31,7 +31,7 @@
                     }
                 ).done(function(data){
                     alert(data);
-                    location.href = "http://localhost:8080/home";
+                    location.href = "http://localhost:8080/login";
                 }).fail(function(){
                     alert("입력 정보가 올바르지 않습니다.");
                 });
@@ -51,12 +51,6 @@
                 <span class="title">회원 가입</span>
             </div>
             <div class="content designSettingElement text-body">
-
-                <div class="row">
-                    <span class="title">아이디 *</span>
-                    <input id="customerId" type="text" class="designSettingElement shape" autofocus
-                           placeholder="영문, 숫자 5자 이상 입력해주세요.">
-                </div>
 
                 <div class="row">
                     <span class="title">이메일 *</span>
@@ -267,12 +261,6 @@
 
             </div>
 
-            <form id="signupForm" action="/dhadbs2/signupComplete" method="post" style="display:none;">
-                <input type="text" name="shopCustomerNo"/>
-                <input type="text" name="buyNowCartNo"/>
-                <input type="text" name="orderType"/>
-                <input type="text" name="returnUrl" value="/dhadbs2/untitled-6"/>
-            </form>
         </div>
     </div>
 </div>

@@ -1,10 +1,13 @@
 package com.don.shopping.common.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -14,29 +17,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .headers()
-                    .addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy","script-src 'self'"))
-                    .frameOptions().disable()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/static/**", "/**")
+                    //.antMatchers("/dashboard/**").hasRole("ADMIN")
+                    .antMatchers("/**")
                         .permitAll()
-                    .anyRequest()
-                        .authenticated()
                 .and()
                     .formLogin()
                         .loginPage("/login")
+                        //.loginProcessingUrl("/login")
                         .failureUrl("/login/error")
-                        .loginProcessingUrl("/login")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
+                        //.usernameParameter("email")
+                        //.passwordParameter("password")
                         .successHandler(new LoginSuccessHandler())
+                        .permitAll()
                 .and()
-                    .csrf()
-                    .disable()
-                .logout()
-                    .logoutUrl("/users/logout")
-                    .logoutSuccessUrl("/home")
-                .permitAll();
-
+                    .logout()
+                        .logoutUrl("/users/logout")
+                        .logoutSuccessUrl("/home")
+                        .invalidateHttpSession(true)
+                .and().csrf().disable();
     }
+
+
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
 }

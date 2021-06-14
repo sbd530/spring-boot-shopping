@@ -16,10 +16,14 @@ spring:
           starttls:
             enable: true
           timeout: 5000
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true

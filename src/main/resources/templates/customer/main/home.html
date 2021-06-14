@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MY FIVE</title>
+</head>
+<body>
+
+아이디 : <span sec:authentication="name"></span><br>
+권한 : <span sec:authentication="authorities"></span><br>
+세션아이디 : <span th:text="${session.userId}"></span>
+세션이메일 : <span th:text="${session.email}"></span>
+
+
+</body>
+</html>

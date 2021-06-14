@@ -6,7 +6,7 @@ import com.don.shopping.domains.user.query.dao.UserDao;
 import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +15,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserService {
+public class UserService  {
 
     private final UserRepository userRepository;
 //    private final CartService cartService;
     private final UserDao userDao;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder encoder;
 
     /**
      * 이메일 중복 검사 후 회원 가입
@@ -80,8 +80,7 @@ public class UserService {
 
     //비번 초기화
     public void initializePassword(Long userId, String newPassword) {
-        UserEntity userEntity = validateExistAndGetUser(userId);
-
+        validateExistAndGetUser(userId);
         userDao.modifyPassword(userId, encoder.encode(newPassword));
     }
 
@@ -92,6 +91,14 @@ public class UserService {
         return userEntity.getId();
     }
 
-
+    //로그인 정보 검증
+    public boolean validateLoginData(LoginRequestDto dto) {
+        Optional<UserEntity> checkUser = userRepository.findFirstByEmail(dto.getEmail());
+        if (checkUser.isPresent()) {
+            String dbPassword = checkUser.get().getPassword();
+            return encoder.matches(dto.getPassword(), dbPassword) ? true : false;
+        }
+        return false;
+    }
 
 }

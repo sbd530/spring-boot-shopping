@@ -3,12 +3,14 @@ package com.don.shopping.domains.user.domain;
 import com.don.shopping.common.vo.Address;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
 @Getter
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
@@ -37,4 +39,5 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
+
 }
