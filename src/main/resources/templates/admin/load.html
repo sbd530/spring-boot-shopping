@@ -11,13 +11,13 @@
 
 <div class="row align-items-start">
     <div class="row g-1">
-        <div class="col-4">
+        <div class="col-3">
             <div>
 
                 <div style=" float:left; font-size: 24px; padding-right: 10px; border-right: 2px solid #C3BEB6;">전체 상품
                 </div>
 
-                <div style="margin-bottom: 10px;">
+                <div style="margin-bottom: 20px;">
 
                     <form action="" name="searchForm1" method="post" style="width: 500px; ">
                         <div class="input-group w-50" style="padding-left: 20px;">
@@ -39,11 +39,14 @@
 
 
         </div>
-        <div class="col-4">
+        <div class="col-3">
 
         </div>
-        <div class="col-4">
-            <div align="center">
+        <div class="col-3">
+
+        </div>
+        <div class="col-3">
+            <div align="right" style="margin-right: 30px;">
                 <button class="btn btn-primary" type="submit"
                     style="background-color: #5553C4; color: #EFEFEF; border: 0; width: 200px; height: 50px;">
                     상품 추가하기</button>
@@ -57,25 +60,23 @@
                 <form action="" name="searchForm" method="post">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        10개
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="searchKey" onclick="searchData();">
-                        <li><button class="dropdown-item" type="button" value="five">5개</button></li>
                         <li><button class="dropdown-item" type="button" value="ten">10개</button></li>
                         <li><button class="dropdown-item" type="button" value="thirty">30개</button></li>
                         <li><button class="dropdown-item" type="button" value="one_h">100개</button></li>
                         <li><button class="dropdown-item" type="button" value="five_h">500개</button></li>
+                        <li><button class="dropdown-item" type="button" value="one_t">1000개</button></li>
                     </ul>
                 </form>
             </div>
         </div>
     </div>
-    <div class="row g-1" style="border-bottom:1px solid #C3BEB6; padding-bottom: 10px;">  
+    <div class="row g-1" style="border-bottom:1px solid #C3BEB6; padding-top: 10px;">  
         <div class="col-6">
             <form>
                 <p><input type="checkbox" name="all" class="check-all"> <label>상품 이름</label></p>
-
-                <p><input type="checkbox" name="cb1" class="ab"> <label>Checkbox 1</label></p>
             </form>
         </div>
         <div class="col-1">
@@ -87,13 +88,47 @@
         <div class="col-1">
             상태
         </div>
-        <div class="col-2" align="center">
+        <div class="col-3" align="center">
             편집하기
         </div>
     </div>
 
-        <button class="btn btn-primary" type="submit"
-        style="background-color: #EAEAF3; color: #5553C4; border: 0; width: 180px; height: 50px;">
-        상품 추가하기</button>
+    <div class="row g-1" style="border-bottom:1px solid #C3BEB6; padding-bottom: 10px; ">  
+        <c:forEach var="dto" items="${lists}"></c:forEach>
+        <div class="col-6" style="padding-top: 20px;">
+            <form>
+                <p><input type="checkbox" name="cb1" class="ab"> <label>Checkbox 1</label></p>
+            </form>
+        </div>
+        <div class="col-1" style="padding-top: 20px;">
+            가격
+        </div>
+        <div class="col-1" style="padding-top: 20px;">
+            수량
+        </div>
+        <div class="col-1" style="padding-top: 20px;">
+            상태
+        </div>
+        <div class="col-3" align="center" style="padding-top: 10px;">
+            <button class="btn btn-primary" type="submit"
+            style="background-color: #EAEAF3; color: #5553C4; border: 0; width: 180px; height: 50px;">
+            상품 추가하기</button>
+        </div>
+        </c:forEach>
+        
+    </div>
+
+    <div id="footer" style="padding-top: 30px;">
+        <c:if test="${totalDataCount!=0}">
+            ${pageIndexList}
+        </c:if>
+        <c:if test="${totalDataCount==0}">
+            등록된 게시물이 없습니다.
+        </c:if>
+    </div>
+
+    
+	
+        
     </div>
 </div>

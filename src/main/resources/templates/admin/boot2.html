@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en">
 
+<html lang="en">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,7 +16,7 @@
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <h1 style="padding:20px;">MYFIVE</h1>
     
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <script src="//code.jquery.com/jquery.min.js"></script>
@@ -102,21 +103,22 @@
         <!-- 사이드바 -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
+                <button class="btn d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#components-collapse" aria-expanded="false" aria-current="true"
+                        style="padding-bottom: 30px;">
+                        <a href="#" class="d-inline-flex align-items-center rounded" >
+                        <span><i class="fas fa-eye"></i>내 상점 바로 가기</span></a>
+                    </button>
+                <label style="padding-left: 20px;">상점 관리하기</label>
                 <li class="sidebar-brand">
                 <li class="mb-1">
                     <button class="btn d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse"
                         data-bs-target="#components-collapse" aria-expanded="false" aria-current="true">
-                        <span><i class="fas fa-caret-right"></i> <i class="fas fa-home"></i>홈</span>
+                        <a href="#" class="d-inline-flex align-items-center rounded" id="ajaxs">
+                        <span><i class="fas fa-caret-right"></i> <i class="fas fa-home"></i>홈</span></a>
                     </button>
 
-                    <div class="collapse" id="components-collapse" >
-                        <ul class="list-unstyled fw-normal pb-1 small">
-                            <li><a href="/docs/5.0/components/accordion/"
-                                    class="d-inline-flex align-items-center rounded">Accordion</a></li>
-                            <li><a href="/docs/5.0/components/alerts/"
-                                    class="d-inline-flex align-items-center rounded">Alerts</a></li>
-                        </ul>
-                    </div>
+                    
                 </li>
 
                 <li class="mb-1">
@@ -128,7 +130,7 @@
                     <div class="collapse" id="getting-started-collapse">
                         <ul class="list-unstyled fw-normal pb-1 small">
                             <li><a href="#" class="d-inline-flex align-items-center rounded" id="load">입금대기</a></li>
-                            <li><a href="#" class="d-inline-flex align-items-center rounded" id="ajaxs">결제완료</a></li>
+                            <li><a href="#" class="d-inline-flex align-items-center rounded" >결제완료</a></li>
                             <li><a href="/docs/5.0/getting-started/contents/"
                                     class="d-inline-flex align-items-center rounded">배송준비</a></li>
                             <li><a href="/docs/5.0/getting-started/browsers-devices/"
@@ -178,7 +180,7 @@
                 <li class="mb-1">
                     <button class="btn d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse"
                         data-bs-target="#content-collapse" aria-expanded="false">
-                        <span><i class="fas fa-caret-down"></i> <i class="fas fa-poll-h"></i>게시판</span>
+                        <span><i class="fas fa-caret-down"></i> <i class="fas fa-th-list"></i>게시판</span>
                     </button>
 
                     <div class="collapse" id="content-collapse">
