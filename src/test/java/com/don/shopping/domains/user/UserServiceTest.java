@@ -11,7 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,6 +92,16 @@ public class UserServiceTest {
         //when, then
         assertThrows(IllegalStateException.class, () -> userService.signup(dto));
 
+    }
+
+    @Test
+    public void test() {
+        MultipartFile m1 = null;
+        MultipartFile m2 = null;
+        List<MultipartFile> list = new ArrayList<>();
+        list.add(m1);
+        list.add(m2);
+        System.out.println(list.size());
     }
 
 

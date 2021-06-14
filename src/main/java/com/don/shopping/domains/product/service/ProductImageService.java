@@ -63,7 +63,7 @@ public class ProductImageService {
 
         List<ProductImageEntity> productImageEntityList = queryFactory
                 .selectFrom(productImageEntity)
-                .where(productImageEntity.productEntity.productid.eq(id))
+                .where(productImageEntity.product.id.eq(id))
                 .fetch();
 
         return productImageEntityList.stream()

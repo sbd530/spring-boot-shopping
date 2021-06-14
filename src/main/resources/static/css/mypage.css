@@ -1,0 +1,9 @@
+.myPage.wrapper, .orderDetails.wrapper, .cart.payment-process.wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    min-height: 300px;
+    height: auto;
+    margin: 0 auto;
+    padding: 60px 16px 70px;
+}

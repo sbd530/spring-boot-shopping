@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <link href="css/mypage.css" rel="stylesheet">
+    <link href="css/signup2.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
+    <style>
+        .designSettingElement.button {color:#ffffff !important;}
+    </style>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
+    <script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
+    <script src="js/webfont.js"></script>
+    <script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
+
+    <script>
+        $(function(){
+            $("#updateBtn").on("click", function() {
+               $.post("/users",
+                    {
+                        email: $("#email").val(),
+                        name: $("#name").val(),
+                        password: $("#password").val(),
+                        phoneNumber1: $("#phoneNumber1").val(),
+                        phoneNumber2: $("#phoneNumber2").val(),
+                        phoneNumber3: $("#phoneNumber3").val(),
+                        postNumber: $("#postNumber").val(),
+                        address1: $("#address1").val(),
+                        address2: $("#address2").val()
+                    }
+                ).done(function(data){
+                    alert(data);
+                    location.href = "http://localhost:8080/home";
+                }).fail(function(){
+                    alert("입력 정보가 올바르지 않습니다.");
+                });
+            });
+        });
+    </script>
+
+</head>
+<body class="display display-home display desktop">
+
+<div id="displayCanvas" class="desktop" data-viewport="desktop">
+
+    <div id="myPage" class="myPage wrapper">
+        <div class="column-wrapper two-column">
+            <div class="infoList field">
+                <div class="header designSettingElement text-title">
+                    <span class="title">주문 내역</span>
+                </div>
+                <div id="shopCustomerOrderListDiv" class="content orderList designSettingElement text-body hide">
+                    <div class="tb-title designSettingElement shape clearfix">
+                        <span class="date">일자</span>
+                        <span class="product">상품 정보</span>
+                        <span class="total">가격</span>
+                        <span class="status">상태</span>
+                    </div>
+                    <div id="shopCustomerOrderList" class="tb-content">
+                    </div>
+                    <div id="shopCustomerOrderPageCount" class="pagination_div designSettingElement">
+                    </div>
+                </div>
+                <div id="noOrderMsg" class="content no-content-msg designSettingElement text-body hide">
+                    주문 내역이 없습니다.
+                </div>
+                <!--  my posts -->
+                <div class="js-section-myposts hide">
+                    <div class="header designSettingElement text-title otherTitle myPostsTitle myPosts">
+                        <span class="title">내가 쓴 글</span>
+                    </div>
+                    <div id="shopProductMyPostDiv" class="content myPostList designSettingElement text-body hide">
+                        <div class="tb-title designSettingElement shape clearfix">
+                            <span class="date">일자</span>
+                            <span class="title">제목</span>
+                            <span class="type">유형</span>
+                        </div>
+                        <div id="shopProductMyPosts" class="tb-content">
+                        </div>
+                        <div id="shopCustomerMyPostsCount" class="pagination_div designSettingElement">
+                        </div>
+                    </div>
+                    <div id="noShopCustomerMyPostsMsg" class="content no-content-msg designSettingElement text-body">
+                        내가 쓴 글이 없습니다.
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="memberInfo field">
+                <div class="header designSettingElement text-title">
+                    <span class="title">회원 정보</span>
+                </div>
+                <div class="content designSettingElement text-body">
+                    <div class="function logout">
+                        <form action="/_shop/customer/logout" method="POST">
+                            <a class="text designSettingElement text-assi"
+                               onclick="this.parentNode.submit()">로그아웃</a>
+                            <input type="hidden" name="memberNo" value="169271">
+                            <input type="hidden" name="customerNo" value="6973390">
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <label for="email" class="title">이메일</label>
+                        <input type="email" id="email" class="designSettingElement shape">
+                    </div>
+
+
+                    <div class="row name">
+                        <span class="title">이름</span>
+                        <input id="name" name="name" type="text" class="designSettingElement shape">
+                    </div>
+
+
+                    <div class="row contact">
+                        <label for="phoneNumber1" class="title">휴대폰 번호</label>
+                        <input type="tel" id="phoneNumber1" name="phoneNumber1" class="designSettingElement shape phoneNumber js-inputOnlyNumber"
+                               maxlength="3"
+                        >
+                        <div class="element">-</div>
+                        <input type="tel" id="phoneNumber2" name="phoneNumber2"
+                               class="designSettingElement shape phoneNumber js-inputOnlyNumber"
+                               maxlength="4"
+                        >
+                        <div class="element">-</div>
+                        <input type="tel" id="phoneNumber3" name="phoneNumber3"
+                               class="designSettingElement shape phoneNumber js-inputOnlyNumber"
+                               maxlength="4"
+                        >
+                    </div>
+
+                    <div class="row post-code">
+                        <label for="post1" class="title">우편번호</label>
+                        <div class="post-code-wrapper clearfix">
+                            <input id="post1" type="text" class="designSettingElement shape addressInfo"
+                                   readonly="readonly">
+                            <button class="designSettingElement button outline"
+                                    onclick="showDaumPostcode(4,'default')">
+                                검색하기
+                            </button>
+                        </div>
+
+
+                        <!-- daum postcode -->
+                        <div id="daum_postcode_layer" style="z-index: 1020">
+                            <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" class="hide"
+                                 style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 100;"
+                                 onclick="closeDaumPostcode()" alt="닫기 버튼">
+                        </div>
+<script>
+    var src = (location.protocol == "https:" ? "https://ssl.daumcdn.net/dmaps" : "http://dmaps.daum.net")
+        + "/map_js_init/postcode.v2.js";
+    var scriptTagElem = document.createElement("script");
+    scriptTagElem.setAttribute("type", "text/javascript");
+    scriptTagElem.setAttribute("src", src);
+    scriptTagElem.setAttribute("onerror", "require(['common/common'], function (common) { common.onErrorLoadPostcodeSdk(); });");
+    document.write(scriptTagElem.outerHTML);
+</script>
+
+
+<script>
+    // 우편번호 찾기 iframe을 넣을 element
+    var element = document.getElementById("daum_postcode_layer");
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element.style.display = 'none';
+        $("#btnCloseLayer").addClass("hide");
+    }
+
+    function showDaumPostcode(no, deviceType, layerNo, callbackFromRedesignPage) {
+        $("#btnCloseLayer").removeClass("hide");
+        if ($(event.target).hasClass("notWorkingButton")) {
+            return
+        }
+        if (deviceType != "mobile") {
+            try {
+                var top = window.getParentScrollTopMinusHeaderHeight ? getParentScrollTopMinusHeaderHeight() : 180;
+
+                $(element).css("top", top + "px");
+            } catch (e) {
+
+            }
+
+            if (layerNo == 1) {
+                document.getElementById("daum_postcode_layer_wrapper1").appendChild(element);
+            } else if (layerNo == 2) {
+                document.getElementById("daum_postcode_layer_wrapper2").appendChild(element);
+            }
+
+            daum.postcode.load(function () {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var fullAddr = data.address; // 최종 주소 변수
+                        var extraAddr = ''; // 조합형 주소 변수
+
+                        // 기본 주소가 도로명 타입일때 조합한다.
+                        if (data.addressType === 'R') {
+                            //법정동명이 있을 경우 추가한다.
+                            if (data.bname !== '') {
+                                extraAddr += data.bname;
+                            }
+                            // 건물명이 있을 경우 추가한다.
+                            if (data.buildingName !== '') {
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                            fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                        }
+
+                        if (no == 1) {
+                            require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "SENDER", false);
+
+                        } else if (no == 2) {
+                            if (callbackFromRedesignPage) {
+                                callbackFromRedesignPage(data.zonecode, fullAddr);
+                            } else {
+                                require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "RECIPIENT", false);
+                            }
+                        } else if (no == 3) {
+                            if ($("#shopOrderDetail #deliveryPrice").attr("value") == -1 || $(
+                                "#shopOrderDetailPage .payment-info #deliveryPrice").attr("value") == -1) {
+                                document.getElementById('post1').value = data.zonecode;
+                                document.getElementById('post2').value = fullAddr;
+
+                                $("#post3").focus();
+                            } else {
+                                require("common/common").commerce.checkDeliveryRemoteArea(
+                                    document.getElementById('post1').value, function (postArea) {
+                                        var beforePostArea = postArea;
+                                        require("common/common").commerce.checkDeliveryRemoteArea(data.zonecode,
+                                            function (postArea) {
+                                                var newPostArea = postArea;
+                                                if (beforePostArea == newPostArea) {
+                                                    document.getElementById('post1').value = data.zonecode;
+                                                    document.getElementById('post2').value = fullAddr;
+                                                    try {
+                                                        document.getElementById('showPost2').innerHTML = fullAddr;
+                                                    } catch (e) {
+                                                        // 방어코드 다른 페이지에 영향을 확인할 수 없어 추가함.
+                                                    }
+                                                    $("#post3").focus();
+                                                } else {
+                                                    alert("원래 주문과 배송비가 다른 지역으로 주소를 변경할 수 없습니다. 환불 후 다시 주문하시기 바랍니다.");
+                                                }
+                                            });
+                                    });
+                            }
+                        } else if (no == 4) {
+                            document.getElementById('post1').value = data.zonecode;
+                            document.getElementById('post2').value = fullAddr;
+                            $("#post3").focus();
+
+                        }
+                        // iframe을 넣은 element를 안보이게 한다.
+                        element.style.display = 'none';
+
+                    },
+                    width: '100%',
+                    height: '100%'
+                }).embed(element);
+                // iframe을 넣은 element를 보이게 한다.
+
+                element.style.display = 'block';
+            })
+
+        } else {
+        }
+    }
+</script>
+                    </div>
+
+                    <div class="row address">
+                        <label class="title">주소</label>
+                        <input type="text" id="post2" class="designSettingElement shape addressInfo"
+                               readonly="readonly">
+                        <input type="text" id="post3" class="designSettingElement shape addressInfo">
+                    </div>
+
+
+
+
+                    <div class="function">
+                        <a href="/changePassword" class="text designSettingElement text-assi">
+                            비밀번호 변경하기
+                        </a>
+                        <a href="/withdrawal" class="text designSettingElement text-assi">
+                            탈퇴하기
+                        </a>
+                    </div>
+
+                    <div class="btn-wrapper">
+                        <button id="updateBtn" class="designSettingElement button">
+                            변경 사항 저장하기
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
