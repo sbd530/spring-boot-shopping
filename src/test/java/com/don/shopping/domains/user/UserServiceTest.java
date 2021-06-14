@@ -27,6 +27,8 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 //    @Mock
+//    private UserValidator userValidator;
+//    @Mock
 //    private CartService cartService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
