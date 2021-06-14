@@ -1,5 +1,6 @@
 package com.don.shopping.domains.product.util;
 
+import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
 import com.don.shopping.domains.product.query.dto.ProductImageDto;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductImageHandler {
@@ -57,7 +59,9 @@ public class ProductImageHandler {
             }
 
             //다중 파일 처리
-            for(MultipartFile multipartFile : multipartFiles) {
+            for(int i=0;i<=3;i++) {
+
+                MultipartFile multipartFile = multipartFiles.get(i);
 
                 //파일의 확장자 추출
                 String fileExt;
@@ -65,7 +69,7 @@ public class ProductImageHandler {
 
                 //확장자명이 존재하지 않을 경우 처리x
                 if(ObjectUtils.isEmpty(contentType)) {
-                    break;
+                    continue;
                 }else {//확장자가 jpeg, png, gif인 파일들만 받아서 처리
                     if (contentType.contains("image/jpeg")) {
                         fileExt = ".jpg";
@@ -74,15 +78,25 @@ public class ProductImageHandler {
                     } else if (contentType.contains("image/gif")) {
                         fileExt = ".gif";
                     } else {
-                        break;
+                        continue;
                     }
                 }
                 //파일명 중복 피하기 위해 나노초 지정
                 String savefilename = System.nanoTime() + fileExt;
 
+                ImageUsage imageUsage;
+
+                switch (i) {
+                    case 0 : imageUsage = ImageUsage.THUMBNAIL1;break;
+                    case 1 : imageUsage = ImageUsage.THUMBNAIL2;break;
+                    case 2 : imageUsage = ImageUsage.CONTENTS1;break;
+                    default : imageUsage = ImageUsage.CONTENTS2;
+                }
+
                 //파일 DTO 생성
                 ProductImageDto productImageDto = ProductImageDto.builder()
                         .originalfilename(multipartFile.getOriginalFilename())
+                        .imageUsage(imageUsage)
                         .filePath(path + File.separator + savefilename)
                         .fileSize(multipartFile.getSize())
                         .build();

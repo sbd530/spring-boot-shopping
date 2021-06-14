@@ -1,5 +1,6 @@
 package com.don.shopping.domains.product.controller;
 
+import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
 import com.don.shopping.domains.product.domain.ProductImageVO;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -45,7 +47,7 @@ public class AdminProductController {
 
         model.addAttribute("product",productService.findOne(id,productimageId));
 
-        return "customer/products/product.html";
+        return "dashboard/products/product.html";
     }
 
     //전체 조회(목록)
@@ -65,7 +67,7 @@ public class AdminProductController {
 
         model.addAttribute("productList",productListResponseDtoList);
 
-        return "customer/products/productList.html";
+        return "dashboard/products/productList.html";
     }
 
     //상품등록페이지
@@ -88,9 +90,8 @@ public class AdminProductController {
                         .stock(productImageVO.getStock())
                         .build();
 
+        Long productId= productService.add(productRequestDto, productImageVO.getFiles());
 
-
-        Long productId= productService.add(productRequestDto, productImageVO.getProductimages());
         System.out.println("상품등록성공!!");
 
         return "redirect:/dashboard/products/" + productId;
@@ -116,7 +117,7 @@ public class AdminProductController {
         //DB에 저장되어있는 파일 불러오기
         List<ProductImageResponseDto> dbProductImageList = productImageService.findAllByProduct(id);
         //전달되어온 파일들
-        List<MultipartFile> multipartFileList = productImageVO.getProductimages();
+        List<MultipartFile> multipartFileList = productImageVO.getFiles();
         //새롭게 전달되어온 파일들의 목록을 저장할 List선언
         List<MultipartFile> validFileList = new ArrayList<>();
 
@@ -172,8 +173,6 @@ public class AdminProductController {
         productService.delete(id);
         return "redirect:/dashboard/products";
     }
-
-
 
 
     @Data

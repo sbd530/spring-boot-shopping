@@ -26,7 +26,8 @@ public class ProductImageEntity {
 
     private String originalfilename;
 
-    private String imageUsage;
+    @Enumerated(EnumType.STRING)
+    private ImageUsage imageUsage;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -37,7 +38,7 @@ public class ProductImageEntity {
     private Long fileSize;
 
     @Builder
-    public ProductImageEntity(String originalfilename, String imageUsage, String filePath, Long fileSize) {
+    public ProductImageEntity(String originalfilename, ImageUsage imageUsage, String filePath, Long fileSize) {
         this.originalfilename = originalfilename;
         this.imageUsage = imageUsage;
         this.filePath = filePath;

@@ -1,5 +1,6 @@
 package com.don.shopping.domains.product.query.dto;
 
+import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,12 +16,12 @@ public class ProductImageDto {
     @NotBlank
     private String filePath;
     @NotBlank
-    private String imageUsage;
+    private ImageUsage imageUsage;
     @NotBlank
     private Long fileSize;
 
     @Builder
-    public ProductImageDto(String originalfilename, String filePath, String imageUsage, Long fileSize) {
+    public ProductImageDto(String originalfilename, String filePath, ImageUsage imageUsage, Long fileSize) {
         this.originalfilename = originalfilename;
         this.filePath = filePath;
         this.imageUsage = imageUsage;
