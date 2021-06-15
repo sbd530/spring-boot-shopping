@@ -44,44 +44,52 @@ public class UserService  {
     }
 
     //유저 정보를 dto 에 담는다
-    public MyPageResponseDto getUserInfo(Long userId) {
-        UserEntity userEntity = validateExistAndGetUser(userId);
+    public MyPageResponseDto getUserInfo(String email) {
+        UserEntity userEntity = validateExistAndGetUser(email);
         return new MyPageResponseDto(userEntity);
     }
-    public UserEntity validateExistAndGetUser(Long userId) {
-        Optional<UserEntity> user = userRepository.findById(userId);
+    public UserEntity validateExistAndGetUser(String email) {
+        Optional<UserEntity> user = userRepository.findFirstByEmail(email);
         return user.
                 orElseThrow(() ->new IllegalStateException("회원이 존재하지 않습니다."));
     }
 
     public boolean isExistEmail(String email) {
         Optional<UserEntity> user = userRepository.findFirstByEmail(email);
-        return user.isPresent() ? true : false;
+        return user.isPresent();
     }
 
     //유저 정보 수정
-    public void updateUserInfo(Long userId, MyPageRequestDto dto) {
-        userDao.updateUserInfo(userId, dto);
+    public void updateUserInfo(String email, MyPageRequestDto dto) {
+        userDao.updateUserInfo(email, dto);
     }
 
     //유저 삭제
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+    public boolean deleteUser(String email, String password) {
+        Optional<UserEntity> user = userRepository.findFirstByEmail(email);
+        if (user.isPresent()) {
+            String dbPassword = user.get().getPassword();
+            if (encoder.matches(password, dbPassword)) {
+                userRepository.delete(user.get());
+                return true;
+            }
+        }
+        return false;
     }
 
     //비번 변경
-    public boolean modifyPassword(Long userId, ChangePasswordDto dto) {
-        UserEntity userEntity = validateExistAndGetUser(userId);
+    public boolean modifyPassword(String email, ChangePasswordDto dto) {
+        UserEntity userEntity = validateExistAndGetUser(email);
         if(!encoder.matches(dto.getPresentPassword(),userEntity.getPassword()))
             return false;
-        userDao.modifyPassword(userId, encoder.encode(dto.getNewPassword()));
+        userDao.modifyPassword(email, encoder.encode(dto.getNewPassword()));
         return true;
     }
 
     //비번 초기화
-    public void initializePassword(Long userId, String newPassword) {
-        validateExistAndGetUser(userId);
-        userDao.modifyPassword(userId, encoder.encode(newPassword));
+    public void initializePassword(String email, String newPassword) {
+        validateExistAndGetUser(email);
+        userDao.modifyPassword(email, encoder.encode(newPassword));
     }
 
     //이메일로 아이디 조회
@@ -96,7 +104,7 @@ public class UserService  {
         Optional<UserEntity> checkUser = userRepository.findFirstByEmail(dto.getEmail());
         if (checkUser.isPresent()) {
             String dbPassword = checkUser.get().getPassword();
-            return encoder.matches(dto.getPassword(), dbPassword) ? true : false;
+            return encoder.matches(dto.getPassword(), dbPassword);
         }
         return false;
     }

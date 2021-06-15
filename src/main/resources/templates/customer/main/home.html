@@ -8,11 +8,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security3">
     <title>MY FIVE</title>
 </head>
 <body>
+<h1>이곳은 홈화면이다</h1>
 
 아이디 : <span sec:authentication="name"></span><br>
 권한 : <span sec:authentication="authorities"></span><br>
-세션아이디 : <span th:text="${session.userId}"></span>
-세션이메일 : <span th:text="${session.email}"></span>
+
+
+<button th:onclick="@{/logout}">로그아웃</button>
 
 
 </body>

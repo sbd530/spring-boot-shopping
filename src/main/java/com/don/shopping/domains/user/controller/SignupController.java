@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/auth/signup")
 public class SignupController {
 
     private final UserService userService;

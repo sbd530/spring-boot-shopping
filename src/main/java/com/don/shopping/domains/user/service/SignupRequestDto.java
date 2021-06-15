@@ -4,6 +4,7 @@ import com.don.shopping.common.vo.Address;
 import com.don.shopping.domains.user.domain.PhoneNumber;
 import com.don.shopping.domains.user.domain.UserEntity;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
@@ -23,11 +24,11 @@ public class SignupRequestDto {
     private String password;
     @NotBlank
     private String name;
-    @NotBlank @Min(2)
+    @NotBlank @Length(min = 2)
     private String phoneNumber1;
-    @NotBlank @Min(3)
+    @NotBlank @Length(min = 3)
     private String phoneNumber2;
-    @NotBlank @Min(4)
+    @NotBlank @Length(min = 4)
     private String phoneNumber3;
 
     private String postNumber;

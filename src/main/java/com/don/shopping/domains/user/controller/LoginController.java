@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -16,12 +15,12 @@ public class LoginController {
 
     private final UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String getLoginPage() {
         return "customer/users/login/login";
     }
 
-    @PostMapping("/login/check")
+    @PostMapping("/auth/login/check")
     public @ResponseBody String checkUser(@ModelAttribute @Valid LoginRequestDto dto) {
         boolean check = userService.validateLoginData(dto);
         if(userService.validateLoginData(dto))
@@ -30,17 +29,9 @@ public class LoginController {
         return "FAIL";
     }
 
-    //로그인 처리는 스프링 시큐리티가 처리한다.
+    //로그인 과정은 스프링 시큐리티가 처리합니다.
 
-    @PostMapping("/login")
-    public String login(LoginRequestDto dto, HttpSession session) {
-        Long userId = userService.findUserIdByEmail(dto.getEmail());
-        session.setAttribute("userId",userId);
-        session.setAttribute("email", dto.getEmail());
-        return "redirect:/home";
-    }
-
-    @GetMapping("/login/error")
+    @GetMapping("/auth/login/error")
     public String getLoginErrorPage(Model model) {
         model.addAttribute("loginError", "true");
         return "customer/main/home";

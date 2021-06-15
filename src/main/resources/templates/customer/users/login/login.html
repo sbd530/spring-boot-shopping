@@ -1,40 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
 
-    <title>로그인</title>
-    <link href="css/signup2.css" rel="stylesheet">
-    <link href="css/signup.css" rel="stylesheet">
-    <style>
-        .designSettingElement.button {color:#ffffff !important;}
-        .designSettingElement.button.outline {
-            color: #2B2F33 !important;
-            background-color: transparent !important;
-            border-color: #2B2F33 !important;
-            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
-            filter: alpha(opacity=100) !important;
-            -moz-opacity: 1 !important;
-            -khtml-opacity: 1 !important;
-            opacity: 1 !important;
-        }
-    </style>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
-    <script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
-    <script src="js/webfont.js"></script>
-    <script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
-
+<div th:replace="customer/users/mypage/head"/>
     <script>
         $(function(){
             $("#loginBtn").on("click", function() {
-               $.post("/login/check",
+               $.post("/auth/login/check",
                     {
                         email: $("#email").val(),
                         password: $("#password").val()
                     }
                 ).done(function(data){
-                    alert(data);
+
                     if(data=="SUCCESS"){
                         $("#loginForm").submit();
                     }else{
@@ -49,7 +27,7 @@
             });
         });
     </script>
-</head>
+
 <body class="display display-home display desktop">
 
 <div id="displayCanvas" class="desktop" data-viewport="desktop">
@@ -62,21 +40,21 @@
                 </div>
                 <div class="content designSettingElement text-body">
 
-                <form id="loginForm" action="/login" method="post">
+                <form id="loginForm" th:action="@{/auth/login}" method="post">
 
                     <div class="row">
                         <span class="title">이메일</span>
-                        <input id="email" name="email" type="email" class="designSettingElement shape" autofocus>
+                        <input id="email" name="email" type="text" class="designSettingElement shape" autofocus>
                     </div>
 
                     <div class="row">
                         <span class="title">비밀번호</span>
                         <input id="password" name="password" type="password" class="designSettingElement shape" autocomplete="off">
                     </div>
-                </form>
+
 
                     <div class="find-pw">
-                        <a href="/findPassword" class="designSettingElement text-link">
+                        <a href="/auth/findPassword" class="designSettingElement text-link">
                             비밀번호를 잊으셨나요?
                         </a>
                     </div>
@@ -86,14 +64,20 @@
                     </div>
 
                     <div class="btn-wrapper">
-                        <button id="loginBtn" class="designSettingElement button">
+                        <button id="loginBtn" class="designSettingElement button"
+                            th:type="button">
                             로그인하기
                         </button>
                     </div>
+
+                </form>
+
+
                     <div class="btn-wrapper">
                         <button
                             class="designSettingElement button outline"
-                            onclick="location.href='http://localhost:8080/users'">
+                            onclick="location.href='http://localhost:8080/auth/signup'"
+                            type="button">
                             회원 가입하기
                         </button>
                     </div>

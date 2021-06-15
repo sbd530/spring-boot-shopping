@@ -1,23 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>회원 가입</title>
-    <link href="css/signup2.css" rel="stylesheet">
-    <link href="css/signup.css" rel="stylesheet">
-    <style>
-        .designSettingElement.button {color:#ffffff !important;}
-    </style>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
-    <script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
-    <script src="js/webfont.js"></script>
-    <script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
 
+<div th:replace="customer/users/mypage/head"/>
     <script>
         $(function(){
             $("#signupBtn").on("click", function() {
-               $.post("/users",
+               var resultDiv = document.getElementById("loginSignupErrorMsg");
+
+               var email = $("#email").val();
+               if(!email){
+                  resultDiv.innerHTML = "이메일을 입력해주세요.";
+                  return;
+               }
+               var name = $("#name").val();
+               if(!name){
+                  resultDiv.innerHTML = "이름을 입력해주세요.";
+                  return;
+               }
+               var phone1 = $("#phoneNumber1").val();
+               var phone2 = $("#phoneNumber2").val();
+               var phone3 = $("#phoneNumber3").val();
+               if(!phone1 || !phone2 || !phone3){
+                  resultDiv.innerHTML = "휴대폰번호를 입력해주세요.";
+                  return;
+               }
+
+               var pwd1 = $("#password").val();
+               var pwd2 = $("#passwordCheck").val();
+               if(pwd1!=pwd2) {
+                  resultDiv.innerHTML = "비밀번호를 확인해주세요.";
+                  return;
+               }
+               if($("#agreeCheck1").is(":checked")==false || $("#agreeCheck2").is(":checked")==false){
+                  resultDiv.innerHTML = "이용약관과 개인정보 수집 및 이용에 동의해주세요.";
+                  return;
+               }
+               $.post("/auth/signup",
                     {
                         email: $("#email").val(),
                         name: $("#name").val(),
@@ -31,7 +51,7 @@
                     }
                 ).done(function(data){
                     alert(data);
-                    location.href = "http://localhost:8080/login";
+                    location.href = "http://localhost:8080/auth/login";
                 }).fail(function(){
                     alert("입력 정보가 올바르지 않습니다.");
                 });
@@ -39,7 +59,6 @@
         });
     </script>
 
-</head>
 <body class="display display-home display desktop">
 
 <div id="displayCanvas" class="desktop" data-viewport="desktop">
@@ -101,126 +120,8 @@
                              style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 100;"
                              onclick="closeDaumPostcode()" alt="닫기 버튼">
                     </div>
-<script>
-    var src = (location.protocol == "https:" ? "https://ssl.daumcdn.net/dmaps" : "http://dmaps.daum.net")
-        + "/map_js_init/postcode.v2.js?autoload=false";
-    var scriptTagElem = document.createElement("script");
-    scriptTagElem.setAttribute("type", "text/javascript");
-    scriptTagElem.setAttribute("src", src);
-    scriptTagElem.setAttribute("onerror", "require(['common/common'], function (common) { common.onErrorLoadPostcodeSdk(); });");
-    document.write(scriptTagElem.outerHTML);
-</script>
-<script>
-    // 우편번호 찾기 iframe을 넣을 element
-    var element = document.getElementById("daum_postcode_layer");
-
-    function closeDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element.style.display = 'none';
-        $("#btnCloseLayer").addClass("hide");
-    }
-
-    function showDaumPostcode(no, deviceType, layerNo, callbackFromRedesignPage) {
-        $("#btnCloseLayer").removeClass("hide");
-        if ($(event.target).hasClass("notWorkingButton")) {
-            return
-        }
-        if (deviceType != "mobile") {
-            try {
-                var top = window.getParentScrollTopMinusHeaderHeight ? getParentScrollTopMinusHeaderHeight() : 180;
-
-                $(element).css("top", top + "px");
-            } catch (e) {
-
-            }
-
-            if (layerNo == 1) {
-                document.getElementById("daum_postcode_layer_wrapper1").appendChild(element);
-            } else if (layerNo == 2) {
-                document.getElementById("daum_postcode_layer_wrapper2").appendChild(element);
-            }
-
-            daum.postcode.load(function () {
-                new daum.Postcode({
-                    oncomplete: function (data) {
-                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                        var fullAddr = data.address; // 최종 주소 변수
-                        var extraAddr = ''; // 조합형 주소 변수
-
-                        // 기본 주소가 도로명 타입일때 조합한다.
-                        if (data.addressType === 'R') {
-                            //법정동명이 있을 경우 추가한다.
-                            if (data.bname !== '') {
-                                extraAddr += data.bname;
-                            }
-                            // 건물명이 있을 경우 추가한다.
-                            if (data.buildingName !== '') {
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
-                            // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                            fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
-                        }
-
-                        if (no == 1) {
-                            require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "SENDER", false);
-
-                        } else if (no == 2) {
-                            if (callbackFromRedesignPage) {
-                                callbackFromRedesignPage(data.zonecode, fullAddr);
-                            } else {
-                                require("display/shopOrderRequest").checkAndApplyDeliveryRemoteArea2(data.zonecode, fullAddr, "RECIPIENT", false);
-                            }
-                        } else if (no == 3) {
-                            if ($("#shopOrderDetail #deliveryPrice").attr("value") == -1 || $(
-                                "#shopOrderDetailPage .payment-info #deliveryPrice").attr("value") == -1) {
-                                document.getElementById('post1').value = data.zonecode;
-                                document.getElementById('post2').value = fullAddr;
-
-                                $("#post3").focus();
-                            } else {
-                                require("common/common").commerce.checkDeliveryRemoteArea(
-                                    document.getElementById('post1').value, function (postArea) {
-                                        var beforePostArea = postArea;
-                                        require("common/common").commerce.checkDeliveryRemoteArea(data.zonecode,
-                                            function (postArea) {
-                                                var newPostArea = postArea;
-                                                if (beforePostArea == newPostArea) {
-                                                    document.getElementById('post1').value = data.zonecode;
-                                                    document.getElementById('post2').value = fullAddr;
-                                                    try {
-                                                        document.getElementById('showPost2').innerHTML = fullAddr;
-                                                    } catch (e) {
-                                                        // 방어코드 다른 페이지에 영향을 확인할 수 없어 추가함.
-                                                    }
-                                                    $("#post3").focus();
-                                                } else {
-                                                    alert("원래 주문과 배송비가 다른 지역으로 주소를 변경할 수 없습니다. 환불 후 다시 주문하시기 바랍니다.");
-                                                }
-                                            });
-                                    });
-                            }
-                        } else if (no == 4) {
-                            document.getElementById('post1').value = data.zonecode;
-                            document.getElementById('post2').value = fullAddr;
-                            $("#post3").focus();
-
-                        }
-                        // iframe을 넣은 element를 안보이게 한다.
-                        element.style.display = 'none';
-
-                    },
-                    width: '100%',
-                    height: '100%'
-                }).embed(element);
-                // iframe을 넣은 element를 보이게 한다.
-
-                element.style.display = 'block';
-            })
-
-        }
-    }
-</script>
+<!-- 주소 검색 모듈 -->
+<script src="/js/searchPost.js"></script>
                 </div>
 
                 <div class="row address">
@@ -237,7 +138,7 @@
                         <input type="checkbox" name="agreeCheck" id="agreeCheck1">
                     </div>
                     <label for="agreeCheck1">
-                        (필수) <a href='/dhadbs2/policy' class="designSettingElement text-link" target="_blank">이용약관</a>과 <a href='/dhadbs2/signupPrivacy' class="designSettingElement text-link" target="_blank">개인정보 수집 및 이용</a>에 동의합니다.
+                        (필수) <a href='' class="designSettingElement text-link" target="_blank">이용약관</a>과 <a href='' class="designSettingElement text-link" target="_blank">개인정보 수집 및 이용</a>에 동의합니다.
                     </label>
                 </div>
                 <div class="checkbox-wrapper js-checkbox-agreement clearfix">
@@ -251,10 +152,12 @@
                     </label>
                 </div>
 
-                <div id="loginSignupErrorMsg" class="error-msg"></div>
+                <div id="loginSignupErrorMsg" class="error-msg">
+
+                </div>
                 <div class="btn-wrapper">
-                    <button id="signupBtn" class="designSettingElement button"
-                            onclick="require('v2/mall/service/customer').signup('169271')">
+
+                    <button id="signupBtn" class="designSettingElement button">
                         가입하기
                     </button>
                 </div>

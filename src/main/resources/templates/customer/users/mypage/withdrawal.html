@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
+
+<div th:replace="customer/users/mypage/head"/>
+
+<script th:inline="javascript">
+        $(function(){
+          $("#withdrawalBtn").on("click", function() {
+
+             var url = "/mypage/withdrawal";
+             $.ajax({
+                url: url,
+                method: "DELETE",
+                data: {
+                      password: $("#password").val(),
+                  },
+                  success: function(data){
+                      if(data=="SUCCESS"){
+                          alert("회원 탈퇴가 완료되었습니다.");
+                          location.replace("/home");
+                      }else{
+                          var resultDiv = document.getElementById("loginSignupErrorMsg");
+                          resultDiv.innerHTML = "비밀번호를 다시 입력해주세요.";
+                      }
+
+                  },
+                  error: function(){
+                      alert("인증에러발생");
+                  }
+
+             });
+
+          });
+      });
+    </script>
+
+<body class="display display-home display desktop">
+
+<div id="displayCanvas" class="desktop" data-viewport="desktop">
+
+    <div id="signup" class="login wrapper">
+        <div class="column-wrapper one-column">
+            <div class="signup field">
+                <div class="header designSettingElement text-title">
+                    <span class="title">회원 탈퇴</span>
+                </div>
+                <div class="content designSettingElement text-body">
+
+                    <div class="row name">
+                        <span class="title">비밀번호</span>
+                        <input id="password" type="text" class="designSettingElement shape">
+                    </div>
+
+                    <div class="row">
+                        <span class="title align-center">
+                            탈퇴가 완료된 계정은 다시 복구할 수 없습니다.<br>탈퇴하시겠습니까?
+                        </span>
+                    </div>
+
+                    <div id="loginSignupErrorMsg" class="error-msg"></div>
+
+                    <div class="btn-wrapper">
+                        <button id="withdrawalBtn" class="designSettingElement button"
+                            type="button">
+                            탈퇴하기
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

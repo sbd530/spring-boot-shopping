@@ -19,21 +19,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUserInfo(Long userId, MyPageRequestDto dto) {
+    public void updateUserInfo(String email, MyPageRequestDto dto) {
 
         query.update(user)
-                .where(user.id.eq(userId))
+                .where(user.email.eq(email))
                 .set(user.name, dto.getName())
-                .set(user.phoneNumber, dto.getPhoneNumber())
-                .set(user.address, dto.getAddress())
+                .set(user.phoneNumber.phoneNumber1, dto.getPhoneNumber().getPhoneNumber1())
+                .set(user.phoneNumber.phoneNumber2, dto.getPhoneNumber().getPhoneNumber2())
+                .set(user.phoneNumber.phoneNumber3, dto.getPhoneNumber().getPhoneNumber3())
+                .set(user.address.postNumber, dto.getAddress().getPostNumber())
+                .set(user.address.address1, dto.getAddress().getAddress1())
+                .set(user.address.address2, dto.getAddress().getAddress2())
                 .execute();
     }
 
     @Override
-    public void modifyPassword(Long userId, String newPassword) {
+    public void modifyPassword(String email, String newPassword) {
 
         query.update(user)
-                .where(user.id.eq(userId))
+                .where(user.email.eq(email))
                 .set(user.password, newPassword)
                 .execute();
     }

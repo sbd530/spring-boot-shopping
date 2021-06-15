@@ -1,12 +1,14 @@
 package com.don.shopping.domains.user.query.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+import javax.validation.constraints.NotBlank;
+
+@Data
 public class ChangePasswordDto {
 
+    @NotBlank
     private String presentPassword;
+    @NotBlank
     private String newPassword;
 }
