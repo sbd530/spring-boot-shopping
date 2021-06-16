@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    /*private final ProductService productService;
+    private final ProductService productService;
     private final ProductImageService productImageService;
 
     public ProductController(ProductService productService, ProductImageService productImageService) {
@@ -65,7 +65,7 @@ public class ProductController {
         return "customer/products/productList.html";
     }
 
-    //전체 조회(목록)
+    /*//전체 조회(목록)
     @GetMapping("/products")
     public String productList() {
         return "customer/products/productList.html";
@@ -75,8 +75,5 @@ public class ProductController {
     @GetMapping("/products/{productId}")
     public String productDetail() {
         return "customer/products/Updateproduct.html";
-    }
-
-
-*/
+    }*/
 }

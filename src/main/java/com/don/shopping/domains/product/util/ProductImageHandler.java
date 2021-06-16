@@ -83,7 +83,7 @@ public class ProductImageHandler {
                     }
                 }
                 //파일명 중복 피하기 위해 나노초 지정
-                String savefilename = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS",
+                String saveFileName = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS",
                         Calendar.getInstance()) + System.nanoTime() + fileExt;
 
                 ImageUsage imageUsage;
@@ -98,9 +98,9 @@ public class ProductImageHandler {
                 //파일 DTO 생성
                 ProductImageDto productImageDto = ProductImageDto.builder()
                         .originalFileName(multipartFile.getOriginalFilename())
-                        .saveFileName(savefilename)
+                        .saveFileName(saveFileName)
                         .imageUsage(imageUsage)
-                        .filePath(path + File.separator + savefilename)
+                        .filePath(path + File.separator + saveFileName)
                         .fileSize(multipartFile.getSize())
                         .build();
 
@@ -122,7 +122,7 @@ public class ProductImageHandler {
                 fileList.add(productImageEntity);
 
                 //업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(absolutePath + path + File.separator + savefilename);
+                file = new File(absolutePath + path + File.separator + saveFileName);
                 multipartFile.transferTo(file);
 
                 //파일 권한 설정(쓰기,읽기)

@@ -5,7 +5,6 @@ import com.don.shopping.domains.product.domain.ProductImageVO;
 import com.don.shopping.domains.product.query.dto.*;
 import com.don.shopping.domains.product.service.ProductImageService;
 import com.don.shopping.domains.product.service.ProductService;
-import com.don.shopping.domains.product.util.ProductImageHandler;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class AdminProductController {
 
     private final ProductService productService;
     private final ProductImageService productImageService;
-    private final ProductImageHandler productImageHandler;
+    //private final ProductImageHandler productImageHandler;
 
     //개별 조회
     @GetMapping("/products/{id}")
@@ -54,15 +53,15 @@ public class AdminProductController {
         //상품 전체 조회
         List<ProductEntity> productEntityList = productService.searchAllDesc();
         //반환할 List<ProductListResponseDto> 생성
-        List<AdminProductListResponseDto> productListResponseDtoList = new ArrayList<>();
+        List<AdminProductListResponseDto> AdminproductListResponseDtoList = new ArrayList<>();
 
         for(ProductEntity product : productEntityList) {
             //전체 조회하여 획득한 각 상품 객체를 이용하여 ProductListResponseDto 생성
             AdminProductListResponseDto productListResponseDto = new AdminProductListResponseDto(product);
-            productListResponseDtoList.add(productListResponseDto);
+            AdminproductListResponseDtoList.add(productListResponseDto);
         }
 
-        model.addAttribute("productListDtoList",productListResponseDtoList);
+        model.addAttribute("productListDtoList", AdminproductListResponseDtoList);
 
         return "dashboard/products/productList.html";
     }

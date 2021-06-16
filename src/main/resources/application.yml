@@ -42,3 +42,11 @@ logging:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 20MB
+
+  thymeleaf:
+    cache: false
+
+  devtools:
+    remote:
+      restart:
+        enabled: true
