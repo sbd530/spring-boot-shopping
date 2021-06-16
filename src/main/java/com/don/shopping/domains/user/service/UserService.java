@@ -1,5 +1,6 @@
 package com.don.shopping.domains.user.service;
 
+import com.don.shopping.domains.cart.service.CartService;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
 import com.don.shopping.domains.user.query.dao.UserDao;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class UserService  {
 
     private final UserRepository userRepository;
-//    private final CartService cartService;
+    private final CartService cartService;
     private final UserDao userDao;
     private final PasswordEncoder encoder;
 
@@ -35,7 +36,7 @@ public class UserService  {
         //회원 저장
         Long userId = userRepository.save(newUser).getId();
         //새 회원 장바구니 생성
-//        cartService.createCart(userId);
+        cartService.createCart(userId);
         return userId;
     }
     public void validateDuplicateUser(String email) {
@@ -70,7 +71,8 @@ public class UserService  {
         if (user.isPresent()) {
             String dbPassword = user.get().getPassword();
             if (encoder.matches(password, dbPassword)) {
-                userRepository.delete(user.get());
+                cartService.deleteCart(user.get().getId());// 카트 삭제
+                userRepository.delete(user.get()); // 유저 삭제
                 return true;
             }
         }
