@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,9 @@ public class ProductImageHandler {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
 
             //파일을 저장할 세부 경로 지정
-            String path = "images" + File.separator + currenDate;
+            String path = "src" + File.separator + "main" +  File.separator
+                    + "resources" +  File.separator + "static" + File.separator +
+                    "productImages";
             File file = new File(path);
 
             //디렉터리가 존재하지 않을 경우
@@ -75,14 +78,13 @@ public class ProductImageHandler {
                         fileExt = ".jpg";
                     } else if (contentType.contains("image/png")) {
                         fileExt = ".png";
-                    } else if (contentType.contains("image/gif")) {
-                        fileExt = ".gif";
                     } else {
                         continue;
                     }
                 }
                 //파일명 중복 피하기 위해 나노초 지정
-                String savefilename = System.nanoTime() + fileExt;
+                String savefilename = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS",
+                        Calendar.getInstance()) + System.nanoTime() + fileExt;
 
                 ImageUsage imageUsage;
 
@@ -95,7 +97,8 @@ public class ProductImageHandler {
 
                 //파일 DTO 생성
                 ProductImageDto productImageDto = ProductImageDto.builder()
-                        .originalfilename(multipartFile.getOriginalFilename())
+                        .originalFileName(multipartFile.getOriginalFilename())
+                        .saveFileName(savefilename)
                         .imageUsage(imageUsage)
                         .filePath(path + File.separator + savefilename)
                         .fileSize(multipartFile.getSize())
@@ -103,7 +106,8 @@ public class ProductImageHandler {
 
                 //파일 DTO 이용하여 ProductImage 엔티티 생성
                 ProductImageEntity productImageEntity = new ProductImageEntity(
-                        productImageDto.getOriginalfilename(),
+                        productImageDto.getOriginalFileName(),
+                        productImageDto.getSaveFileName(),
                         productImageDto.getImageUsage(),
                         productImageDto.getFilePath(),
                         productImageDto.getFileSize()
@@ -129,5 +133,6 @@ public class ProductImageHandler {
         }
         return fileList;
     }
+
 }
 

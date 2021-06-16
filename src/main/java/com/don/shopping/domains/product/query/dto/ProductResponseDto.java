@@ -12,14 +12,16 @@ public class ProductResponseDto {
     private String productinfo;
     private int rprice;
     private int dprice;
+    private int stock;
     private List<Long> fileId; //첨부파일 id목록
 
     public ProductResponseDto(ProductEntity productEntity, List<Long> fileId) {
         this.productid = productEntity.getId();
-        this.productname = productEntity.getProductname();
-        this.productinfo = productEntity.getProductinfo();
+        this.productname = productEntity.getProductName();
+        this.productinfo = productEntity.getProductInfo();
         this.rprice = productEntity.getRprice();
         this.dprice = productEntity.getDprice();
+        this.stock = productEntity.getStock();
         this.fileId = fileId;
 
     }

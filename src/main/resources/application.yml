@@ -38,7 +38,7 @@ logging:
         type: trace
     root: info
 
-servlet:
-  multipart:
-    maxFileSize: 10MB
-    maxRequestSize: 20MB
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 20MB

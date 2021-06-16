@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>상품등록혀!!</title>
+    <title>상품등록 | 어드민</title>
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 <form action="/dashboard/products/add" method="post" enctype="multipart/form-data">
 
 상품명 : <input type="text" name="productname"><br>
-상품설명 : <input type="text" name="productinfo"><br>
+상품설명 : <textarea type="text" name="productinfo" cols="40" rows="5" style="padding:5px;"></textarea><br>
 정상가 : <input type="text" name="rprice"><br>
 할인가 : <input type="text" name="dprice"><br>
 재고 : <input type="text" name="stock"><br>

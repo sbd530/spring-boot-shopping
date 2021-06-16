@@ -1,7 +1,6 @@
 package com.don.shopping.domains.product.query.dto;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
-import com.don.shopping.domains.product.domain.ProductImageEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +12,9 @@ import javax.validation.constraints.NotBlank;
 public class ProductRequestDto {
 
     @NotBlank
-    private String productname;
+    private String productName;
     @NotBlank
-    private String productinfo;
+    private String productInfo;
     @NotBlank
     private int rprice;
     @NotBlank
@@ -24,9 +23,9 @@ public class ProductRequestDto {
     private int stock;
 
     @Builder
-    public ProductRequestDto(String productname, String productinfo, int rprice, int dprice, int stock) {
-        this.productname = productname;
-        this.productinfo = productinfo;
+    public ProductRequestDto(String productName, String productInfo, int rprice, int dprice, int stock) {
+        this.productName = productName;
+        this.productInfo = productInfo;
         this.rprice = rprice;
         this.dprice = dprice;
         this.stock = stock;
@@ -34,8 +33,8 @@ public class ProductRequestDto {
 
     public ProductEntity toEntity() {
         return ProductEntity.builder()
-                .productname(productname)
-                .productinfo(productinfo)
+                .productName(productName)
+                .productInfo(productInfo)
                 .rprice(rprice)
                 .dprice(dprice)
                 .stock(stock)

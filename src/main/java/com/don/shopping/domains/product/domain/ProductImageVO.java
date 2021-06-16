@@ -7,8 +7,8 @@ import java.util.*;
 
 @Data
 public class ProductImageVO {
-    private String productname;
-    private String productinfo;
+    private String productName;
+    private String productInfo;
     private int rprice;
     private int dprice;
     private int stock;

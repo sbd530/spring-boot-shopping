@@ -6,6 +6,7 @@ import com.don.shopping.domains.product.domain.ProductImageVO;
 import com.don.shopping.domains.product.domain.ProductRepository;
 import com.don.shopping.domains.product.query.dto.ProductImageDto;
 import com.don.shopping.domains.product.query.dto.ProductRequestDto;
+import com.don.shopping.domains.product.query.dto.ProductResponseDto;
 import com.don.shopping.domains.product.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,14 +27,10 @@ public class productServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-
-
     @Test
     public void 상품리스트() throws Exception {
-
         List<ProductEntity> product = productRepository.findAll();
         System.out.println(product);
-
     }
 
     @Test
@@ -46,5 +43,7 @@ public class productServiceTest {
         ProductImageVO productImageVO = new ProductImageVO();
         System.out.println(productImageVO.getFiles().getClass());
     }
+
+
 
 }

@@ -25,9 +25,9 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_generator")
     private Long id;
 
-    private String productname;
+    private String productName;
 
-    private String productinfo;
+    private String productInfo;
 
     private int rprice;
 
@@ -43,17 +43,17 @@ public class ProductEntity {
     private List<ProductImageEntity> productImages = new ArrayList<>();
 
     @Builder
-    public ProductEntity(String productname, String productinfo, int rprice, int dprice, int stock) {
-        this.productname = productname;
-        this.productinfo = productinfo;
+    public ProductEntity(String productName, String productInfo, int rprice, int dprice, int stock) {
+        this.productName = productName;
+        this.productInfo = productInfo;
         this.rprice = rprice;
         this.dprice = dprice;
         this.stock = stock;
     }
 
-    public void update(String productname, String productinfo, int rprice, int dprice, int stock) {
-        this.productname = productname;
-        this.productinfo = productinfo;
+    public void update(String productName, String productInfo, int rprice, int dprice, int stock) {
+        this.productName = productName;
+        this.productInfo = productInfo;
         this.rprice = rprice;
         this.dprice = dprice;
         this.stock = stock;

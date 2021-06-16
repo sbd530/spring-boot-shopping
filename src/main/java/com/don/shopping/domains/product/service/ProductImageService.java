@@ -44,7 +44,8 @@ public class ProductImageService {
                     -> new IllegalArgumentException("해당 파일이 존재하지 않습니다."));
 
         ProductImageDto productImageDto = ProductImageDto.builder()
-                .originalfilename(productImageEntity.getOriginalfilename())
+                .originalFileName(productImageEntity.getOriginalFileName())
+                .saveFileName(productImageEntity.getSaveFileName())
                 .filePath(productImageEntity.getFilePath())
                 .imageUsage(productImageEntity.getImageUsage())
                 .fileSize(productImageEntity.getFileSize())
@@ -55,7 +56,7 @@ public class ProductImageService {
 
     //이미지 전체 조회
     @Transactional(readOnly = true)
-    public List<ProductImageResponseDto> findAllByProduct(Long id) {
+    public List<ProductImageResponseDto> findAllByProduct(Long productid) {
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
@@ -63,7 +64,7 @@ public class ProductImageService {
 
         List<ProductImageEntity> productImageEntityList = queryFactory
                 .selectFrom(productImageEntity)
-                .where(productImageEntity.product.id.eq(id))
+                .where(productImageEntity.product.id.eq(productid))
                 .fetch();
 
         return productImageEntityList.stream()

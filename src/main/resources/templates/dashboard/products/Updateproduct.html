@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품수정 | 어드민</title>
+</head>
+<body>
+
+    상품명 : <input type="text" name="productname" th:value="${product.productname}"><br>
+    상품설명 : <input type="text" name="productinfo" th:value="${product.productinfo}"><br>
+    정상가 : <input type="text" name="rprice" th:value="${product.rprice}"><br>
+    할인가 : <input type="text" name="dprice" th:value="${product.dprice}"><br>
+    재고 : <input type="text" name="stock" th:value="${product.stock}"><br>
+
+    썸네일1 : <input multiple type="file" name="file1"><br>
+    썸네일2 : <input multiple type="file" name="file2"><br>
+    내용1 : <input multiple type="file" name="file3"><br>
+    내용2 : <input multiple type="file" name="file4"><br>
+
+
+</body>
+</html>

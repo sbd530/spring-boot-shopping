@@ -24,7 +24,9 @@ public class ProductImageEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productimage_seq_generator")
     private Long id;
 
-    private String originalfilename;
+    private String originalFileName;
+
+    private String saveFileName;
 
     @Enumerated(EnumType.STRING)
     private ImageUsage imageUsage;
@@ -38,8 +40,9 @@ public class ProductImageEntity {
     private Long fileSize;
 
     @Builder
-    public ProductImageEntity(String originalfilename, ImageUsage imageUsage, String filePath, Long fileSize) {
-        this.originalfilename = originalfilename;
+    public ProductImageEntity(String originalFileName, String saveFileName, ImageUsage imageUsage, String filePath, Long fileSize) {
+        this.originalFileName = originalFileName;
+        this.saveFileName = saveFileName;
         this.imageUsage = imageUsage;
         this.filePath = filePath;
         this.fileSize = fileSize;

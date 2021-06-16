@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품리스트 | 어드민</title>
+</head>
+<body>
+
+전체 상품 | <input type="text" placeholder="검색어를 입력해주세요">
+<input type="button" value=" 상품 추가하기 " align="right" th:onclick="'location.href=\'' + @{/dashboard/products/add} + '\''">
+
+<table border="1px solid black">
+  <thead>
+    <tr>
+      <th>이미지</th>
+      <th style="width:200px;">상품명</th>
+      <th style="width:100px;">정상가</th>
+      <th style="width:100px;">할인가</th>
+      <th style="width:100px;">재  고</th>
+      <th style="width:200px;">편  집</th>
+    </tr>
+    <tr th:each="image : ${productListDtoList}">
+      <td><img th:src="@{/productImages/}+${image.thumbnailImage}" style="width:100px;height:100px;"></td>
+      <td th:text="${image.productname}"></td>
+      <td th:text="${image.rprice}"></td>
+      <td th:text="${image.dprice}"></td>
+      <td th:text="${image.stock}"></td>
+      <td><input type="button" value="수정" th:onclick="'location.href=\''+@{/dashboard/products/} + ${image.productid} + '\''">&nbsp;&nbsp;
+        <form method="post" th:action="@{/dashboard/products/} + ${image.productid}">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="삭제">
+        </form>
+      </td>
+    </tr>
+  </thead>
+</table>
+
+
+
+</body>
+</html>

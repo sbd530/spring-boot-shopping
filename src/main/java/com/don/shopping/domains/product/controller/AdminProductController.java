@@ -1,16 +1,13 @@
 package com.don.shopping.domains.product.controller;
 
-import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductEntity;
-import com.don.shopping.domains.product.domain.ProductImageEntity;
 import com.don.shopping.domains.product.domain.ProductImageVO;
 import com.don.shopping.domains.product.query.dto.*;
 import com.don.shopping.domains.product.service.ProductImageService;
 import com.don.shopping.domains.product.service.ProductService;
+import com.don.shopping.domains.product.util.ProductImageHandler;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,6 +24,7 @@ public class AdminProductController {
 
     private final ProductService productService;
     private final ProductImageService productImageService;
+    private final ProductImageHandler productImageHandler;
 
     //개별 조회
     @GetMapping("/products/{id}")
@@ -43,11 +40,11 @@ public class AdminProductController {
             productimageId.add(productImageResponseDto.getFileId());
         }
 
-        ProductEntity productEntity = productService.searchById(id);
+        ProductEntity product = productService.searchById(id);
 
         model.addAttribute("product",productService.findOne(id,productimageId));
 
-        return "dashboard/products/product.html";
+        return "dashboard/products/Updateproduct.html";
     }
 
     //전체 조회(목록)
@@ -57,15 +54,15 @@ public class AdminProductController {
         //상품 전체 조회
         List<ProductEntity> productEntityList = productService.searchAllDesc();
         //반환할 List<ProductListResponseDto> 생성
-        List<ProductListResponseDto> productListResponseDtoList = new ArrayList<>();
+        List<AdminProductListResponseDto> productListResponseDtoList = new ArrayList<>();
 
-        for(ProductEntity productEntity : productEntityList) {
+        for(ProductEntity product : productEntityList) {
             //전체 조회하여 획득한 각 상품 객체를 이용하여 ProductListResponseDto 생성
-            ProductListResponseDto productListResponseDto = new ProductListResponseDto(productEntity);
+            AdminProductListResponseDto productListResponseDto = new AdminProductListResponseDto(product);
             productListResponseDtoList.add(productListResponseDto);
         }
 
-        model.addAttribute("productList",productListResponseDtoList);
+        model.addAttribute("productListDtoList",productListResponseDtoList);
 
         return "dashboard/products/productList.html";
     }
@@ -78,13 +75,13 @@ public class AdminProductController {
 
     //상품등록
     @PostMapping("/products/add")
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     public String add(ProductImageVO productImageVO) throws Exception {
 
         ProductRequestDto productRequestDto =
                 ProductRequestDto.builder()
-                        .productname(productImageVO.getProductname())
-                        .productinfo(productImageVO.getProductinfo())
+                        .productName(productImageVO.getProductName())
+                        .productInfo(productImageVO.getProductInfo())
                         .rprice(productImageVO.getRprice())
                         .dprice(productImageVO.getDprice())
                         .stock(productImageVO.getStock())
@@ -92,10 +89,7 @@ public class AdminProductController {
 
         Long productId= productService.add(productRequestDto, productImageVO.getFiles());
 
-        System.out.println("상품등록성공!!");
-
-        return "redirect:/dashboard/products/" + productId;
-
+        return "redirect:/dashboard/products/";
     }
 
     //상품수정
@@ -105,17 +99,22 @@ public class AdminProductController {
 
         ProductRequestDto productRequestDto =
                 ProductRequestDto.builder()
-                        .productname(productImageVO.getProductname())
-                        .productinfo(productImageVO.getProductinfo())
+                        .productName(productImageVO.getProductName())
+                        .productInfo(productImageVO.getProductInfo())
                         .rprice(productImageVO.getRprice())
                         .dprice(productImageVO.getDprice())
                         .stock(productImageVO.getStock())
                         .build();
 
-        model.addAttribute("originalDto",productRequestDto);
+        //model.addAttribute("originalDto",productRequestDto);
+        //model.addAttribute("id",id);
 
         //DB에 저장되어있는 파일 불러오기
         List<ProductImageResponseDto> dbProductImageList = productImageService.findAllByProduct(id);
+
+        //model.addAttribute("dbProductImage",dbProductImageList);
+        //model.addAttribute("productVO",productImageVO);
+
         //전달되어온 파일들
         List<MultipartFile> multipartFileList = productImageVO.getFiles();
         //새롭게 전달되어온 파일들의 목록을 저장할 List선언
@@ -141,7 +140,7 @@ public class AdminProductController {
                     //file id로 DB에 저장된 파일 정보 얻기
                     ProductImageDto dbProductImageDto = productImageService.findByFileId(dbProductImage.getFileId());
                     //DB의 파일 원본명 얻기
-                    String dbOriginalname = dbProductImageDto.getOriginalfilename();
+                    String dbOriginalname = dbProductImageDto.getOriginalFileName();
 
                     if(!multipartFileList.contains(dbOriginalname)) {//삭제 요청 파일
                         productImageService.deleteProductImage(dbProductImage.getFileId()); //파일 삭제

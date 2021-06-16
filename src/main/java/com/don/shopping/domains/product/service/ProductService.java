@@ -32,8 +32,8 @@ public class ProductService {
     public Long add(ProductRequestDto productRequestDto, List<MultipartFile> files) throws Exception {
         //파일 처리를 위한 ProductEntity 객체 생성
         ProductEntity productEntity = new ProductEntity(
-                productRequestDto.getProductname(),
-                productRequestDto.getProductinfo(),
+                productRequestDto.getProductName(),
+                productRequestDto.getProductInfo(),
                 productRequestDto.getRprice(),
                 productRequestDto.getDprice(),
                 productRequestDto.getStock()
@@ -65,7 +65,7 @@ public class ProductService {
             }
         }
 
-        productEntity.update(productRequestDto.getProductname(), productRequestDto.getProductinfo(),
+        productEntity.update(productRequestDto.getProductName(), productRequestDto.getProductInfo(),
                 productRequestDto.getRprice(), productRequestDto.getDprice(), productRequestDto.getStock());
     }
 
@@ -74,7 +74,6 @@ public class ProductService {
     public void delete(Long id) {
        ProductEntity productEntity = productRepository.findById(id)
                .orElseThrow(()->new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
-
        productRepository.delete(productEntity);
     }
 
@@ -111,7 +110,7 @@ public class ProductService {
 
         List<ProductEntity> productEntityList = queryFactory
                 .selectFrom(productEntity)
-                .where(productEntity.productname.contains(keyword).or(productEntity.productinfo.contains(keyword)))
+                .where(productEntity.productName.contains(keyword).or(productEntity.productInfo.contains(keyword)))
                 .fetch();
 
         return productEntityList;
