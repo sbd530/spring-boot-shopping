@@ -40,11 +40,11 @@ public class ProductImageEntity {
     private Long fileSize;
 
     @Builder
-    public ProductImageEntity(String originalFileName, String saveFileName, ImageUsage imageUsage, String filePath, Long fileSize) {
+    public ProductImageEntity(String originalFileName, String saveFileName, ImageUsage imageUsage, Long fileSize) {
         this.originalFileName = originalFileName;
         this.saveFileName = saveFileName;
         this.imageUsage = imageUsage;
-        this.filePath = filePath;
+        this.filePath = "C:\\productImages";
         this.fileSize = fileSize;
     }
 

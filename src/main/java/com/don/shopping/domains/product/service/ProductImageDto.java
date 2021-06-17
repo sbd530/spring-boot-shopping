@@ -1,4 +1,4 @@
-package com.don.shopping.domains.product.query.dto;
+package com.don.shopping.domains.product.service;
 
 import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
@@ -15,18 +15,16 @@ public class ProductImageDto {
     private String originalFileName;
     @NotBlank
     private String saveFileName;
-    @NotBlank
-    private String filePath;
+
     @NotBlank
     private ImageUsage imageUsage;
     @NotBlank
     private Long fileSize;
 
     @Builder
-    public ProductImageDto(String originalFileName, String saveFileName, String filePath, ImageUsage imageUsage, Long fileSize) {
+    public ProductImageDto(String originalFileName, String saveFileName, ImageUsage imageUsage, Long fileSize) {
         this.originalFileName = originalFileName;
         this.saveFileName = saveFileName;
-        this.filePath = filePath;
         this.imageUsage = imageUsage;
         this.fileSize = fileSize;
     }
@@ -35,7 +33,6 @@ public class ProductImageDto {
         ProductImageEntity build = ProductImageEntity.builder()
                                 .originalFileName(originalFileName)
                                 .saveFileName(saveFileName)
-                                .filePath(filePath)
                                 .imageUsage(imageUsage)
                                 .fileSize(fileSize)
                                 .build();

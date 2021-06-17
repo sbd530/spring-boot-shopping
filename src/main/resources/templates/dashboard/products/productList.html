@@ -19,14 +19,15 @@
       <th style="width:100px;">재  고</th>
       <th style="width:200px;">편  집</th>
     </tr>
-    <tr th:each="image : ${productListDtoList}">
-      <td><img th:src="@{/productImages/}+${image.thumbnailImage}" style="width:100px;height:100px;"></td>
-      <td th:text="${image.productName}"></td>
-      <td th:text="${image.rprice}"></td>
-      <td th:text="${image.dprice}"></td>
-      <td th:text="${image.stock}"></td>
-      <td><input type="button" value="수정" th:onclick="'location.href=\''+@{/dashboard/products/} + ${image.productId} + '\''">&nbsp;&nbsp;
-        <form method="post" th:action="@{/dashboard/products/} + ${image.productId}">
+    <tr th:each="dto : ${productListDtoList}">
+      <td><img th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:100px;height:100px;">
+      <img th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL2}" style="width:100px;height:100px;"></td>
+      <td th:text="${dto.productName}"></td>
+      <td th:text="${dto.rprice}"></td>
+      <td th:text="${dto.dprice}"></td>
+      <td th:text="${dto.stock}"></td>
+      <td><input type="button" value="수정" th:onclick="'location.href=\''+@{/dashboard/products/} + ${dto.productId} + '\''">&nbsp;&nbsp;
+        <form method="post" th:action="@{/dashboard/products/} + ${dto.productId}">
           <input type="hidden" name="_method" value="delete">
           <input type="submit" value="삭제">
         </form>

@@ -16,6 +16,10 @@ public class ProductImageVO {
     private MultipartFile file2;
     private MultipartFile file3;
     private MultipartFile file4;
+    private Long imageId1;
+    private Long imageId2;
+    private Long imageId3;
+    private Long imageId4;
 
     public List<MultipartFile> getFiles() {
 
@@ -27,6 +31,18 @@ public class ProductImageVO {
         files.add(this.file4);
 
         return files;
+    }
+
+    public List<Long> getImageIdList() {
+
+        List<Long> imageIdList = new ArrayList<>();
+
+        imageIdList.add(imageId1);
+        imageIdList.add(imageId2);
+        imageIdList.add(imageId3);
+        imageIdList.add(imageId4);
+
+        return imageIdList;
     }
 
 }

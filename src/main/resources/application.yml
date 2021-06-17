@@ -47,6 +47,8 @@ logging:
     cache: false
 
   devtools:
-    remote:
-      restart:
-        enabled: true
+    livereload:
+      enabled: true
+    freemarker:
+      cache: false
+

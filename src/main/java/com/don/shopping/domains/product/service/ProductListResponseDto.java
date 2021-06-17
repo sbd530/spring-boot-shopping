@@ -1,4 +1,4 @@
-package com.don.shopping.domains.product.query.dto;
+package com.don.shopping.domains.product.service;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
 import lombok.Getter;
@@ -11,7 +11,7 @@ public class ProductListResponseDto {
     private int rprice;
     private int dprice;
     private int discount;
-    private String thumbnailImage; //썸네일 id
+    private String thumbnailImage; //썸네일 saveFileName
 
     public ProductListResponseDto(ProductEntity productEntity) {
         this.productid = productEntity.getId();

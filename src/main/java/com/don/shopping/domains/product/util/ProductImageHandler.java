@@ -3,7 +3,7 @@ package com.don.shopping.domains.product.util;
 import com.don.shopping.domains.product.domain.ImageUsage;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
-import com.don.shopping.domains.product.query.dto.ProductImageDto;
+import com.don.shopping.domains.product.service.ProductImageDto;
 import com.don.shopping.domains.product.service.ProductImageService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ProductImageHandler {
@@ -44,12 +43,10 @@ public class ProductImageHandler {
 
             //프로젝트 디렉터리 내 저장을 위한 절대 경로 설정
             //경로 구분자 File.seperator사용
-            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            //String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
 
             //파일을 저장할 세부 경로 지정
-            String path = "src" + File.separator + "main" +  File.separator
-                    + "resources" +  File.separator + "static" + File.separator +
-                    "productImages";
+            String path = "C:" +  File.separator + "productImages";
             File file = new File(path);
 
             //디렉터리가 존재하지 않을 경우
@@ -100,7 +97,6 @@ public class ProductImageHandler {
                         .originalFileName(multipartFile.getOriginalFilename())
                         .saveFileName(saveFileName)
                         .imageUsage(imageUsage)
-                        .filePath(path + File.separator + saveFileName)
                         .fileSize(multipartFile.getSize())
                         .build();
 
@@ -109,7 +105,6 @@ public class ProductImageHandler {
                         productImageDto.getOriginalFileName(),
                         productImageDto.getSaveFileName(),
                         productImageDto.getImageUsage(),
-                        productImageDto.getFilePath(),
                         productImageDto.getFileSize()
                 );
 
@@ -122,7 +117,7 @@ public class ProductImageHandler {
                 fileList.add(productImageEntity);
 
                 //업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(absolutePath + path + File.separator + saveFileName);
+                file = new File(path + File.separator + saveFileName);
                 multipartFile.transferTo(file);
 
                 //파일 권한 설정(쓰기,읽기)
@@ -134,5 +129,16 @@ public class ProductImageHandler {
         return fileList;
     }
 
+    public void doFileDelete(String saveFileName) {
+        try {
+            String filePath = "C:" +  File.separator + "productImages" + File.separator + saveFileName;
+            File f = new File(filePath);
+            if(f.exists()) {
+                f.delete();
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
 }
 

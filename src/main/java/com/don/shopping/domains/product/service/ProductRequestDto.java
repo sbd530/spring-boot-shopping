@@ -1,4 +1,4 @@
-package com.don.shopping.domains.product.query.dto;
+package com.don.shopping.domains.product.service;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
 import lombok.Builder;
