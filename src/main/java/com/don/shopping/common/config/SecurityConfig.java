@@ -43,11 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeRequests()
                     // 대시보드 -> ADMIN 권한
-                    .antMatchers("/dashboard/**").hasAuthority("ADMIN")
+                    //.antMatchers("/dashboard/**").hasAuthority("ADMIN")
                     // 마이페이지
                     .antMatchers("/mypage/**").hasAnyAuthority("USER","ADMIN")
                     // 장바구니
-                    //.antMatchers("/carts/**").authenticated()
+                    .antMatchers("/carts/**").authenticated()
                     // 상기 외의 어떤 요청도 접근을 허용합니다.
                     .anyRequest().permitAll()
                 .and()

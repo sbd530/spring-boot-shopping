@@ -29,7 +29,7 @@ public class CartController {
     public String getCartPage(Authentication authentication, Model model) {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         List<CartLineDto> cartLineDtoList = cartService.getCartLineDtoListForCartPage(userId);
-        model.addAttribute("cartLineList", cartLineDtoList);
+        model.addAttribute("cartLineDtoList", cartLineDtoList);
         return "customer/carts/cart";
     }
 

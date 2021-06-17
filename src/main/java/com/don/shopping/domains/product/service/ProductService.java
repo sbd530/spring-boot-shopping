@@ -28,7 +28,7 @@ public class ProductService {
     private EntityManager em;
 
     //상품등록
-   @Transactional
+    @Transactional
     public Long add(ProductRequestDto productRequestDto, List<MultipartFile> files) throws Exception {
         //파일 처리를 위한 ProductEntity 객체 생성
         ProductEntity productEntity = new ProductEntity(

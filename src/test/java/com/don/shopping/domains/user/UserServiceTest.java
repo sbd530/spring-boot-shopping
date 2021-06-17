@@ -1,5 +1,6 @@
 package com.don.shopping.domains.user;
 
+import com.don.shopping.domains.cart.service.CartService;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
 import com.don.shopping.domains.user.service.SignupRequestDto;
@@ -29,10 +30,8 @@ public class UserServiceTest {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
-//    @Mock
-//    private UserValidator userValidator;
-//    @Mock
-//    private CartService cartService;
+    @Mock
+    private CartService cartService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Test
@@ -57,8 +56,8 @@ public class UserServiceTest {
                 .willReturn(Optional.ofNullable(user));
         given(userRepository.save(any()))
                 .willReturn(user);
-//        given(cartService.createCart(any()))
-//                .willReturn(any());
+        given(cartService.createCart(any()))
+                .willReturn(any());
 
         //when
         Long userId = userService.signup(dto);

@@ -21,7 +21,6 @@ public class CartLineDto {
     private int stock;
 
     @QueryProjection
-
     public CartLineDto(Long productId, String filePath, String productName, int rprice, int dprice, int orderAmount, int stock) {
         this.productId = productId;
         this.filePath = filePath;

@@ -24,7 +24,7 @@ public class CartEntity {
     // 타입파라미터의 Long 은 ProductEntity 의 id
     @ElementCollection
     @CollectionTable(name = "cart_line")
-    //@MapKeyColumn(name = "map_key")
+    @MapKeyColumn(name = "cart_key")
     private Map<Long, CartLine> cart = new HashMap<>();
 
     public CartEntity(Long userId) {
@@ -40,14 +40,14 @@ public class CartEntity {
     public void addProductToCart(int stock, CartLine cartLine) {
         validateEnoughStock(stock, cartLine.getOrderAmount());
 
-        Long mapKey = cartLine.getProductId();
+        Long cartKey = cartLine.getProductId();
         // 키값으로 할당된 상품이 있다면 수량만 추가
-        if (cart.containsKey(mapKey)) {
+        if (cart.containsKey(cartKey)) {
             CartLine cartLineInCart = cart.get(cartLine.getProductId());
             int newOrderAmount = cartLineInCart.getOrderAmount() + cartLine.getOrderAmount();
-            cart.replace(mapKey, new CartLine(cartId, cartLine.getProductId(), newOrderAmount));
+            cart.replace(cartKey, new CartLine(cartId, cartLine.getProductId(), newOrderAmount));
         }else {
-            cart.put(mapKey, cartLine);
+            cart.put(cartKey, cartLine);
         }
     }
 
