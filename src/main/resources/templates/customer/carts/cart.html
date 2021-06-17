@@ -57,8 +57,8 @@
         <div class="tb-title designSettingElement shape">
           <div class="item-list-header">
             <span class="name">상품 정보</span>
-            <span class="qty">수량</span>
-            <span class="price">가격</span>
+            <span class="qty" style=" text-align: left; padding-left: 50px;">수량</span>
+            <span class="price" style=" text-align: center;">가격</span>
           </div>
           <span class="deliveryCharge">배송비</span>
         </div>
@@ -93,7 +93,7 @@
                   </div>
 
                 </div>
-                <div class="QuantityDiv">
+                <div class="QuantityDiv" style="width: 250px;">
                   <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
                     <!-- 상품 수량 -->
                     <input th:value="${dto.orderAmount}" class="designSettingElement shape ui-spinner-input" type="number" data-cart-item-no="34090789" aria-valuemin="1" aria-valuenow="4" autocomplete="off" role="spinbutton">
