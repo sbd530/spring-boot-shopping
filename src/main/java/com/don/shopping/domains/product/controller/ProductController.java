@@ -5,6 +5,9 @@ import com.don.shopping.domains.product.query.dto.ProductImageResponseDto;
 import com.don.shopping.domains.product.query.dto.AdminProductListResponseDto;
 import com.don.shopping.domains.product.service.ProductImageService;
 import com.don.shopping.domains.product.service.ProductService;
+import com.don.shopping.domains.review.domain.ReviewEntity;
+import com.don.shopping.domains.review.service.ReviewService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final ProductImageService productImageService;
+    private final ReviewService reviewService;
 
-    public ProductController(ProductService productService, ProductImageService productImageService) {
-        this.productService = productService;
-        this.productImageService = productImageService;
-    }
 
     //개별 조회
     @GetMapping("/products/{id}")
@@ -39,9 +40,10 @@ public class ProductController {
         }
 
         ProductEntity product = productService.searchById(id);
+        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id);
 
         model.addAttribute("product",productService.findOne(id,productimageId));
-
+        model.addAttribute("reviewListByProduct",reviewsByProductId);
         return "customer/products/product.html";
     }
 
@@ -65,15 +67,6 @@ public class ProductController {
         return "customer/products/productList.html";
     }
 
-    /*//전체 조회(목록)
-    @GetMapping("/products")
-    public String productList() {
-        return "customer/products/productList.html";
-    }
 
-    //개별 조회
-    @GetMapping("/products/{productId}")
-    public String productDetail() {
-        return "customer/products/Updateproduct.html";
-    }*/
+
 }

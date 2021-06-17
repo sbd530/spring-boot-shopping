@@ -1,0 +1,49 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reviewlist</title>
+</head>
+<body>
+<h1>리뷰 목록</h1>
+
+
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>reviewlist</title>
+</head>
+<body>
+<h1>리뷰 목록</h1>
+<div class="container">
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품 아이디</th>
+                <th>리뷰 내용</th>
+                <th>작성자</th>
+                <th>별점</th>
+           <!--     <th>리뷰 작성 시간</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review : ${reviewListByProduct}">
+                <td th:text="${review.id}"></td>
+                <td th:text="${review.productId}"></td>
+                <td th:text="${review.content}"></td>
+                <td th:text="${review.userId}"></td>
+                <td th:text="${review.rating}"></td>
+               <!--   <td th:text="${review.reviewTime}"></td>  -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

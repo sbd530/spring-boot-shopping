@@ -1,49 +1,57 @@
-
 package com.don.shopping.domains.review.service;
 
-
-
-
-
+import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.domain.ReviewRepository;
-import com.don.shopping.domains.review.query.dto.ReviewDTO;
+import com.don.shopping.domains.review.infra.ReviewDaoImpl;
+import com.don.shopping.domains.review.query.ReviewDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor //의존주입해주는 뇨속
+@RequiredArgsConstructor
 public class ReviewService {
 
-    private final ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository; //field injection
+    private final ReviewDao reviewDao;
 
+    //리뷰 등록
+    @Transactional
+    public Long addReview(ReviewEntity reviewEntity){
+        //validateDuplicateReview(reviewEntity); //중복리뷰 검증
+        reviewRepository.save(reviewEntity);
+        return reviewEntity.getId();
 
-    public Long createReview(ReviewDTO reviewDTO) throws Exception{ //리뷰쓴사람 이름(이름은 세션으로 받아야할듯)과 dto를 받음
+    }
+    /*
+    private void validateDuplicateReview(ReviewEntity reviewEntity){
+        //EXCEPTION
 
-        ReviewEntity reviewEntity = new ReviewEntity(
-                reviewDTO.getReviewid(),
-                reviewDTO.getReviewproductname(),
-                reviewDTO.getReviewcontent(),
-                reviewDTO.getReviewSaveFileName(),
-                reviewDTO.getReviewOriginalFileName(),
-                reviewDTO.getStarscore(),
-                reviewDTO.getReviewdate(),
-                reviewDTO.getReviewerid()
-        );
+    }*/
 
-        return reviewRepository.save(reviewEntity).getReviewid();
+    //리뷰 전체 조회
+    @Transactional(readOnly = true) // 성능이 최적화된다 읽기 전용이니까 리소스를 많이 안씀(읽기에는 가급적이면 readonly)
+    public List<ReviewEntity> findAllReviews(){
+        return reviewRepository.findAll();
     }
 
-    public List<ReviewDTO> searchAllDesc(){
-        return reviewRepository.findAll().stream()
-                .map(ReviewDTO::new)
-                .collect(Collectors.toList());
+    //리뷰 하나 조회(수정창)
+    @Transactional(readOnly = true)
+    public ReviewEntity findOneReview(Long reviewId){
+        return reviewRepository.findById(reviewId).orElseThrow(()
+            -> new IllegalArgumentException("해당 상품이 없습니다."));
     }
+
+    @Transactional(readOnly = true)
+    public List<ReviewEntity> findReviewsByProductId(Long productId){
+        return reviewDao.findReviewsByProductId(productId);
+
+    }
+
+
 
 }
-
