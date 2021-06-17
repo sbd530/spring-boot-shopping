@@ -1,6 +1,6 @@
 package com.don.shopping.domains.review.service;
 
-import com.don.shopping.domains.product.domain.ProductEntity;
+
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.domain.ReviewRepository;
 import com.don.shopping.domains.review.infra.ReviewDaoImpl;
@@ -46,6 +46,7 @@ public class ReviewService {
             -> new IllegalArgumentException("해당 상품이 없습니다."));
     }
 
+    //해당 상품의 모든 리뷰
     @Transactional(readOnly = true)
     public List<ReviewEntity> findReviewsByProductId(Long productId){
         return reviewDao.findReviewsByProductId(productId);

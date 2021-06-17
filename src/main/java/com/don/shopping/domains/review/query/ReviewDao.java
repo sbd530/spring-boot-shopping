@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface ReviewDao {
 
-    ReviewEntity findOne(Long reviewid);
+    ReviewEntity findOne(Long reviewid); //reviewid로 하나면 값 꺼내기
 
-    List<ReviewEntity> findReviewsByProductId(Long productId); //민감한정보는 dto로
+    List<ReviewEntity> findReviewsByProductId(Long productId); //productId에 있는 모든 리뷰 가져오기 //민감한정보는 dto로
+
+    void deleteReviewOne(Long reviewid);
 
 }

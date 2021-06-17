@@ -7,6 +7,7 @@ import com.don.shopping.domains.review.query.ReviewDao;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class ReviewDaoImpl implements ReviewDao {
 
         return reviewEntityList;
     }
-
+    @Transactional
+    @Override
+    public void deleteReviewOne(Long reviewid) {
+        query.delete(qReviewEntity)
+                .where(qReviewEntity.id.eq(reviewid))
+                .execute();
+    }
 
 }

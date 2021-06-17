@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.jdo.annotations.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Timer;
 
 @Entity
 @Table(name = "review")
@@ -31,6 +31,14 @@ public class ReviewEntity {
 
     private LocalDateTime reviewTime; //리뷰 작성 시간
 
+    @PrePersist
+    protected void onReviewTimeCreate(){
+        this.reviewTime = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected  void unReviewTimeUpdate(){
+        this.reviewTime = LocalDateTime.now();
+    }
 
 
     @Builder

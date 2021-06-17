@@ -55,7 +55,7 @@ public class ProductService {
         return productRepository.save(productEntity).getId();
     }
 
-    /*//상품수정
+    //상품수정
     @Transactional
     public void update(Long id, ProductRequestDto productRequestDto, List<MultipartFile> files) throws Exception {
 
@@ -72,7 +72,7 @@ public class ProductService {
 
         productEntity.update(productRequestDto.getProductName(), productRequestDto.getProductInfo(),
                 productRequestDto.getRprice(), productRequestDto.getDprice(), productRequestDto.getStock());
-    }*/
+    }
 
     //상품삭제
     @Transactional
@@ -97,14 +97,14 @@ public class ProductService {
        return new ProductResponseDto(productEntity);
     }
 
-   /* //상품 개별조회(정보)
+    //상품 개별조회(정보)
     @Transactional(readOnly = true)
     public ProductEntity searchById(Long id) {
         ProductEntity productEntity = productRepository.findById(id).orElseThrow(()
             -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 
         return productEntity;
-    }*/
+    }
 
     //상품 전체조회
     @Transactional(readOnly = true)

@@ -18,32 +18,41 @@
     <title>reviewlist</title>
 </head>
 <body>
+<a th:href="@{/reviews}">리뷰 전체 목록</a><br/>
+<a th:href="@{/reviews/add}">리뷰 등록 하기</a>
 <h1>리뷰 목록</h1>
 <div class="container">
     <div>
-        <table class="table table-striped">
+        <table style="border: 1px solid #444444">
             <thead>
             <tr>
-                <th>#</th>
-                <th>상품 아이디</th>
-                <th>리뷰 내용</th>
-                <th>작성자</th>
-                <th>별점</th>
-           <!--     <th>리뷰 작성 시간</th>-->
+                <th style="border: 1px solid #444444">#</th>
+                <th style="border: 1px solid #444444">상품 아이디</th>
+                <th style="border: 1px solid #444444">리뷰 내용</th>
+                <th style="border: 1px solid #444444">작성자</th>
+                <th style="border: 1px solid #444444">별점</th>
+                <th style="border: 1px solid #444444">작성날짜</th>
+                <th style="border: 1px solid #444444">수정</th>
+                <th style="border: 1px solid #444444">삭제</th>
+                <!--     <th>리뷰 작성 시간</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="review : ${reviewListByProduct}">
-                <td th:text="${review.id}"></td>
-                <td th:text="${review.productId}"></td>
-                <td th:text="${review.content}"></td>
-                <td th:text="${review.userId}"></td>
-                <td th:text="${review.rating}"></td>
-               <!--   <td th:text="${review.reviewTime}"></td>  -->
+            <tr th:each="review : ${reviewlists}">
+                <td style="border: 1px solid #444444" th:text="${review.id}"></td>
+                <td style="border: 1px solid #444444" th:text="${review.productId}"></td>
+                <td style="border: 1px solid #444444" th:text="${review.content}"></td>
+                <td style="border: 1px solid #444444" th:text="${review.userId}"></td>
+                <td style="border: 1px solid #444444" th:text="${review.rating}"></td>
+                <td style="border: 1px solid #444444" th:text="${#temporals.format(review.reviewTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td style="border: 1px solid #444444" ><a th:href="@{/reviews/}+${review.id}+@{/edit}">수정</a></td>
+                <td style="border: 1px solid #444444" ><a th:href="@{/reviews/}+${review.id}+@{/delete}">삭제</a></td>
+                <!--   <td th:text="${review.reviewTime}"></td>  -->
             </tr>
             </tbody>
         </table>
     </div>
-</div> <!-- /container -->
+</div>
+
 </body>
 </html>
