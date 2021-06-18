@@ -45,7 +45,7 @@ public class CartEntity {
         if (cart.containsKey(cartKey)) {
             CartLine cartLineInCart = cart.get(cartLine.getProductId());
             int newOrderAmount = cartLineInCart.getOrderAmount() + cartLine.getOrderAmount();
-            cart.replace(cartKey, new CartLine(cartId, cartLine.getProductId(), newOrderAmount));
+            cart.replace(cartKey, new CartLine(this.cartId, cartLine.getProductId(), newOrderAmount));
         }else {
             cart.put(cartKey, cartLine);
         }

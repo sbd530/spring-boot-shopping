@@ -1,8 +1,7 @@
 package com.don.shopping.domains.user.query.dto;
 
 import com.don.shopping.common.vo.Address;
-import com.don.shopping.domains.user.domain.PhoneNumber;
-import com.don.shopping.domains.user.domain.UserEntity;
+import com.don.shopping.common.vo.PhoneNumber;
 import lombok.*;
 
 import javax.validation.constraints.Min;

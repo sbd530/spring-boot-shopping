@@ -93,15 +93,7 @@ public class UserServiceTest {
 
     }
 
-    @Test
-    public void test() {
-        MultipartFile m1 = null;
-        MultipartFile m2 = null;
-        List<MultipartFile> list = new ArrayList<>();
-        list.add(m1);
-        list.add(m2);
-        System.out.println(list.size());
-    }
+
 
 
 }

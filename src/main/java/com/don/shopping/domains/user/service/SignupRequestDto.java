@@ -1,14 +1,13 @@
 package com.don.shopping.domains.user.service;
 
 import com.don.shopping.common.vo.Address;
-import com.don.shopping.domains.user.domain.PhoneNumber;
+import com.don.shopping.common.vo.PhoneNumber;
 import com.don.shopping.domains.user.domain.UserEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter

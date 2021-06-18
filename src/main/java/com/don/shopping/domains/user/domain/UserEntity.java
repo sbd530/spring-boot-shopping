@@ -1,6 +1,7 @@
 package com.don.shopping.domains.user.domain;
 
 import com.don.shopping.common.vo.Address;
+import com.don.shopping.common.vo.PhoneNumber;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

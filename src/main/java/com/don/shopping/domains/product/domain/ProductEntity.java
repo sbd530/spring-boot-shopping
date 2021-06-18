@@ -1,6 +1,7 @@
 package com.don.shopping.domains.product.domain;
 
 
+import com.don.shopping.common.exception.StockShortageException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -68,5 +69,19 @@ public class ProductEntity {
             //파일저장
             productImageEntity.saveProductEntity(this);
         }
+    }
+
+    /**
+     * increaseStock(), decreaseStock()
+     * Order 를 추가하거나 주문을 취소하는 경우, 해당 제품의 stock 을 증가, 감소 시킵니다.
+     * 작성자 : 윤병돈
+     */
+    public void increaseStock(int amount) {
+        this.stock += amount;
+    }
+    public void decreaseStock(int amount) {
+        if(amount > this.stock)
+            throw new StockShortageException();
+        this.stock = this.stock - amount;
     }
 }

@@ -1,4 +1,4 @@
-package com.don.shopping.domains.user.domain;
+package com.don.shopping.common.vo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
