@@ -9,4 +9,6 @@ public interface QuestionDao {
     QuestionEntity findOne(Long questionid);
 
     List<QuestionEntity> findQuestionsByProductId(Long productId);
+
+    void deleteQuestionOne(Long questionId);
 }

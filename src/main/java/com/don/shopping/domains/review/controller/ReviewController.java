@@ -29,7 +29,7 @@ public class ReviewController {
     public String listProductViewGet(Model model) {
         List<ReviewEntity> reviewEntityList = reviewService.findAllReviews();
         model.addAttribute("reviewlists",reviewEntityList);
-        return "review/reviewlist";
+        return "dashboard/review/reviewlist";
     }
     //개별조회
     //log.info("review Controller");
@@ -42,14 +42,14 @@ public class ReviewController {
         model.addAttribute("test","타임리프 잘나오냐?");
         model.addAttribute("reviewForm", new ReviewForm());
 
-        return "review/addreview";
+        return "dashboard/review/addreview";
     }
     //리뷰 등록
     @PostMapping("/reviews/add")
     public String addProductViewPost(@Valid ReviewForm reviewForm, BindingResult result) { //ReviewForm클래스에 notEmpty가져옴 @Valid
 
         if(result.hasErrors())
-            return "review/addreview";
+            return "dashboard/review/addreview";
 
         ReviewEntity reviewEntity = new ReviewEntity();
         reviewEntity.setContent(reviewForm.getContent());
@@ -67,7 +67,7 @@ public class ReviewController {
 
         model.addAttribute("reviewListByProduct",reviewsByProductId);
 
-        return "review/reviewlist";
+        return "dashboard/review/reviewlist";
     }
 
     //개별 수정 update
@@ -80,7 +80,7 @@ public class ReviewController {
         form.setProductId(reviewEntity.getProductId());
         model.addAttribute("reviewForm",form);
         model.addAttribute("id",reviewId);
-        return "review/reviewupdate";
+        return "dashboard/review/reviewupdate";
     }
     //개별 수정 update
     @PostMapping("/reviews/{reviewId}/edit")  //

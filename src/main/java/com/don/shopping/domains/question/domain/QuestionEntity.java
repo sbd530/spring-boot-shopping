@@ -27,6 +27,17 @@ public class QuestionEntity {
 
     private LocalDateTime questionTime; //질문문 작성시간
 
+    @PrePersist
+    protected void onReviewTimeCreate(){
+        this.questionTime = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected  void unReviewTimeUpdate(){
+        this.questionTime = LocalDateTime.now();
+    }
+
+
+
     @OneToMany
     private List<QuestionAnswerEntity> questionAnswerEntity = new ArrayList<>();
 

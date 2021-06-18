@@ -21,19 +21,31 @@ public class QuestionAnswerEntity {
 
     private String name; //답변한 사람 (관리자)
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id")
-    private QuestionEntity questionEntity;
+    private QuestionEntity questionEntity;*/
+
+    private Long questionId; //답변할 질문 id
 
     private String content;  //답변할 내용
 
     private LocalDateTime questionAnswerTime; //답변한 작성시간
 
+    @PrePersist
+    protected void onReviewTimeCreate(){
+        this.questionAnswerTime = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected  void unReviewTimeUpdate(){
+        this.questionAnswerTime = LocalDateTime.now();
+    }
+
+
     @Builder
-    public QuestionAnswerEntity(Long id, String name, QuestionEntity questionEntity, String content, LocalDateTime questionAnswerTime) {
+    public QuestionAnswerEntity(Long id, String name, Long questionId, String content, LocalDateTime questionAnswerTime) {
         this.id = id;
         this.name = name;
-        this.questionEntity = questionEntity;
+        this.questionId = questionId;
         this.content = content;
         this.questionAnswerTime = questionAnswerTime;
     }
