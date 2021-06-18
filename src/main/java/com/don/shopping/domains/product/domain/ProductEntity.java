@@ -15,15 +15,10 @@ import java.util.List;
 @Getter
 @Table(name="product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SequenceGenerator(
-        name = "product_seq_generator",
-        sequenceName = "product_seq", // 매핑할 데이터베이스 시퀀스 이름
-        initialValue = 1,
-        allocationSize = 1)
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String productName;

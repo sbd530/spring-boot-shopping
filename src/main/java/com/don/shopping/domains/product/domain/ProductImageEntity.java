@@ -13,15 +13,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@SequenceGenerator(
-        name = "productimage_seq_generator",
-        sequenceName = "productimage_seq", // 매핑할 데이터베이스 시퀀스 이름
-        initialValue = 1,
-        allocationSize = 1)
 public class ProductImageEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productimage_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String originalFileName;

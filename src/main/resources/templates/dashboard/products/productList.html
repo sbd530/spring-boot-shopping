@@ -20,8 +20,7 @@
       <th style="width:200px;">편  집</th>
     </tr>
     <tr th:each="dto : ${productListDtoList}">
-      <td><img th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:100px;height:100px;">
-      <img th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL2}" style="width:100px;height:100px;"></td>
+      <td><img th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:100px;height:100px;"></td>
       <td th:text="${dto.productName}"></td>
       <td th:text="${dto.rprice}"></td>
       <td th:text="${dto.dprice}"></td>

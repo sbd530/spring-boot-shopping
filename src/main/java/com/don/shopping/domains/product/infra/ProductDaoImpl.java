@@ -30,7 +30,6 @@ public class ProductDaoImpl implements ProductDao {
                 .set(product.dprice, updateProductDto.getDprice())
                 .set(product.stock, updateProductDto.getStock())
                 .execute();
-
     }
 
 }

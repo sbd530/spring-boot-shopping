@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Getter
 @NoArgsConstructor
@@ -15,11 +17,11 @@ public class ProductRequestDto {
     private String productName;
     @NotBlank
     private String productInfo;
-    @NotBlank
+    @NotBlank @Positive
     private int rprice;
-    @NotBlank
+    @Positive //dprice<rprice 프론트쪽에서 막기
     private int dprice;
-    @NotBlank
+    @NotBlank @Positive
     private int stock;
 
     @Builder
