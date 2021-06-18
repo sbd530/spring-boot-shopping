@@ -2,25 +2,28 @@ package com.don.shopping.domains.product.controller;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.service.*;
+import com.don.shopping.domains.review.controller.ReviewForm;
+import com.don.shopping.domains.review.domain.ReviewEntity;
+import com.don.shopping.domains.review.service.ReviewService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final ProductImageService productImageService;
-
-    public ProductController(ProductService productService, ProductImageService productImageService) {
-        this.productService = productService;
-        this.productImageService = productImageService;
-    }
+    private final ReviewService reviewService;
 
     /*//개별 조회
     @GetMapping("/products/{id}")
@@ -50,7 +53,33 @@ public class ProductController {
         ProductResponseDto productResponseDto = productService.getProductById(id);
         model.addAttribute("dto",productResponseDto);
 
+        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
+        model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
+        model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
+        model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
+
         return "customer/products/product.html";
+    }
+
+    //개별 조회(리뷰,후기 작성 후)
+    @PostMapping("/products/{id}")
+    public String addProductReviewPost(Model model, @PathVariable Long id, ReviewForm reviewForm) {
+
+        ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setContent(reviewForm.getContent());
+        reviewEntity.setRating(reviewForm.getRating());
+        reviewEntity.setProductId(reviewForm.getProductId());
+        Long reviewId = reviewService.addReview(reviewEntity);
+
+        ProductResponseDto productResponseDto = productService.getProductById(id);
+        model.addAttribute("dto",productResponseDto);
+
+        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
+        model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
+        model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
+        model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
+
+        return "redirect:/products/" + id;
     }
 
     //전체 조회(목록)
