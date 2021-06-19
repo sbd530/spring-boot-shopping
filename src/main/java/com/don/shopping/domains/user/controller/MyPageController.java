@@ -71,7 +71,7 @@ public class MyPageController {
         }
         return "FAIL";
     }
-
+    //
     // 유저의 주문 내역 테스트
     @GetMapping("/orders")
     @ResponseBody
