@@ -2,16 +2,18 @@ package com.don.shopping.domains.cart.service;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@ToString
 public class AddToCartRequestDto {
 
-    @NotBlank
+    @NotNull
     private Long productId;
-    @NotBlank @Min(1)
+    @Min(1)
     private Integer orderAmount;
 }

@@ -1,8 +1,11 @@
 package com.don.shopping.domains.user.controller;
 
+import com.don.shopping.domains.order.query.dto.MyOrderDto;
+import com.don.shopping.domains.order.service.OrderService;
 import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import com.don.shopping.domains.user.service.UserService;
+import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,6 +22,8 @@ import javax.validation.constraints.NotBlank;
 public class MyPageController {
 
     private final UserService userService;
+    private final OrderService orderService;
+    private final AuthenticationConverter ac;
 
     @GetMapping
     public String getMyPage(Authentication authentication, Model model) {
@@ -65,5 +71,16 @@ public class MyPageController {
         }
         return "FAIL";
     }
+
+    // 유저의 주문 내역 테스트
+    @GetMapping("/orders")
+    @ResponseBody
+    public List<MyOrderDto> getMyOrders(Authentication authentication) {
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+        return orderService.getMyOrders(userId);
+    }
+
+
+    // 유저의 내가 쓴 글 테스트
 
 }

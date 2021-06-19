@@ -17,4 +17,6 @@ public interface OrderDao {
     Page<OrderEntity> findOrders(OrderStatus orderStatus, DeliveryStatus deliveryStatus, Pageable pageable);
 
     void updateShipment(Long orderId, DeliveryForm deliveryForm);
+
+    List<OrderEntity> findMyOrders(Long userId);
 }

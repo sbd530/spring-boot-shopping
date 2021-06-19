@@ -85,6 +85,16 @@ public class OrderDaoImpl implements OrderDao {
                 .execute();
     }
 
+    @Override
+    public List<OrderEntity> findMyOrders(Long userId) {
+        List<OrderEntity> orderEntityList = query
+                .select(order)
+                .from(order)
+                .where(order.orderer.id.eq(userId))
+                .fetch();
+        return orderEntityList;
+    }
+
     private BooleanExpression eqOrderStatus(OrderStatus orderStatus) {
         if(orderStatus == null)
             return null;

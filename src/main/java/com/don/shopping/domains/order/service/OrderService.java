@@ -6,12 +6,15 @@ import com.don.shopping.domains.order.domain.OrderEntity;
 import com.don.shopping.domains.order.domain.OrderLineEntity;
 import com.don.shopping.domains.order.domain.OrderRepository;
 import com.don.shopping.domains.order.query.dao.OrderDao;
+import com.don.shopping.domains.order.query.dto.MyOrderDto;
 import com.don.shopping.domains.order.query.dto.OrderProductDto;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductRepository;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -27,17 +30,16 @@ public class OrderService {
     private final UserService userService;
     private final ProductRepository productRepository;
     private final CartService cartService;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public OrderResponseDto getOrderResponseDtoFromCart(Long userId, OrderRequestDto orderRequestDto) {
 
         List<Long> orderProductIdList = orderRequestDto.getOrderLineDtoList()
                 .stream()
-                .map(orderLine -> orderLine.getProductId())
+                .map(OrderLineDto::getProductId)
                 .collect(Collectors.toList());
-        OrderResponseDto orderResponseDto =
-                orderDao.toOrderResponseDtoFromCart(userId, orderProductIdList);
 
-        return orderResponseDto;
+        return orderDao.toOrderResponseDtoFromCart(userId, orderProductIdList);
     }
 
     public OrderResponseDto getOrderResponseDtoByOneOrderLine(OrderRequestDto orderRequestDto) {
@@ -59,11 +61,17 @@ public class OrderService {
     public Long order(Long ordererId, OrderRequestDto orderRequestDto) {
         // 주문자 정보
         UserEntity orderer = userService.findUserById(ordererId);
+        logger.info("email : " + orderer.getEmail());
+        for (OrderLineDto ol : orderRequestDto.getOrderLineDtoList()) {
+            logger.info(ol.getProductId().toString());
+        }
+
 
         // 배송 정보
         DeliveryEntity delivery = DeliveryEntity.builder()
                 .address(orderer.getAddress())
                 .build();
+
 
         // 주문 상품 정보
         List<OrderLineEntity> orderLineList = orderRequestDto
@@ -79,7 +87,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         // 상품 재고 감소
-        orderLineList.stream().forEach(orderLine -> orderLine.decreaseStock());
+        orderLineList.forEach(OrderLineEntity::decreaseStock);
 
         // 주문 정보
         OrderEntity order = OrderEntity.builder()
@@ -91,16 +99,24 @@ public class OrderService {
         // 장바구니에서 주문한 상품만 제거
         List<Long> productIdList = orderRequestDto.getOrderLineDtoList()
                 .stream()
-                .map(orderLineDto -> orderLineDto.getProductId())
+                .map(OrderLineDto::getProductId)
                 .collect(Collectors.toList());
         cartService.removeCartLines(ordererId, productIdList);
 
         // 주문 정보 저장
-        Long orderId = orderRepository.save(order).getOrderId();
 
-        return orderId;
+        return orderRepository.save(order).getOrderId();
     }
 
+    // 마이페이지 주문 내역
+    public List<MyOrderDto> getMyOrders(Long userId) {
+
+        List<OrderEntity> orderEntityList = orderDao.findMyOrders(userId);
+        return orderEntityList
+                .stream()
+                .map(MyOrderDto::new)
+                .collect(Collectors.toList());
+    }
 
 
 }
