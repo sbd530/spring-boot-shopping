@@ -82,6 +82,26 @@
           const mainImageDiv = document.getElementById("mainImage");
           mainImageDiv.style.backgroundImage = "url(" + url + ")";
     }
+
+    function sendToPayment() {
+            const f = document.toCartOrBuyForm;
+            if(f.pop_out.value<1){
+                alert("수량을 입력해주세요.");
+                return;
+            }
+            f.action = "/orders/buy";
+            f.submit();
+        }
+
+    function sendToCart() {
+		const f = document.toCartOrBuyForm;
+		if(f.pop_out.value<1){
+			alert("수량을 입력해주세요.");
+			return;
+		}
+		f.action = "/carts";
+		f.submit();
+	}
   </script>
 
   <!-- js -->
@@ -118,8 +138,6 @@
 <!--[if (gt IE 9)|!(IE)]><!-->
 <body class="display display-home display desktop">
 <!--<![endif]-->
-
-<!--<div id="searchOptimizeTextDiv" style="position:absolute !important; top:-999999px !important; left:-999999px !important"></div>-->
 
 <!--[if lt IE 9]>
 <div id="ie8header">
@@ -216,6 +234,8 @@
        <span style="text-decoration:line-through">[[${#numbers.formatInteger(dto.rprice, 0, 'COMMA')}]]원</span>
      </span>
     </div>
+    <form method="post" name="toCartOrBuyForm">
+    <input type="hidden" value="${dto.productId}">
     <div id="shopProductQuantityDiv" class="productQuantityDiv row designSettingElement text-body ">
       <span class="text">수량</span>
       <table align="center">
@@ -227,22 +247,22 @@
           </td>
         </tr>
       </table>
-      <!--<div style="margin-top:30px;">
-        합계 : <span style="font-size:" th:text="${#numbers.formatInteger(dto.rprice * dto.stock, 0 ,'COMMA') + '원'}"></span>
-      </div>-->
     </div>
+    </form>
     <div id="shopProductCartErrorDiv" style="margin-bottom:20px;">
       <span th:if="${dto.stock<1}" class="text" style="margin-bottom:20px;">품절된 상품입니다.</span>
     </div>
     <div id="productActionButtonDiv" class="productActionButtonDiv row">
       <div class="normalButton">
         <div class="btn-wrapper buyButton">
-          <button id="btn_buyNow" class="buyNow designSettingElement button " data-is-mini-cart-available="false" onclick="require('v2/mall/service/product').detail.handlePurchase('buyNow', event)">
+          <button id="btn_buyNow" class="buyNow designSettingElement button " data-is-mini-cart-available="false"
+                  onclick="sendToPayment();">
             구매하기
           </button>
         </div>
         <div class="btn-wrapper cartButton">
-          <button id="btn_addToCart" class="addToCart designSettingElement button outline " data-is-mini-cart-available="false" onclick="require('v2/mall/service/product').detail.handlePurchase('', event)">
+          <button id="btn_addToCart" class="addToCart designSettingElement button outline " data-is-mini-cart-available="false"
+                  onclick="sendToCart();">
             장바구니에 담기
           </button>
         </div>

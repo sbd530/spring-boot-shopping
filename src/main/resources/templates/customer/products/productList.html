@@ -118,8 +118,8 @@
                 <div style="width:500px;height:500px;margin:0 40px 30px 40px;" class="thumbnail">
                   <span th:if="${dto.rprice > dto.dprice}" style="position:absolute;top:20px;left:60px;padding:10px;background-color:red;color:white;z-index:100;font-weight:700;"> SALE </span>
                   <span th:if="${dto.stock == 0}" style="position:absolute;top:20px;left:60px;padding:10px;background-color:#7B7B7B;color:white;z-index:100;font-weight:700;"> SOLD OUT </span>
-                <img id="thumbnail1" th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:500px;height:500px;margin:0 40px 30px 40px;">
                 <img id="thumbnail2" th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL2}" style="width:500px;height:500px;margin:0 40px 30px 40px;">
+                <img id="thumbnail1" th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:500px;height:500px;margin:0 40px 30px 40px;">
                 </div>
                 <span th:text="${dto.productName}" style="font-size:24px;font-family:'Nanum Myeongjo';font-weight:500;"></span><br>
                 <div style="margin-bottom:100px;margin-top:20px;color:#666666">
