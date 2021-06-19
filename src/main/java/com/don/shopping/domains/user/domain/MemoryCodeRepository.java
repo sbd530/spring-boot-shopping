@@ -18,6 +18,7 @@ public class MemoryCodeRepository {
         String code;
         try {
             code = codeRepository.get(email);
+            codeRepository.remove(email);
             return code.equals(inputCode) ? true : false;
         } catch (NullPointerException exception) {
             return false;

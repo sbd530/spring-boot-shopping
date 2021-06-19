@@ -101,6 +101,12 @@ public class UserService  {
         return userEntity.getId();
     }
 
+    // userId 로 유저 엔티티 조회
+    public UserEntity findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 아이디입니다."));
+    }
+
     //로그인 정보 검증
     public boolean validateLoginData(LoginRequestDto dto) {
         Optional<UserEntity> checkUser = userRepository.findFirstByEmail(dto.getEmail());

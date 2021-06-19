@@ -1,6 +1,6 @@
 package com.don.shopping.domains.order.domain;
 
-import com.don.shopping.common.vo.Address;
+import com.don.shopping.common.logging.BaseEntity;
 import com.don.shopping.domains.user.domain.UserEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderEntity {
+public class OrderEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,9 +38,10 @@ public class OrderEntity {
     private DeliveryEntity delivery;
 
     @Builder
-    public OrderEntity(UserEntity orderer, List<OrderLineEntity> orderLineList) {
+    public OrderEntity(UserEntity orderer, List<OrderLineEntity> orderLineList, DeliveryEntity delivery) {
         this.orderStatus = OrderStatus.PAYMENT_SUCCESS;
         this.orderer = orderer;
+        this.delivery = delivery;
         setOrderLineList(orderLineList);
     }
 
@@ -55,7 +56,7 @@ public class OrderEntity {
                 .sum();
     }
 
-    public void cancelOrder() {
+    public void cancelThisOrder() {
         if(this.delivery.getDeliveryStatus() == DeliveryStatus.DONE)
             throw new IllegalStateException("이미 배송을 완료했습니다");
         this.orderLineList.stream()
