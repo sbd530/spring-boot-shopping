@@ -4,6 +4,7 @@ import com.don.shopping.domains.order.query.dto.MyOrderDto;
 import com.don.shopping.domains.order.service.OrderService;
 import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
+import com.don.shopping.domains.user.service.MyQuestionDto;
 import com.don.shopping.domains.user.service.UserService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +72,7 @@ public class MyPageController {
         }
         return "FAIL";
     }
-    //
+
     // 유저의 주문 내역 테스트
     @GetMapping("/orders")
     @ResponseBody
@@ -82,5 +83,11 @@ public class MyPageController {
 
 
     // 유저의 내가 쓴 글 테스트
+    @GetMapping("/questions")
+    @ResponseBody
+    public List<MyQuestionDto> getMyQuestions(Authentication authentication) {
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+        return userService.getMyQuestions(userId);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.don.shopping.domains.user.service;
 
 import com.don.shopping.domains.cart.service.CartService;
+import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
 import com.don.shopping.domains.user.query.dao.UserDao;
@@ -11,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,4 +120,11 @@ public class UserService  {
         return false;
     }
 
+    public List<MyQuestionDto> getMyQuestions(Long userId) {
+        List<QuestionEntity> questionEntities = userDao.findQuestionsByUserId(userId);
+        List<MyQuestionDto> myQuestions = questionEntities.stream()
+                .map(MyQuestionDto::new)
+                .collect(Collectors.toList());
+        return myQuestions;
+    }
 }

@@ -9,13 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * JPA 의 Auditing 을 설정합니다.
- * QueryDSL 에 필요한 빈을 등록합니다.
+ * JPA 관련 설정을 합니다.
+ * JpaAuditing 설정, QueryDSL 설정
  * 작성자 : 윤병돈
  */
 @Configuration
 @EnableJpaAuditing
-public class CommonConfig {
+public class JpaConfig {
 
     @PersistenceContext
     private EntityManager entityManager;

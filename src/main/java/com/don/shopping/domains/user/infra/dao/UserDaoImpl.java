@@ -1,5 +1,7 @@
 package com.don.shopping.domains.user.infra.dao;
 
+import com.don.shopping.domains.question.domain.QQuestionEntity;
+import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.user.domain.QUserEntity;
 import com.don.shopping.domains.user.query.dao.UserDao;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
@@ -7,12 +9,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
     private final JPAQueryFactory query;
     private final QUserEntity user = QUserEntity.userEntity;
+    private final QQuestionEntity question = QQuestionEntity.questionEntity;
 
     public UserDaoImpl(EntityManager em) {
         this.query = new JPAQueryFactory(em);
@@ -40,5 +44,14 @@ public class UserDaoImpl implements UserDao {
                 .where(user.email.eq(email))
                 .set(user.password, newPassword)
                 .execute();
+    }
+
+    @Override
+    public List<QuestionEntity> findQuestionsByUserId(Long userId) {
+        List<QuestionEntity> myQuestions = query.select(question)
+                .from(question)
+                .where(question.userId.eq(userId))
+                .fetch();
+        return myQuestions;
     }
 }

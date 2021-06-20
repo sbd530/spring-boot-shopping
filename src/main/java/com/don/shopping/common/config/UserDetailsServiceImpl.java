@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Spring Security 를 통한 인증을 위해 UserDetailsService 를 구현합니다.
+ * 작성자 : 윤병돈
+ */
 @Component
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
