@@ -9,9 +9,9 @@ import java.util.*;
 public class ProductImageVO {
     private String productName;
     private String productInfo;
-    private int rprice;
-    private int dprice;
-    private int stock;
+    private Integer rprice;
+    private Integer dprice;
+    private Integer stock;
     private MultipartFile file1;
     private MultipartFile file2;
     private MultipartFile file3;
@@ -24,6 +24,7 @@ public class ProductImageVO {
     public List<MultipartFile> getFiles() {
 
         List<MultipartFile> files = new ArrayList<>();
+
 
         files.add(this.file1);
         files.add(this.file2);

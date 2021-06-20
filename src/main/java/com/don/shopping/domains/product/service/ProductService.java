@@ -91,7 +91,7 @@ public class ProductService {
     }
 
     //상품 개별조회(정보 + 파일)
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductResponseDto getProductById(Long id){
        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()
                -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
