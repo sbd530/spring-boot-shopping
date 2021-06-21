@@ -12,6 +12,6 @@ import java.util.List;
 public class AdminOrderResponseDto {
 
     private List<AdminOrderDto> orderDtoList;
-    private int total;
+
 
 }

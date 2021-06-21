@@ -44,6 +44,9 @@ public class CartController {
     @PostMapping
     @ResponseBody
     public ResponseEntity addToCart(@ModelAttribute @Valid AddToCartRequestDto dto, Authentication authentication) {
+        if(!authentication.isAuthenticated())
+            return ResponseEntity.badRequest().build();
+
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         cartService.addProductToCart(userId, dto);
         return ResponseEntity.ok().build();
@@ -52,6 +55,9 @@ public class CartController {
     @PutMapping
     @ResponseBody
     public ResponseEntity modifyCartLine(@ModelAttribute ModifyOrderAmountRequestDto dto, Authentication authentication) {
+        if(!authentication.isAuthenticated())
+            return ResponseEntity.badRequest().build();
+
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         cartService.modifyOrderAmount(userId, dto);
         return ResponseEntity.ok().build();
@@ -60,6 +66,9 @@ public class CartController {
     @DeleteMapping
     @ResponseBody
     public ResponseEntity removeCartLine(@RequestParam("productId") Long productId, Authentication authentication) {
+        if(!authentication.isAuthenticated())
+            return ResponseEntity.badRequest().build();
+
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         cartService.removeCartLine(userId, productId);
         return ResponseEntity.ok().build();

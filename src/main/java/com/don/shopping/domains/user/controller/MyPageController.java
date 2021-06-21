@@ -1,10 +1,8 @@
 package com.don.shopping.domains.user.controller;
 
-import com.don.shopping.domains.order.query.dto.MyOrderDto;
 import com.don.shopping.domains.order.service.OrderService;
 import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
-import com.don.shopping.domains.user.service.MyQuestionDto;
 import com.don.shopping.domains.user.service.UserService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -67,7 +64,7 @@ public class MyPageController {
         return "customer/users/mypage/withdrawal";
     }
 
-    @DeleteMapping
+    @DeleteMapping("/withdrawal")
     public @ResponseBody String deleteUser(Authentication authentication, @RequestParam @NotBlank String password) {
         String email = authentication.getName();
         boolean result = userService.deleteUser(email, password);

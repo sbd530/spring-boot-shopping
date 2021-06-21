@@ -27,7 +27,7 @@ public class AdminOrderService {
         order.cancelThisOrder();
     }
 
-    public AdminOrderResponseDto getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
+    public List<AdminOrderDto> getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
 
         // status 문자열이 있으면 valueOf 로 변환
         OrderStatus orderStatusEnum = OrderStatus.PAYMENT_SUCCESS;
@@ -53,9 +53,8 @@ public class AdminOrderService {
 
                         .build()
                 ).collect(Collectors.toList());
-        int total = adminOrderDtoList.size();
 
-        return new AdminOrderResponseDto(adminOrderDtoList, total);
+        return adminOrderDtoList;
     }
 
     public OrderResponseDto getOrderDetail(Long orderId) {

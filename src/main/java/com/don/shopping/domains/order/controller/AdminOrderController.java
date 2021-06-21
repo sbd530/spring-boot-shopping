@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class AdminOrderController {
@@ -17,14 +19,14 @@ public class AdminOrderController {
     // ?orderStatus={주문상태} &deliveryStatus={배송상태} ( &page={페이지번호} &size={한페이지당주문수})
     @GetMapping("/dashboard/orders")
     @Transactional(readOnly = true)
-    public AdminOrderResponseDto getAdminOrderPage(
+    public List<AdminOrderDto> getAdminOrderPage(
             @RequestParam(name = "orderStatus", required = false) String orderStatus,
             @RequestParam(name = "deliveryStatus", required = false) String deliveryStatus,
             @PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-        AdminOrderResponseDto dto =
+        List<AdminOrderDto> adminOrderDtoList =
                 adminOrderService.getFilteredOrders(orderStatus, deliveryStatus, pageable);
-        return dto;
+        return adminOrderDtoList;
     }
 
     @GetMapping("/dashboard/orders/{orderId}")

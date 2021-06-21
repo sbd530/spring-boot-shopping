@@ -19,10 +19,8 @@ public class MemoryCodeRepository {
         try {
             code = codeRepository.get(email);
             codeRepository.remove(email);
-            return code.equals(inputCode) ? true : false;
-        } catch (NullPointerException exception) {
-            return false;
-        } catch (ClassCastException exception) {
+            return code.equals(inputCode);
+        } catch (NullPointerException | ClassCastException exception) {
             return false;
         }
 
