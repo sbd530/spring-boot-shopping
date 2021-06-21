@@ -12,4 +12,8 @@ public interface ReviewDao {
 
     void deleteReviewOne(Long reviewid);
 
+    Integer ratingSum(Long productId);
+    Integer ratingCount(Long productId);
+    Double ratingAve(Long productId);
+
 }

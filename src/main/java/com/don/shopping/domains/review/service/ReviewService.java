@@ -53,6 +53,21 @@ public class ReviewService {
 
     }
 
+    //해당 상품의 리뷰의 총 별점합
+    @Transactional(readOnly = true)
+    public int ratingSum(Long productId){
+        return reviewDao.ratingSum(productId);
+    }
+    //해당 상품의 리뷰의 총 개수
+    @Transactional(readOnly = true)
+    public int ratingCount(Long productId){
+        return reviewDao.ratingCount(productId);
+    }
+    //해당 상품의 리뷰의 별점 평균
+    @Transactional(readOnly = true)
+    public Double ratingAve(Long productId){
+        return reviewDao.ratingAve(productId);
+    }
 
 
 }

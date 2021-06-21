@@ -12,10 +12,10 @@ public class ReviewForm {
 
 
     @NotEmpty(message="리뷰 내용을 입력해주세요.")
-    private String content;
+    private String reviewContent;
     @Min(value = 1,message = "별점을 1이상 주세요")
     private int rating;
-    private Long productId;
+    private Long reviewProductId;
 
 
 

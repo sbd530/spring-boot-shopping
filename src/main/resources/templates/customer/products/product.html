@@ -46,7 +46,12 @@
 
   <meta id="metaTagViewport" name="viewport" content="width=device-width">
   <meta name="robots" content="noindex">
+  <!-- bootstrap -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+  <!-- bootstrap end -->
   <link rel="apple-touch-icon" href="https://contents.sixshop.com">
   <link rel="apple-touch-icon-precomposed" href="https://contents.sixshop.com">
   <link rel="canonical" href="https://www.sixshop.com/dhadbs2/product/untitled-1">
@@ -127,15 +132,44 @@
   <link rel="stylesheet" href="https://static.sixshop.com/resources/css/common/ie9.css?v=04081515"/>
   <![endif]-->
   <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515"></script>
+<!-- 무룡 스크립트-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+		$("#dialog").hide();
+
+		$("#btn1").click(function(){
+			$("#dialog").dialog();
+		});
+
+		$("#btn2").click(function(){
+			$("#dialog").dialog({
+				height:240,
+				width:300,
+				modal: true
+			});
+		});
+
+		$("#btn3").click(function(){
+			$("<div>").dialog({
+				modal:true,
+				open:function(){
+					$(this).load("addanswer_modal.html");
+				},
+				height:400,
+				width:400,
+				title:"외부파일 창 띄우기"
+			});
+		});
+
+
+	});
+
+  </script>
+  <!-- 무룡 스크립트 end -->
 </head>
 
-<!--[if lt IE 9 ]>
-<body class="display display-home display desktop  document-loading ie8">
-<![endif]-->
-<!--[if IE 9 ]>
-<body class="display display-home display desktop  document-loading ie9">
-<![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
+
 <body class="display display-home display desktop">
 <!--<![endif]-->
 
@@ -157,6 +191,7 @@
     </div>
   </div>
 </div>
+
 <![endif]-->
 
 <!-- body section -->
@@ -211,16 +246,10 @@
     <div id="shopProductNameWrapper" class="row">
       <h1 id="shopProductName" class="row name designSettingElement productName" th:text="${dto.productName}"></h1>
       <div id="shopProductReviewElem" class="designSettingElement text-body" data-product-rating-value="3.0">
-        <div id="productReviewStar">
-          <div class="icomoon-star designSettingElement"></div>
-          <div class="icomoon-star designSettingElement"></div>
-          <div class="icomoon-star designSettingElement"></div>
-          <div class="icomoon-star designSettingElement opacity"></div>
-          <div class="icomoon-star designSettingElement opacity"></div>
-        </div>
+
         <a href="#reviewBoardPost" class="designSettingElement text-assi" data-track-conversion-type="click" data-track-conversion-title="shop-product-info-review-count-click">
-          <div>&nbsp;(2</div>
-          <div>개 후기)</div>
+          (별점 평균: <div th:text="${#numbers.formatDecimal(ratingAve,1,2)}"></div>) (<div th:text="${ratingCount}"></div>개의 후기)
+
         </a>
       </div>
     </div>
@@ -284,29 +313,36 @@
 </div>
 
   <br/><br/><br/>
+
+
 <!-- 리뷰 -->
   <!-- 작성자: 서무룡
        리뷰 리스트 출력 -->
+
   <div class="container">
+
+    <div style="font-size: x-large">리뷰 목록</div><br/><br/><br/>
+
     <div>
-      <table style="border: 1px solid #444444">
+      <table class="table">
         <thead>
         <tr>
-          <th style="border: 1px solid #444444">#</th>
-          <th style="border: 1px solid #444444">상품 아이디</th>
-          <th style="border: 1px solid #444444">리뷰 내용</th>
-          <th style="border: 1px solid #444444">작성자</th>
-          <th style="border: 1px solid #444444">별점</th>
+          <th scope="col">#</th>
+          <th scope="col">상품 아이디</th>
+          <th scope="col">리뷰 내용</th>
+          <th scope="col">작성자</th>
+          <th scope="col">별점</th>
+
           <!--     <th>리뷰 작성 시간</th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="review : ${reviewListByProduct}">
-          <td style="border: 1px solid #444444" th:text="${review.id}"></td>
-          <td style="border: 1px solid #444444" th:text="${review.productId}"></td>
-          <td style="border: 1px solid #444444" th:text="${review.content}"></td>
-          <td style="border: 1px solid #444444" th:text="${review.userId}"></td>
-          <td style="border: 1px solid #444444" th:text="${review.rating}"></td>
+          <th scope="row"><div th:text="${review.id}"></div></th>
+          <td th:text="${review.productId}"></td>
+          <td th:text="${review.content}"></td>
+          <td th:text="${review.userId}"></td>
+          <td th:text="${review.rating}"></td>
           <!--   <td th:text="${review.reviewTime}"></td>  -->
         </tr>
         </tbody>
@@ -314,32 +350,115 @@
     </div>
   </div>
 
+
+
   <!-- 작성자: 서무룡
      리뷰 추가 버튼 출력 -->
-  <div>
+  <div class="container">
+
+    <br/><br/><div style="font-size: x-large">리뷰 등록</div><br/><br/><br/>
+
+
     <form role="form" th:action="@{/products/}+${id}" th:object="${reviewForm}" method="post" enctype="multipart/form-data">
       <div class="form-group">
-        <label th:for="productId">상품 아이디</label>
-        <input type="text" th:field="*{productId}" class="form-control" placeholder="상품아이디를 입력하세요"
-               th:class="${#fields.hasErrors('productId')}? 'form-control fieldError' : 'form-control'">
-        <p th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}">Incorrect date</p>
+        <label th:for="reviewProductId">상품 아이디</label>
+        <input type="text" th:field="*{reviewProductId}" class="form-control" placeholder="상품아이디를 입력하세요"
+               th:class="${#fields.hasErrors('reviewProductId')}? 'form-control fieldError' : 'form-control'">
+        <p th:if="${#fields.hasErrors('reviewProductId')}" th:errors="*{reviewProductId}">Incorrect date</p>
       </div>
       <div class="form-group">
-        <label th:for="content">리뷰내용</label>
-        <input type="text" th:field="*{content}" class="form-control" placeholder="이름을 입력하세요"
-               th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'">
-        <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
+        <label th:for="reviewContent">리뷰내용</label>
+        <input type="text" th:field="*{reviewContent}" class="form-control" placeholder="리뷰 내용을 입력하세요"
+               th:class="${#fields.hasErrors('reviewContent')}? 'form-control fieldError' : 'form-control'">
+        <p th:if="${#fields.hasErrors('reviewContent')}" th:errors="*{reviewContent}">Incorrect date</p>
       </div>
       <div class="form-group">
         <label th:for="rating">별점</label>
-        <input type="text" th:field="*{rating}" class="form-control" placeholder="별점 입력하세요"
+        <select id="rating" class="selectpicker" th:field="*{rating}">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+       <!-- <input type="text" th:field="*{rating}" class="form-control" placeholder="별점 입력하세요"
                th:class="${#fields.hasErrors('rating')}? 'form-control fieldError' : 'form-control'">
-        <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Incorrect date</p>
+        <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Incorrect date</p>-->
       </div>
-      <button type="submit" class="btn btn-primary">리뷰 작성 하기</button>
+      <button type="submit"  class="btn btn-dark">리뷰 작성</button>
     </form>
   </div>
   <br/><br/><br/>
+        <!-- 작성자: 서무룡
+           해당 질문 리스트 출력 -->
+        <div class="container">
+
+          <br/><br/><div style="font-size: x-large">질문 목록</div><br/><br/><br/>
+
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">상품 아이디</th>
+                <th scope="col">질문 내용</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성날짜</th>
+                <th scope="col">댓글</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="question : ${questionList}">
+                <th scope="row"><div th:text="${question.id}"></div></th>
+                <td th:text="${question.productId}"></td>
+                <td th:text="${question.content}"></td>
+                <td th:text="${question.userId}"></td>
+                <td th:text="${#temporals.format(question.questionTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td><a th:href="@{/question/}+${question.id}+@{/addanswer}" id="btn3">댓글보기</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 작성자: 서무룡
+           질문 추가 버튼 출력 -->
+        <div class="container">
+
+          <br/><br/> <div style="font-size: x-large">질문 등록</div><br/><br/><br/>
+
+          <form role="form" th:action="@{/products/}+${id}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+
+            <label th:for="content">질문 내용</label>
+            <input type="text" th:field="*{questionContent}" class="form-control" placeholder="내용을 입력하세요"
+                   th:class="${#fields.hasErrors('questionContent')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('questionContent')}" th:errors="*{questionContent}">Incorrect date</p>
+          </div>
+
+          <div class="form-group">
+            <label th:for="productId">상품 아이디</label>
+            <input type="text" th:field="*{questionProductId}" class="form-control" placeholder="상품 아이디를 입력하세요"
+                   th:class="${#fields.hasErrors('questionProductId')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('questionProductId')}" th:errors="*{questionProductId}">Incorrect date</p>
+          </div>
+
+
+
+
+          <button type="submit" class="btn btn-dark">질문 작성</button>
+
+        </form>
+        </div>
+
+        <div th:text="${ratingSum}"></div>
+
+
+
+
+
+
+
+
 
 </div>
 <div class="mobile-fixed-buy-button-box designSettingElement entire-background-color">
@@ -350,5 +469,6 @@
 <!-- footer -->
 <footer th:insert="customer/main/footer.html"></footer>
 
-</div>
-</body></html>
+</div></div>
+</body>
+</html>

@@ -51,9 +51,9 @@ public class ReviewController {
             return "dashboard/review/addreview";
 
         ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setContent(reviewForm.getContent());
+        reviewEntity.setContent(reviewForm.getReviewContent());
         reviewEntity.setRating(reviewForm.getRating());
-        reviewEntity.setProductId(reviewForm.getProductId());
+        reviewEntity.setProductId(reviewForm.getReviewProductId());
 
         Long reviewId = reviewService.addReview(reviewEntity);
         return "redirect:/reviews";
@@ -74,9 +74,9 @@ public class ReviewController {
     public String updateReviewForm(@PathVariable("reviewId") Long reviewId,Model model){
         ReviewEntity reviewEntity = reviewDao.findOne(reviewId);
         ReviewForm form = new ReviewForm();
-        form.setContent(reviewEntity.getContent());
+        form.setReviewContent(reviewEntity.getContent());
         form.setRating(reviewEntity.getRating());
-        form.setProductId(reviewEntity.getProductId());
+        form.setReviewProductId(reviewEntity.getProductId());
         model.addAttribute("reviewForm",form);
         model.addAttribute("id",reviewId);
         return "dashboard/review/reviewupdate";
@@ -86,8 +86,8 @@ public class ReviewController {
     public String updateReview(@PathVariable("reviewId") Long reviewId,@ModelAttribute("reviewForm") ReviewForm reviewForm){
         ReviewEntity reviewEntity = new ReviewEntity();
         reviewEntity.setId(reviewId);
-        reviewEntity.setProductId(reviewForm.getProductId());
-        reviewEntity.setContent(reviewForm.getContent());
+        reviewEntity.setProductId(reviewForm.getReviewProductId());
+        reviewEntity.setContent(reviewForm.getReviewContent());
         reviewEntity.setRating(reviewForm.getRating());
 
         reviewService.addReview(reviewEntity);

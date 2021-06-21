@@ -2,10 +2,15 @@ package com.don.shopping.domains.product.controller;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.service.*;
+import com.don.shopping.domains.question.controller.QuestionForm;
+import com.don.shopping.domains.question.domain.QuestionEntity;
+import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.domains.review.controller.ReviewForm;
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.service.ReviewService;
+import com.don.shopping.util.AuthenticationConverter;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +29,8 @@ public class ProductController {
     private final ProductService productService;
     private final ProductImageService productImageService;
     private final ReviewService reviewService;
+    private final QuestionService questionService;
+    private final AuthenticationConverter ac;
 
     /*//개별 조회
     @GetMapping("/products/{id}")
@@ -57,26 +64,42 @@ public class ProductController {
         model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
         model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
         model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
-
+        List<QuestionEntity> questionEntityList = questionService.findQuestionsByProductId(id);
+        model.addAttribute("questionList",questionEntityList); //+무룡파트 해당상품에 대한 질문 출력
+        model.addAttribute("questionForm", new QuestionForm()); //+무룡파트 해당 상품에 대한 질문추가 form
+        model.addAttribute("ratingSum",reviewService.ratingSum(id)); //+무룡파트 해당 상품에 대한 별점의 합
+        model.addAttribute("ratingCount",reviewService.ratingCount(id)); //+무룡파트 해당 상품에 대한 별점의 개수
+        model.addAttribute("ratingAve",reviewService.ratingAve(id));//+무룡파트 해당 상품에 대한 별점의 평균
+        System.out.println("reviewService.ratingAve(id)"+reviewService.ratingAve(id));
+        //+무룡파트 해당 상품에 대한 별점의 개수
         return "customer/products/product.html";
     }
 
     //개별 조회(리뷰,후기 작성 후)
     @PostMapping("/products/{id}")
-    public String addProductReviewPost(Model model, @PathVariable Long id, ReviewForm reviewForm) {
+    public String addProductReviewPost(Model model, @PathVariable Long id, ReviewForm reviewForm, Authentication authentication, QuestionForm questionForm) {
 
-        ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setContent(reviewForm.getContent());
-        reviewEntity.setRating(reviewForm.getRating());
-        reviewEntity.setProductId(reviewForm.getProductId());
-        Long reviewId = reviewService.addReview(reviewEntity);
+        if(reviewForm!=null) {
+            ReviewEntity reviewEntity = new ReviewEntity();//리뷰 엔티티생성
+            reviewEntity.setContent(reviewForm.getReviewContent());
+            reviewEntity.setRating(reviewForm.getRating());
+            reviewEntity.setProductId(reviewForm.getReviewProductId());
+            Long reviewId = reviewService.addReview(reviewEntity);
 
+        }
+        if(questionForm!=null) {
+            Long userId = ac.getUserFromAuthentication(authentication).getId();// 질문엔티티생성
+            QuestionEntity questionEntity = new QuestionEntity();
+            questionEntity.setContent(questionForm.getQuestionContent());
+            questionEntity.setProductId(questionForm.getQuestionProductId());
+            questionEntity.setUserId(userId);
+            Long questionId = questionService.addQuestion(questionEntity);
+        }
         ProductResponseDto productResponseDto = productService.getProductById(id);
         model.addAttribute("dto",productResponseDto);
 
         List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
         model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
-        model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
         model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
 
         return "redirect:/products/" + id;

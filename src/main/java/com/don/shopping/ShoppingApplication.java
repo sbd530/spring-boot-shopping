@@ -20,6 +20,8 @@ public class ShoppingApplication {
 		System.setProperty("spring.devtools.restart.enabled", "false");
 		System.setProperty("spring.devtools.livereload.enabled", "true");
 		SpringApplication.run(ShoppingApplication.class, args);
+
+		System.out.println(Math.round(2.25*100)/100.0);
 	}
 
 }

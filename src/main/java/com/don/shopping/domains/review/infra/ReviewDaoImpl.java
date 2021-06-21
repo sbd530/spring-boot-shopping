@@ -46,4 +46,43 @@ public class ReviewDaoImpl implements ReviewDao {
                 .execute();
     }
 
+    @Override
+    public Integer ratingSum(Long productId) {
+        List<ReviewEntity> reviewEntityList = query.selectFrom(qReviewEntity)
+                .where(qReviewEntity.productId.eq(productId))
+                .fetch();
+        int ratingSum =0;
+        for(ReviewEntity entity : reviewEntityList){
+            ratingSum += entity.getRating();
+        }
+        return ratingSum;
+
+    }
+
+    @Override
+    public Integer ratingCount(Long productId) {
+        List<ReviewEntity> reviewEntityList = query.selectFrom(qReviewEntity)
+                .where(qReviewEntity.productId.eq(productId))
+                .fetch();
+        return reviewEntityList.size();
+    }
+
+    public Double ratingAve(Long productId) {
+        List<ReviewEntity> reviewEntityList = query.selectFrom(qReviewEntity)
+                .where(qReviewEntity.productId.eq(productId))
+                .fetch();
+        int ratingSum =0;
+        for(ReviewEntity entity : reviewEntityList){
+            ratingSum += entity.getRating();
+        }
+        int ratingSize =0;
+        List<ReviewEntity> reviewEntityList2 = query.selectFrom(qReviewEntity)
+                .where(qReviewEntity.productId.eq(productId))
+                .fetch();
+        ratingSize = reviewEntityList2.size();
+        float ratingAvefull = (float) ratingSum/(float)ratingSize;
+
+        return Math.round(ratingAvefull*100)/100.0;
+    }
+
 }

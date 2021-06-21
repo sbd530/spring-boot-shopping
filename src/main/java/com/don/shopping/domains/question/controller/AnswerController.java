@@ -5,6 +5,7 @@ import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.don.shopping.domains.question.service.QuestionAnswerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,4 +44,13 @@ public class AnswerController {
 
         return "redirect:/question/"+ questionId+"/addanswer";
     }
+
+    //댓글 개별 삭제 delete
+    @GetMapping("question/{questionId}/delete/{answerId}")
+    public String deleteAnswer(@PathVariable("questionId") Long questionId, @PathVariable("answerId") Long answerId){
+        questionAnswerDao.deleteQuestionAnswerOne(answerId);
+        return "redirect:/question/"+ questionId+"/addanswer";
+    }
+
+
 }
