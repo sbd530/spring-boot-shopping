@@ -10,9 +10,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security3">
 <body>
 <h1>이곳은 홈화면이다</h1>
 
-아이디 : <span sec:authentication="name"></span><br>
-권한 : <span sec:authentication="authorities"></span><br>
-
+<!--아이디 : <span sec:authentication="name"></span><br>
+권한 : <span sec:authentication="authorities"></span><br>-->
+<button onclick="location.href='http://localhost:8081/dashboard/home'">dashboard</button>
 
 <button th:onclick="@{/logout}">로그아웃</button>
 

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <side-tool-bar></side-tool-bar>
-    <router-view></router-view>
+    <transition name="page">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -19,5 +21,14 @@ export default {
 <style>
 body {
   background-color: #dedddb;
+}
+/* Router Transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+page .page-enter,
+.page-leave-to {
+  opacity: 0;
 }
 </style>

@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,10 +23,12 @@ public class ReviewController {
 
     //전체조회
     @GetMapping("/reviews")
-    public String listProductViewGet(Model model) {
+    @ResponseBody
+    @CrossOrigin("*")
+    public List<ReviewEntity> listProductViewGet(Model model) {
         List<ReviewEntity> reviewEntityList = reviewService.findAllReviews();
-        model.addAttribute("reviewlists",reviewEntityList);
-        return "dashboard/review/reviewlist";
+        //model.addAttribute("reviewlists",reviewEntityList);
+        return reviewEntityList;
     }
     //개별조회
     //log.info("review Controller");

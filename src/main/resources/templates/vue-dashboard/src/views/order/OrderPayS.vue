@@ -7,7 +7,7 @@
             <div
               style=" float:left; font-size: 24px; padding-right: 10px; border-right: 2px solid #C3BEB6;"
             >
-              결제 완료
+              전체 주문
             </div>
 
             <div style="margin-bottom: 20px;">
@@ -65,69 +65,10 @@
           </div>
         </div>
       </div>
-      <div class="row g-1">
-        <div
-          class="col-12"
-          style="border-bottom:1px solid #C3BEB6; width: 1000px; padding-bottom: 10px;"
-        >
-          <div class="dropdown">
-            <form action="" name="searchForm" method="post">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenu2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                10개
-              </button>
-              <ul
-                class="dropdown-menu"
-                aria-labelledby="dropdownMenu2"
-                name="searchKey"
-                onclick="searchData();"
-              >
-                <li>
-                  <button class="dropdown-item" type="button" value="ten">
-                    10개
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item" type="button" value="thirty">
-                    30개
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item" type="button" value="one_h">
-                    100개
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item" type="button" value="five_h">
-                    500개
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item" type="button" value="one_t">
-                    1000개
-                  </button>
-                </li>
-              </ul>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row g-1"
-        style="border-bottom:1px solid #C3BEB6; padding-top: 10px;"
-      >
-        <div class="col-6">
-          <form>
-            <p>
-              <input type="checkbox" name="all" class="check-all" />
-              <label style="padding-left:10px;">상품 이름</label>
-            </p>
-          </form>
+
+      <div class="row g-1 top">
+        <div class="col-5">
+          <div style="padding-left:10px;">상품 이름</div>
         </div>
         <div class="col-1">
           가격
@@ -135,7 +76,7 @@
         <div class="col-1">
           수량
         </div>
-        <div class="col-1">
+        <div class="col-2" align="center">
           상태
         </div>
         <div class="col-3" align="center">
@@ -143,38 +84,45 @@
         </div>
       </div>
 
-      <div
-        class="row g-1"
-        style="border-bottom:1px solid #C3BEB6; padding-bottom: 10px; "
-      >
-        <c:forEach var="dto" items="${lists}"></c:forEach>
-        <div class="col-6" style="padding-top: 20px;">
-          <form>
-            <p>
-              <input type="checkbox" name="cb1" class="ab" />
-              <label style="padding-left:10px;">Checkbox 1</label>
-            </p>
-          </form>
+      <div class="row g-1">
+        <div
+          v-for="user in this.$store.state.news"
+          v-bind:key="user"
+          class="listAll"
+        >
+          <div class="col-5">
+            <!-- 리스트 -->
+
+            {{ user.title }}
+          </div>
+          <div class="col-1">
+            가격
+          </div>
+          <div class="col-1">
+            수량
+          </div>
+          <div class="col-2" align="center">
+            상태
+          </div>
+          <div class="col-3" align="center">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              id="show-modal"
+              @click="showModal = true"
+            >
+              편집하기
+            </button>
+          </div>
         </div>
-        <div class="col-1" style="padding-top: 20px;">
-          가격
-        </div>
-        <div class="col-1" style="padding-top: 20px;">
-          수량
-        </div>
-        <div class="col-1" style="padding-top: 20px;">
-          상태
-        </div>
-        <div class="col-3" align="center" style="padding-top: 10px;">
-          <button
-            class="btn btn-primary"
-            type="submit"
-            style="background-color: #EAEAF3; color: #D9557C; border: 0; width: 130px; height: 50px; font-size:13pt;"
-          >
-            편집하기
-          </button>
-        </div>
-        <!-- </c:forEach> -->
+        <!-- 편집하기 모달 -->
+        <modal v-if="showModal" @close="showModal = false">
+          <!--
+         you can use custom content here to overwrite
+         default content
+       -->
+          <!-- <h3 slot="header">전체 주문 현황</h3> -->
+        </modal>
       </div>
 
       <div id="footer" style="padding-top: 30px;">
@@ -190,10 +138,41 @@
 </template>
 
 <script>
-export default {};
+import Modal from "../order/OrderModal.vue";
+
+export default {
+  created() {
+    this.$store.dispatch("FETCH_NEWS");
+  },
+  data() {
+    return {
+      newTodoItem: "",
+      showModal: false,
+    };
+  },
+  components: {
+    Modal,
+  },
+};
 </script>
 
 <style scoped>
+.top {
+  border-top: 1px solid #c3beb6;
+  border-bottom: 1px solid #c3beb6;
+  align-items: center;
+  display: flex;
+  font-size: 15pt;
+  height: 70px;
+}
+.btn-primary {
+  background-color: #eaeaf3;
+  color: #d9557c;
+  border: 0;
+  width: 105px;
+  height: 45px;
+  font-size: 13pt;
+}
 #product {
   margin: 0 0 0 230px;
   padding: 100px 50px 0 50px;
@@ -203,5 +182,13 @@ export default {};
   width: 1500px;
   padding: 50px 20px 30px 50px;
   border-radius: 12px;
+}
+.listAll {
+  align-items: center;
+  display: flex;
+  height: 60px;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #c3beb6;
 }
 </style>
