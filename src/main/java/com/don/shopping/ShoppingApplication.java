@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
+@EnableCaching
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching

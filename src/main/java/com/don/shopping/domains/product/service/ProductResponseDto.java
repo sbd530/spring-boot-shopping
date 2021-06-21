@@ -13,9 +13,9 @@ public class ProductResponseDto {
     private String productName;
     private String productInfo;
     private List<String> usageList;
-    private int rprice;
-    private int dprice;
-    private int stock;
+    private Integer rprice;
+    private Integer dprice;
+    private Integer stock;
     private List<ProductImageEntity> imageList;
 
     public ProductResponseDto(ProductEntity productEntity) {

@@ -7,9 +7,9 @@ import lombok.Getter;
 public class AdminProductListResponseDto {
     private Long productId;
     private String productName;
-    private int rprice;
-    private int dprice;
-    private int stock;
+    private Integer rprice;
+    private Integer dprice;
+    private Integer stock;
 
     public AdminProductListResponseDto(ProductEntity productEntity) {
         this.productId = productEntity.getId();

@@ -13,10 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -114,16 +111,15 @@ public class ProductController {
 
     //상품조회(키워드기준)
     @GetMapping("/products/search")
-    public String findByKeyword(@RequestParam("keyword") String keyword, Model model) {
+    @ResponseBody
+    public List<ProductListResponseDto> getByKeyword(@RequestParam("keyword") String keyword) {
         List<ProductEntity> productEntityList = productService.findByKeyword(keyword);
         List<ProductListResponseDto> responseDtoList = new ArrayList<>();
 
         for(ProductEntity productEntity : productEntityList) {
-            ProductListResponseDto ProductListResponseDto = new ProductListResponseDto(productEntity);
-            responseDtoList.add(ProductListResponseDto);
+            ProductListResponseDto productListResponseDto = new ProductListResponseDto(productEntity);
+            responseDtoList.add(productListResponseDto);
         }
-
-        model.addAttribute("responseDtoList",responseDtoList);
-        return "customer/products/productList.html";
+        return responseDtoList;
     }
 }

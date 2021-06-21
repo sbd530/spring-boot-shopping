@@ -18,14 +18,14 @@ public class ProductRequestDto {
     @NotBlank
     private String productInfo;
     @NotBlank @Positive
-    private int rprice;
+    private Integer rprice;
     @Positive //dprice<rprice 프론트쪽에서 막기
-    private int dprice;
+    private Integer dprice;
     @NotBlank @Positive
-    private int stock;
+    private Integer stock;
 
     @Builder
-    public ProductRequestDto(String productName, String productInfo, int rprice, int dprice, int stock) {
+    public ProductRequestDto(String productName, String productInfo, Integer rprice, Integer dprice, Integer stock) {
         this.productName = productName;
         this.productInfo = productInfo;
         this.rprice = rprice;

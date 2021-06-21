@@ -70,6 +70,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	//Cache(redis)
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 
 	// Swagger 2
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
@@ -85,6 +87,7 @@ dependencies {
 
 	// jquery
 	implementation group: 'org.webjars', name: 'jquery', version: '3.3.1'
+
 
 }
 
