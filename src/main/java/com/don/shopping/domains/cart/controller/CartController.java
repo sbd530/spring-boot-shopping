@@ -30,6 +30,14 @@ public class CartController {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         List<CartLineDto> cartLineDtoList = cartService.getCartLineDtoListForCartPage(userId);
         model.addAttribute("cartLineDtoList", cartLineDtoList);
+        int totalPrice = 0;
+        int totalAmount = 0;
+        for (CartLineDto cartLineDto : cartLineDtoList) {
+            totalPrice += cartLineDto.getDprice() * cartLineDto.getOrderAmount();
+            totalAmount += cartLineDto.getOrderAmount();
+        }
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalAmount", totalAmount);
         return "customer/carts/cart";
     }
 

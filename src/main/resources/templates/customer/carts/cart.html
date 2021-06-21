@@ -3,40 +3,36 @@
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
 <meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
 
-<div th:replace="customer/users/mypage/head"/>
+<div th:replace="customer/users/mypage/head"></div>
 
 
 <script th:inline="javascript">
-      $(function(){
-          $("#updateBtn").on("click", function() {
-              var url = "/mypage"
 
-             $.ajax({
-                url: url,
-                method: "PUT",
-                data: {
-                      email: $("#email").val(),
-                      name: $("#name").val(),
-                      password: $("#password").val(),
-                      phoneNumber1: $("#phoneNumber1").val(),
-                      phoneNumber2: $("#phoneNumber2").val(),
-                      phoneNumber3: $("#phoneNumber3").val(),
-                      postNumber: $("#postNumber").val(),
-                      address1: $("#address1").val(),
-                      address2: $("#address2").val()
-                  },
-                  success: function(data){
-                      alert(data);
-                      location.replace(url);
-                  },
-                  error: function(){
-                      alert("에러발생");
-                  }
+function plusAmount(productId){
 
-             });
+    var oldValue = $("#orderAmount"+productId).val();
+    $("#orderAmount"+productId).val(oldValue+1);
 
-          });
-      });
+    var url = "/carts"
+
+    $.ajax({
+        url: url,
+        method: "PUT",
+        data: {
+            productId: productId,
+            orderAmount: $("#orderAmount"+productId).val()
+
+        },
+        success: function(data){
+            alert(data);
+        },
+        error: function(){
+            alert("에러발생");
+        }
+
+    });
+
+}
     </script>
 
 <div id="displayCanvas" class="desktop" data-viewport="desktop">
@@ -58,7 +54,7 @@
           <div class="item-list-header">
             <span class="name">상품 정보</span>
             <span class="qty" style=" text-align: left; padding-left: 50px;">수량</span>
-            <span class="price" style=" text-align: center;">가격</span>
+            <span class="price" style=" text-align: center;">배송비</span>
           </div>
           <span class="deliveryCharge">배송비</span>
         </div>
@@ -70,23 +66,23 @@
 
             <div class="delivery-group-item-list">
 
-              <!-- CartLine Row 시작 -->
-              <div th:each="dto : ${cartLineDtoList}" class="info cartDiv designSettingElement shape">
+              <!-- CartLine Row Start @Don -->
+              <div th:each="cartLine : ${cartLineDtoList}" class="info cartDiv designSettingElement shape">
                 <div class="product">
                   <div class="img">
-                    <a th:href="@{'/products/' + ${dto.productId}}">
-                      <img th:src="${dto.filePath}">
+                    <a th:href="@{'/products/' + ${cartLine.productId}}">
+                      <img th:src="${cartLine.filePath}">
                     </a>
                   </div>
                   <div class="text">
                     <div class="name">
-                      <a th:href="@{'/products/' + ${dto.productId}}" th:text="${dto.productName}">
+                      <a th:href="@{'/products/' + ${cartLine.productId}}" th:text="${cartLine.productName}">
                         <!-- productName -->
                       </a>
                     </div>
 
                     <div class="delete-btn-wrapper">
-                      <span class="designSettingElement text-assi" th:onclick="'remove(' + ${dto.productId} + ')'">
+                      <span class="designSettingElement text-assi" th:onclick="'remove(' + ${cartLine.productId} + ')'">
                         삭제하기
                       </span>
                     </div>
@@ -96,24 +92,27 @@
                 <div class="QuantityDiv" style="width: 250px;">
                   <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
                     <!-- 상품 수량 -->
-                    <input th:value="${dto.orderAmount}" class="designSettingElement shape ui-spinner-input" type="number" data-cart-item-no="34090789" aria-valuemin="1" aria-valuenow="4" autocomplete="off" role="spinbutton">
-                    <a tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-up ui-corner-tr ui-button-icon-only" role="button">
+                    <input th:id="'orderAmount' + ${cartLine.productId}" th:value="${cartLine.orderAmount}"
+                           class="designSettingElement shape ui-spinner-input"
+                           type="number" data-cart-item-no="34090789" aria-valuemin="1" aria-valuenow="4" autocomplete="off" role="spinbutton">
+                    <a th:onclick="'plusAmount(' + cartLine.productId + ')'"
+                       tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-up ui-corner-tr ui-button-icon-only" role="button"
+                       th:id="plusAmount" >
                       <span class="ui-button-icon ui-icon ui-icon-triangle-1-n">
 
                       </span>
                       <span class="ui-button-icon-space">
                     </span>
                     </a>
-                    <a tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-down ui-corner-br ui-button-icon-only" role="button">
-                      <span class="ui-button-icon ui-icon ui-icon-triangle-1-s">
-
-                      </span>
+                    <a th:onclick="'minusAmount(' + cartLine.productId + ')'"
+                       tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-down ui-corner-br ui-button-icon-only" role="button" id="minusAmount">
+                      <span class="ui-button-icon ui-icon ui-icon-triangle-1-s"></span>
                     <span class="ui-button-icon-space">
                     </span>
                     </a>
                   </span>
                 </div>
-                <div class="shopCartPrice price" th:text="${dto.rprice}">
+                <div class="shopCartPrice price" th:text="${cartLine.rprice}">
                   <!-- rprice -->
                 </div>
               </div>
@@ -127,7 +126,7 @@
 
               <div class="delivery-group-sale-price-info">
                 <div class="delivery-group-sale-price">
-                  가격 14,000원 + 배송비&nbsp;
+
                 </div>
               </div>
 
@@ -149,16 +148,16 @@
         <div class="tb-total clearfix">
           <div id="cartInfoDiv" class="info designSettingElement shape">
             <div class="price">
-              <div class="title">상품 합계</div>
-              <div id="cartTotalProductPrice" class="content">₩ 0</div>
+              <div class="title">상품 수량</div>
+              <div id="cartTotalProductPrice" class="content">[[${totalAmount}]] 개</div>
             </div>
             <div id="cartDiscountDiv" class="discount">
               <div class="hide">
                 <span class="icomoon-ic-info designSettingElement text-assi"></span>
                 <span id="cartDiscountList" class=""></span>
               </div>
-              <div class="title">할인</div>
-              <div id="cartDiscountPrice" class="content"></div>
+              <!--<div class="title">할인</div>-->
+              <!--<div id="cartDiscountPrice" class="content"></div>-->
             </div>
             <div class="price shippingPriceWrapper">
               <div class="title">배송비</div>
@@ -167,35 +166,18 @@
           </div>
           <div id="cartTotalDiv" class="total">
             <div class="title bold">합계</div>
-            <div id="cartTotalDiscountAppliedPrice" class="content bold"></div>
+            <div id="cartTotalDiscountAppliedPrice" class="content bold">₩ [[${totalPrice}]]</div>
           </div>
         </div>
       </div>
 
-      <div class="btn-wrapper shopCartInfo hide">
-        <button id="btn_orderProducts"
-                class="designSettingElement button">주문하기</button>
+      <div class="btn-wrapper shopCartInfo">
+        <button id="btn_orderProducts" class="designSettingElement button" style="background-color: #2B2F33 !important;">주문하기</button>
       </div>
 
-
-      <div id="no-shopCart-msg" class="field_content no-content-msg designSettingElement text-body">
+      <div th:if="${#lists.size(cartLineDtoList)==0}" id="no-shopCart-msg" class="field_content no-content-msg designSettingElement text-body">
         장바구니가 비어 있습니다.
       </div>
-
-      <!-- Test -->
-      <div th:each="dto : ${cartLineDtoList}">
-        <div th:text="${dto.productId}"></div>
-        <div th:text="${dto.filePath}"></div>
-        <div th:text="${dto.productName}"></div>
-        <div th:text="${dto.rprice}"></div>
-        <div th:text="${dto.dprice}"></div>
-        <div th:text="${dto.stock}"></div>
-
-      </div>
-      <!-- Test -->
-
-
-
 
 
     </div>
@@ -203,5 +185,4 @@
 
 </div>
 
-</body>
 </html>

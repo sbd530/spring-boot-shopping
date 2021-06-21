@@ -3,9 +3,7 @@
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
     <meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
 
-<div th:replace="customer/users/mypage/head"/>
-
-
+<div th:replace="customer/users/mypage/head"></div>
 
     <script th:inline="javascript">
       $(function(){
@@ -55,30 +53,27 @@
                   <div id="shopCustomerOrderListDiv" class="content orderList designSettingElement text-body ">
                       <div class="tb-title designSettingElement shape clearfix">
                           <span class="date">일자</span>
-                          <span class="product">상품 정보</span>
+                          <span class="product">상품명</span>
                           <span class="total">가격</span>
                           <span class="status">상태</span>
                       </div>
-
-                      <div class="tb-title designSettingElement shape clearfix">
-                          <span class="date">21.06.15</span>
-                          <span class="product">상품 정보</span>
-                          <span class="total">90,000</span>
-                          <span class="status">굿</span>
-                      </div>
-
-
-
-
-                      <div id="shopCustomerOrderList" class="tb-content">
-                      </div>
-                      <div id="shopCustomerOrderPageCount" class="pagination_div designSettingElement">
+                  </div>
+                  <div th:each="myOrder : ${myOrderList}" class="content orderList designSettingElement text-body ">
+                      <!-- MyOrder Row Start @Don -->
+                      <div th:each="productInfo : ${myOrder.myOrderProductList}" class="tb-title designSettingElement shape clearfix">
+                          <span th:text="${#temporals.format(myOrder.orderDate, 'yy.MM.dd')}" class="date"></span>
+                          <span th:text="${productInfo.productName}" class="product"></span>
+                          <span th:text="${#numbers.formatInteger(productInfo.totalPrice, 3, 'COMMA')}" class="total"></span>
+                          <span th:text="${myOrder.orderStatus}" class="status"></span>
                       </div>
                   </div>
-                  <div id="noOrderMsg" class="content no-content-msg designSettingElement text-body ">
+
+                  <div th:if="${#lists.size(myOrderList)==0}" id="noOrderMsg" class="content no-content-msg designSettingElement text-body ">
                       주문 내역이 없습니다.
                   </div>
-                  <!--  my posts -->
+
+
+
                 <div class="js-section-myposts ">
                     <div class="header designSettingElement text-title otherTitle myPostsTitle myPosts">
                         <span class="title">내가 쓴 글</span>
@@ -89,20 +84,18 @@
                             <span class="title">제목</span>
                             <span class="type">유형</span>
                         </div>
-                        <div id="shopProductMyPosts" class="tb-content">
+
+                        <!--  MyQuestion Row Start @Don -->
+                        <div th:each="myQuestion : ${myQuestionList}" id="shopProductMyPosts" class="tb-content">
                             <div class="tb-title designSettingElement shape clearfix">
-                                <span class="date">21.06.15</span>
-                                <span class="title"><a href="/dhadbs2/productQna/120001/5">asdf</a></span>
+                                <span th:text="${#temporals.format(myQuestion.questionTime, 'yy.MM.dd')}" class="date"></span>
+                                <span th:text="${#strings.substring(myQuestion.content,0,9)}" class="title"></span>
                                 <span class="type">질문</span>
                             </div>
                         </div>
                     </div>
 
-                    <div id="shopCustomerMyPostsCount" class="pagination_div designSettingElement">
-                        <!-- 페이지네이션 -->
-                    </div>
-
-                    <div id="noShopCustomerMyPostsMsg" class="content no-content-msg designSettingElement text-body">
+                    <div th:if="${#lists.size(myQuestionList)==0}" id="noShopCustomerMyPostsMsg" class="content no-content-msg designSettingElement text-body">
                         내가 쓴 글이 없습니다.
                     </div>
                 </div>

@@ -1,5 +1,9 @@
 package com.don.shopping.domains.cart.infra;
 
+import com.don.shopping.domains.cart.domain.CartEntity;
+import com.don.shopping.domains.cart.domain.CartLineEntity;
+import com.don.shopping.domains.cart.domain.QCartEntity;
+import com.don.shopping.domains.cart.domain.QCartLineEntity;
 import com.don.shopping.domains.cart.query.dao.CartDao;
 import com.don.shopping.domains.cart.query.dto.CartLineDto;
 import com.don.shopping.domains.product.domain.ImageUsage;
@@ -14,12 +18,31 @@ public class CartDaoImpl implements CartDao {
 
     private EntityManager em;
     private JPAQueryFactory query;
+    private final QCartLineEntity cartLine = QCartLineEntity.cartLineEntity;
+    private final QCartEntity cart = QCartEntity.cartEntity;
 
     public CartDaoImpl(EntityManager em) {
         this.em = em;
         this.query = new JPAQueryFactory((em));
     }
-//com.don.shopping.domains.cart.query.dto.
+
+    @Override
+    public List<CartLineEntity> getCartLineList(Long userId) {
+        CartEntity cartEntity = query
+                .selectFrom(cart)
+                .where(cart.userId.eq(userId))
+                .fetchOne();
+        return cartEntity.getCartLineList();
+    }
+
+    @Override
+    public void modifyOrderAmount(Long cartLineId, CartLineEntity newCartLine) {
+        query.update(cartLine)
+                .set(cartLine.orderAmount, newCartLine.getOrderAmount())
+                .where(cartLine.cartLineId.eq(cartLineId))
+                .execute();
+    }
+
     @Override
     public List<CartLineDto> getCartLineDtoList(Long userId) {
         StringBuilder sb = new StringBuilder();

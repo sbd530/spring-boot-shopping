@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum OrderStatus {
 
-    PAYMENT_SUCCESS("paymentSuccess"), CANCELED("orderCanceled");
+    PAYMENT_SUCCESS("주문완료"), CANCELED("주문취소");
 
     private String status;
 

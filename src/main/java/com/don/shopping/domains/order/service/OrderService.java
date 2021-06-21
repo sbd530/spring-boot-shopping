@@ -16,12 +16,14 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class OrderService {
 
@@ -32,6 +34,7 @@ public class OrderService {
     private final CartService cartService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Transactional(readOnly = true)
     public OrderResponseDto getOrderResponseDtoFromCart(Long userId, OrderRequestDto orderRequestDto) {
 
         List<Long> orderProductIdList = orderRequestDto.getOrderLineDtoList()
@@ -42,6 +45,7 @@ public class OrderService {
         return orderDao.toOrderResponseDtoFromCart(userId, orderProductIdList);
     }
 
+    @Transactional(readOnly = true)
     public OrderResponseDto getOrderResponseDtoByOneOrderLine(OrderRequestDto orderRequestDto) {
 
         OrderLineDto orderLineDto = orderRequestDto.getOrderLineDtoList().get(0);
@@ -109,6 +113,7 @@ public class OrderService {
     }
 
     // 마이페이지 주문 내역
+    @Transactional(readOnly = true)
     public List<MyOrderDto> getMyOrders(Long userId) {
 
         List<OrderEntity> orderEntityList = orderDao.findMyOrders(userId);

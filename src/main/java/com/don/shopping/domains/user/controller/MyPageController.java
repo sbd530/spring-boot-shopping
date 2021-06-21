@@ -28,11 +28,15 @@ public class MyPageController {
 
     @GetMapping
     public String getMyPage(Authentication authentication, Model model) {
-
-        System.out.println("authentication = " + authentication.toString());
-
         String email = authentication.getName();
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+
+        // 유저 정보
         model.addAttribute("user", userService.getUserInfo(email));
+        // 나의 주문 내역
+        model.addAttribute("myOrderList", orderService.getMyOrders(userId));
+        // 나의 질문 내역
+        model.addAttribute("myQuestionList", userService.getMyQuestions(userId));
         return "customer/users/mypage/mypage";
     }
 
@@ -73,21 +77,6 @@ public class MyPageController {
         return "FAIL";
     }
 
-    // 유저의 주문 내역 테스트
-    @GetMapping("/orders")
-    @ResponseBody
-    public List<MyOrderDto> getMyOrders(Authentication authentication) {
-        Long userId = ac.getUserFromAuthentication(authentication).getId();
-        return orderService.getMyOrders(userId);
-    }
 
-
-    // 유저의 내가 쓴 글 테스트
-    @GetMapping("/questions")
-    @ResponseBody
-    public List<MyQuestionDto> getMyQuestions(Authentication authentication) {
-        Long userId = ac.getUserFromAuthentication(authentication).getId();
-        return userService.getMyQuestions(userId);
-    }
 
 }
