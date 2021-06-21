@@ -39,7 +39,7 @@
   <!-- 윤서script(0618추가) -->
   <script th:inline="javascript">
     function fnCalCount(type, ths){
-        var $input = $(ths).parents("td").find("input[name='pop_out']");
+        var $input = $(ths).parents("td").find("input[name='orderAmount']");
         var tCount = Number($input.val());
 
         if(type=='p'){
@@ -57,7 +57,7 @@
 
     function sendToPayment() {
             const f = document.toCartOrBuyForm;
-            if(f.pop_out.value<1){
+            if(f.orderAmount.value<1){
                 alert("수량을 입력해주세요.");
                 return;
             }
@@ -67,11 +67,24 @@
 
     function sendToCart() {
 		const f = document.toCartOrBuyForm;
-		if(f.pop_out.value<1){
+		if(f.orderAmount.value<1){
 			alert("수량을 입력해주세요.");
 			return;
 		}
-
+		$.ajax({
+          url: "/carts",
+          method: "GET",
+          data: {
+              productId: $("#productId").val(),
+              orderAmount: $("#orderAmount").val()
+          },
+          success: function(data){
+              alert("장바구니에 담았습니다");
+          },
+          error: function(){
+              alert("에러발생");
+          }
+        });
 		f.action = "/carts";
 		f.submit();
 	}
@@ -232,7 +245,7 @@
      </span>
     </div>
     <form method="post" name="toCartOrBuyForm">
-    <input type="hidden" value="${dto.productId}" name="productId">
+    <input type="hidden" th:value="${dto.productId}" name="productId" id="productId">
     <div id="shopProductQuantityDiv" class="productQuantityDiv row designSettingElement text-body ">
       <span class="text">수량</span>
       <table align="center">
