@@ -72,7 +72,6 @@ public class OrderDaoImpl implements OrderDao {
 
         List<OrderEntity> results = queryResults.getResults();
         long total = queryResults.getTotal();
-
         return new PageImpl<>(results, pageable, total);
     }
 

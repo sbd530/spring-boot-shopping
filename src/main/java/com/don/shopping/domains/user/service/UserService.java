@@ -8,6 +8,8 @@ import com.don.shopping.domains.user.query.dao.UserDao;
 import com.don.shopping.domains.user.query.dto.ChangePasswordDto;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,5 +128,15 @@ public class UserService  {
                 .map(MyQuestionDto::new)
                 .collect(Collectors.toList());
         return myQuestions;
+    }
+
+    public List<AdminUserDto> getUserList(Pageable pageable) {
+        Page<UserEntity> userPage = userDao.findUserList(pageable);
+
+        List<AdminUserDto> adminUserDtoList = userPage
+                .stream()
+                .map(AdminUserDto::new).collect(Collectors.toList());
+
+        return adminUserDtoList;
     }
 }

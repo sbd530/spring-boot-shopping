@@ -3,9 +3,14 @@ package com.don.shopping.domains.user.infra.dao;
 import com.don.shopping.domains.question.domain.QQuestionEntity;
 import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.user.domain.QUserEntity;
+import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.query.dao.UserDao;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -53,5 +58,20 @@ public class UserDaoImpl implements UserDao {
                 .where(question.userId.eq(userId))
                 .fetch();
         return myQuestions;
+    }
+
+    @Override
+    public Page<UserEntity> findUserList(Pageable pageable) {
+
+        QueryResults<UserEntity> queryResults = query
+                .select(user)
+                .from(user)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(user.id.desc())
+                .fetchResults();
+        List<UserEntity> results = queryResults.getResults();
+        long total = queryResults.getTotal();
+        return new PageImpl<>(results, pageable, total);
     }
 }

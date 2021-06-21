@@ -35,22 +35,23 @@ public class AdminProductController {
 
     //전체 조회(목록)
     @GetMapping("/products")
-    public String getAdminProductListPage(Model model) {
+    @ResponseBody
+    public List<AdminProductListResponseDto> getAdminProductListPage(Model model) {
 
         //상품 전체 조회
         List<ProductEntity> productEntityList = productService.searchAllDesc();
         //반환할 List<ProductListResponseDto> 생성
-        List<AdminProductListResponseDto> AdminproductListResponseDtoList = new ArrayList<>();
+        List<AdminProductListResponseDto> adminproductListResponseDtoList = new ArrayList<>();
 
         for(ProductEntity product : productEntityList) {
             //전체 조회하여 획득한 각 상품 객체를 이용하여 ProductListResponseDto 생성
             AdminProductListResponseDto productListResponseDto = new AdminProductListResponseDto(product);
-            AdminproductListResponseDtoList.add(productListResponseDto);
+            adminproductListResponseDtoList.add(productListResponseDto);
         }
 
-        model.addAttribute("productListDtoList", AdminproductListResponseDtoList);
+//        model.addAttribute("productListDtoList", adminproductListResponseDtoList);
 
-        return "dashboard/products/productList.html";
+        return adminproductListResponseDtoList;
     }
 
     //상품등록페이지

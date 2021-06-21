@@ -6,7 +6,7 @@ import com.don.shopping.domains.order.domain.OrderRepository;
 import com.don.shopping.domains.order.domain.OrderStatus;
 import com.don.shopping.domains.order.query.dao.OrderDao;
 import com.don.shopping.domains.order.query.dto.OrderProductDto;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AdminOrderService {
 
     private OrderRepository orderRepository;
@@ -29,9 +29,9 @@ public class AdminOrderService {
 
     public AdminOrderResponseDto getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
 
-        // status 문자열이 없으면 valueOf 로 변환
-        OrderStatus orderStatusEnum = null;
-        DeliveryStatus deliveryStatusEnum = null;
+        // status 문자열이 있으면 valueOf 로 변환
+        OrderStatus orderStatusEnum = OrderStatus.PAYMENT_SUCCESS;
+        DeliveryStatus deliveryStatusEnum = DeliveryStatus.READY;
 
         if(orderStatusStr != null && !orderStatusStr.equals(""))
             orderStatusEnum = OrderStatus.valueOf(orderStatusStr);

@@ -42,6 +42,9 @@ public class AdminOrderDto {
         this.phoneNumber1 = phoneNumber.getPhoneNumber1();
         this.phoneNumber2 = phoneNumber.getPhoneNumber2();
         this.phoneNumber3 = phoneNumber.getPhoneNumber3();
+        if (shipment == null) {
+            shipment = new Shipment("배송회사", "송장번호");
+        }
         this.shipmentCompany = shipment.getShipmentCompany();
         this.trackingNumber = shipment.getTrackingNumber();
     }
