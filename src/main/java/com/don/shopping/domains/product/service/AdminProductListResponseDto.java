@@ -3,8 +3,10 @@ package com.don.shopping.domains.product.service;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class AdminProductListResponseDto {
+public class AdminProductListResponseDto implements Serializable {
     private Long productId;
     private String productName;
     private Integer rprice;

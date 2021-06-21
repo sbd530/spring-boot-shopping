@@ -53,17 +53,23 @@
           </div>
           <span class="headerProductSearchContent" data-type="english">SEARCH</span>
         <div class="headerProductSearchContent icomoon-search systemIcon systemIconWeight_none" data-type="icon"></div></a>
-      <div style="display:inline-block;" >
-       <a id="headerCustomer" class="headerCustomer desktop site-element-child" href="/dhadbs2/myPage">
+      <div style="display:inline-block;" th:if="${session.login}">
+       <a id="headerCustomer" class="headerCustomer desktop site-element-child" href="http://localhost:8080/mypage/">
         <span class="headerCustomerContent" data-type="english">MY PAGE</span>
         <div class="headerCustomerContent icomoon-user systemIcon systemIconWeight_none" data-type="icon"></div>
         <div class="headerCustomerContent icomoon-snowman systemIcon systemIconWeight_none" data-type="icon-snowman"></div></a>
-       <a id="headerCart" class="headerCart desktop site-element-child" href="/dhadbs2/cart/6970319">
+       <a id="headerCart" class="headerCart desktop site-element-child" href="http://localhost:8080/carts">
         <span class="headerCartContent" data-type="english">CART</span>
         <div class="headerCartContent icomoon-cart systemIcon systemIconWeight_none" data-type="icon"></div>
         <div class="headerCartContent icomoon-bag systemIcon systemIconWeight_none" data-type="icon-bag"></div>
         <span class="cartSizeWithBracketSpan cartType_english"></span></a>
       </div>
+        <div style="display:inline-block;" th:unless="${session.login}">
+          <a id="headerCustomer" class="headerCustomer desktop site-element-child" href="http://localhost:8080/auth/login">
+            <span class="headerCustomerContent" data-type="english">LOGIN</span>
+            <div class="headerCustomerContent icomoon-user systemIcon systemIconWeight_none" data-type="icon"></div>
+            <div class="headerCustomerContent icomoon-snowman systemIcon systemIconWeight_none" data-type="icon-snowman"></div></a>
+        </div>
     </div>
       <div id="headerSns" class="headerSns desktop site-element" data-itemtype="header-sns">
       </div>

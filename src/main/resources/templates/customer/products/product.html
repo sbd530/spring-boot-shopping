@@ -66,13 +66,13 @@
         }
 
     function sendToCart() {
-		const f = document.toCartOrBuyForm;
+		f = document.toCartOrBuyForm;
 		if(f.orderAmount.value<1){
 			alert("수량을 입력해주세요.");
 			return;
 		}
 		$.ajax({
-          url: "/carts",
+          url: "/products",
           method: "GET",
           data: {
               productId: $("#productId").val(),
@@ -85,8 +85,8 @@
               alert("에러발생");
           }
         });
-		f.action = "/carts";
-		f.submit();
+        f.action = "/carts";
+        f.submit();
 	}
   </script>
 

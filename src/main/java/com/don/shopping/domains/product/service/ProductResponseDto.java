@@ -4,11 +4,12 @@ import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductImageEntity;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class ProductResponseDto {
+public class ProductResponseDto implements Serializable {
     private Long productId;
     private String productName;
     private String productInfo;

@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
 <meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
+<!-- header -->
+<header th:insert="customer/main/header.html"></header>
 
 <div th:replace="customer/users/mypage/head"></div>
 
@@ -67,21 +69,21 @@ function plusAmount(productId){
             <div class="delivery-group-item-list">
 
               <!-- CartLine Row Start @Don -->
-              <div th:each="cartLine : ${cartLineDtoList}" class="info cartDiv designSettingElement shape">
-                <div class="product">
-                  <div class="img">
+              <div th:each="cartLine : ${cartLineDtoList}" class="info cartDiv designSettingElement shape" style="display:inline-block">
+                <div class="product" style="display:inline-block">
+                  <div class="img" style="display:inline-block">
                     <a th:href="@{'/products/' + ${cartLine.productId}}">
                       <img th:src="${cartLine.filePath}">
                     </a>
                   </div>
-                  <div class="text">
+                  <div class="text" style="display:inline-block">
                     <div class="name">
                       <a th:href="@{'/products/' + ${cartLine.productId}}" th:text="${cartLine.productName}">
                         <!-- productName -->
                       </a>
                     </div>
 
-                    <div class="delete-btn-wrapper">
+                    <div class="delete-btn-wrapper" style="display:inline-block">
                       <span class="designSettingElement text-assi" th:onclick="'remove(' + ${cartLine.productId} + ')'">
                         삭제하기
                       </span>
@@ -89,7 +91,7 @@ function plusAmount(productId){
                   </div>
 
                 </div>
-                <div class="QuantityDiv" style="width: 250px;">
+                <div class="QuantityDiv" style="width: 250px;display:inline-block">
                   <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
                     <!-- 상품 수량 -->
                     <input th:id="'orderAmount' + ${cartLine.productId}" th:value="${cartLine.orderAmount}"
@@ -112,7 +114,7 @@ function plusAmount(productId){
                     </a>
                   </span>
                 </div>
-                <div class="shopCartPrice price" th:text="${cartLine.rprice}">
+                <div class="shopCartPrice price" th:text="${cartLine.rprice}" style="display:inline-block">
                   <!-- rprice -->
                 </div>
               </div>
@@ -165,7 +167,7 @@ function plusAmount(productId){
             </div>
           </div>
           <div id="cartTotalDiv" class="total">
-            <div class="title bold">합계</div>
+            <div class="title bold">합 계</div>
             <div id="cartTotalDiscountAppliedPrice" class="content bold">₩ [[${totalPrice}]]</div>
           </div>
         </div>
