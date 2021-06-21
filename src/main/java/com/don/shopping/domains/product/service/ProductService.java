@@ -8,6 +8,7 @@ import com.don.shopping.domains.product.query.dto.UpdateProductImageDto;
 import com.don.shopping.domains.product.util.ProductImageHandler;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -100,31 +102,24 @@ public class ProductService {
     //상품 개별조회(정보)
     @Transactional(readOnly = true)
     public ProductEntity searchById(Long id) {
-        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()
+        return productRepository.findById(id).orElseThrow(()
             -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
-
-        return productEntity;
     }
 
     //상품 전체조회
-    @Transactional(readOnly = true)
-    public List<ProductEntity> searchAllDesc() {
-        return productRepository.findAll();
+//    @Transactional(readOnly = true)
+    @Cacheable("products")
+    public List<AdminProductListResponseDto> searchAllDesc() {
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        return productEntityList.stream()
+                .map(AdminProductListResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     //키워드별 상품 전체조회
     @Transactional(readOnly = true)
     public List<ProductEntity> findByKeyword(String keyword) {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-
-        QProductEntity productEntity = QProductEntity.productEntity;
-
-        List<ProductEntity> productEntityList = queryFactory
-                .selectFrom(productEntity)
-                .where(productEntity.productName.contains(keyword).or(productEntity.productInfo.contains(keyword)))
-                .fetch();
-
-        return productEntityList;
+        return productDao.findByKeyword(keyword);
     }
 
     @Transactional

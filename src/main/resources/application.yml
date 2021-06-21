@@ -20,7 +20,6 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -30,15 +29,6 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type: trace
-    root: info
-
   servlet:
     multipart:
       maxFileSize: 10MB
@@ -52,3 +42,18 @@ logging:
       enabled: true
     freemarker:
       cache: false
+
+  redis:
+    host: localhost
+    port: 6379
+    prefix:
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: trace
+    root: info
+

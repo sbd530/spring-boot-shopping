@@ -108,20 +108,7 @@ public class ProductController {
     //전체 조회(목록)
     @GetMapping("/products")
     public String searchAll(Model model) {
-
-        //상품 전체 조회
-        List<ProductEntity> productEntityList = productService.searchAllDesc();
-        //반환할 List<ProductListResponseDto> 생성
-        List<AdminProductListResponseDto> productListResponseDtoList = new ArrayList<>();
-
-        for(ProductEntity product : productEntityList) {
-            //전체 조회하여 획득한 각 상품 객체를 이용하여 ProductListResponseDto 생성
-            AdminProductListResponseDto productListResponseDto = new AdminProductListResponseDto(product);
-            productListResponseDtoList.add(productListResponseDto);
-        }
-
-        model.addAttribute("productListDtoList",productListResponseDtoList);
-
+        model.addAttribute("productListDtoList",productService.searchAllDesc());
         return "customer/products/productList.html";
     }
 

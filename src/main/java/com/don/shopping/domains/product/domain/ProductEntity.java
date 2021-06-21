@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Table(name="product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductEntity {
+public class ProductEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

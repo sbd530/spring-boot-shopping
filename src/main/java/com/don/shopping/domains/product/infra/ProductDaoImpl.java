@@ -1,5 +1,6 @@
 package com.don.shopping.domains.product.infra;
 
+import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.QProductEntity;
 import com.don.shopping.domains.product.query.dao.ProductDao;
 import com.don.shopping.domains.product.query.dto.UpdateProductDto;
@@ -7,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -30,6 +32,15 @@ public class ProductDaoImpl implements ProductDao {
                 .set(product.dprice, updateProductDto.getDprice())
                 .set(product.stock, updateProductDto.getStock())
                 .execute();
+    }
+
+    @Override
+    public List<ProductEntity> findByKeyword(String keyword) {
+        List<ProductEntity> productEntityList = query
+                .selectFrom(product)
+                .where(product.productName.contains(keyword).or(product.productInfo.contains(keyword)))
+                .fetch();
+        return productEntityList;
     }
 
 }
