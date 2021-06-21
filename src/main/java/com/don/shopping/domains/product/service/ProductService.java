@@ -107,8 +107,8 @@ public class ProductService {
     }
 
     //상품 전체조회
-//    @Transactional(readOnly = true)
-    @Cacheable("products")
+    @Transactional(readOnly = true)
+    //@Cacheable("products")
     public List<AdminProductListResponseDto> searchAllDesc() {
         List<ProductEntity> productEntityList = productRepository.findAll();
         return productEntityList.stream()
