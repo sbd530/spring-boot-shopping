@@ -30,7 +30,9 @@ public class QuestionController {
     public String listQuestionView(Model model){
         List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
         model.addAttribute("questionLists",questionEntityList);
-        return "dashboard/question/questionlist";
+        model.addAttribute("questionForm", new QuestionForm());
+        /* return "dashboard/question/questionlist";*/ //대쉬보드 버전
+        return "customer/question/addanswer_modal.html";
 
     }
     //질문 등록
