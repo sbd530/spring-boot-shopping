@@ -72,8 +72,8 @@
 			return;
 		}
 		$.ajax({
-          url: "/products",
-          method: "GET",
+          url: "/carts",
+          method: "POST",
           data: {
               productId: $("#productId").val(),
               orderAmount: $("#orderAmount").val()
@@ -82,11 +82,9 @@
               alert("장바구니에 담았습니다");
           },
           error: function(){
-              alert("에러발생");
+              alert("에러 발생");
           }
         });
-        f.action = "/carts";
-        f.submit();
 	}
   </script>
 
@@ -234,8 +232,8 @@
         </a>
       </div>
     </div>
-    <div style="height:200px;">
-      <pre><p th:text="${dto.productInfo}" style="line-height:20px;"></p></pre>
+    <div style="height:200px;" >
+      <pre><p th:text="${dto.productInfo}" style="line-height:20px;background-color:#fff"></p></pre>
     </div>
    <div id="shopProductPrice" class="price row designSettingElement">
      <span th:if="${dto.rprice == dto.dprice}" th:text="${#numbers.formatInteger(dto.rprice, 0, 'COMMA') + '원'}"></span>
@@ -252,7 +250,7 @@
         <tr>
           <td>
             <button type="button" style="width:40px;height:40px;margin-right:-5px;border:1px solid #EFEFEF;cursor:pointer;" onclick="fnCalCount('m', this);">-</button>
-            <input type="text" name="orderAmount" value="1" style="text-align:center;width:40px;height:40px;border:1px solid #EFEFEF;"/>
+            <input type="text" id="orderAmount" name="orderAmount" value="1" style="text-align:center;width:40px;height:40px;border:1px solid #EFEFEF;"/>
             <button type ="button" style="width:40px;height:40px;margin-left:-5px;border:1px solid #EFEFEF;cursor:pointer;" onclick="fnCalCount('p',this);">+</button>
           </td>
         </tr>
