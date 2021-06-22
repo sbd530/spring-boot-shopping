@@ -42,11 +42,11 @@ public class QuestionEntity {
 
 
 
-    @OneToMany
+    /*@OneToMany
     private List<QuestionAnswerEntity> questionAnswerEntity = new ArrayList<>();
-
+*/
     @Builder
-    public QuestionEntity(Long id, Long productId, String productName, Long userId, String userName, String content, LocalDateTime questionTime, List<QuestionAnswerEntity> questionAnswerEntity) {
+    public QuestionEntity(Long id, Long productId, String productName, Long userId, String userName, String content, LocalDateTime questionTime) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
@@ -54,6 +54,5 @@ public class QuestionEntity {
         this.userName = userName;
         this.content = content;
         this.questionTime = questionTime;
-        this.questionAnswerEntity = questionAnswerEntity;
     }
 }

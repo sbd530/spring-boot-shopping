@@ -1,6 +1,7 @@
 package com.don.shopping.domains.question.controller;
 
 import com.don.shopping.domains.question.domain.QuestionEntity;
+import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.don.shopping.domains.question.query.QuestionDao;
 import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.util.AuthenticationConverter;
@@ -23,9 +24,10 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionDao questionDao;
+    private final QuestionAnswerDao questionAnswerDao;
     private final AuthenticationConverter ac;
 
-    //전체 질문 조회
+    //전체 질문 조회(custmer)
     @GetMapping("/questions")
     public String listQuestionView(Model model){
         List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
@@ -33,6 +35,16 @@ public class QuestionController {
         model.addAttribute("questionForm", new QuestionForm());
         /* return "dashboard/question/questionlist";*/ //대쉬보드 버전
         return "customer/question/addanswer_modal.html";
+
+    }
+    //전체 질문 조회
+    @GetMapping("/questionadmin")
+    public String listQuestionView2(Model model){
+        List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
+        model.addAttribute("questionLists",questionEntityList);
+        model.addAttribute("questionForm", new QuestionForm());
+        return "dashboard/question/questionlist"; //대쉬보드 버전
+
 
     }
     //질문 등록
@@ -56,7 +68,7 @@ public class QuestionController {
         questionEntity.setUserId(userId);
 
         Long questionId = questionService.addQuestion(questionEntity);
-        return "redirect:/questions";
+        return "redirect:/questionadmin";
     }
     //개별 수정 update
     @GetMapping("/question/{questionId}/edit")
@@ -80,14 +92,16 @@ public class QuestionController {
         questionEntity.setProductId(questionForm.getQuestionProductId());
 
         questionService.addQuestion(questionEntity);
-        return "redirect:/questions";
+        return "redirect:/questionadmin";
     }
 
     //개별 삭제 delete
     @GetMapping("/question/{questionId}/delete")
     public String deleteQuestion(@PathVariable("questionId") Long questionId){
+        questionAnswerDao.deleteQuestionAnswer(questionId);
         questionDao.deleteQuestionOne(questionId);
-        return "redirect:/questions";
+
+        return "redirect:/questionadmin";
     }
 
 }

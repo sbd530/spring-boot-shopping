@@ -12,4 +12,6 @@ public interface QuestionAnswerDao {
 
     void deleteQuestionAnswerOne(Long questionAnswerId);
 
+    void deleteQuestionAnswer(Long questionId);
+
 }

@@ -44,4 +44,12 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
                 .where(qQuestionAnswerEntity.id.eq(questionAnswerId))
                 .execute();
     }
+
+    @Override
+    @Transactional
+    public void deleteQuestionAnswer(Long questionId) {
+        query.delete(qQuestionAnswerEntity)
+                .where(qQuestionAnswerEntity.questionId.eq(questionId))
+                .execute();
+    }
 }

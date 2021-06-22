@@ -392,7 +392,7 @@
                 <td th:text="${question.content}"></td>
                 <td th:text="${question.userName}"></td>
                 <td th:text="${#temporals.format(question.questionTime,'yyyy-MM-dd HH:mm')}"></td>
-                <td><a th:href="@{/question/}+${question.id}+@{/addanswer}" id="btn3">댓글보기</a></td>
+                <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" id="btn3">댓글보기</a></td>
               </tr>
               </tbody>
             </table>

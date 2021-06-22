@@ -23,7 +23,18 @@ public class AnswerController {
     private final QuestionAnswerService questionAnswerService;
     private final QuestionAnswerDao questionAnswerDao;
 
-    //댓글등록창
+    //댓글등록창 CUSTOMER
+    @GetMapping("question/{questionId}/addanswerCustom")
+    public String addAnswer2(@PathVariable("questionId")Long questionId,Model model){
+        model.addAttribute("answerForm", new AnswerForm());
+        List<QuestionAnswerEntity> questionAnswerEntityList = questionAnswerDao.findQuestionByQuestionId(questionId);
+        model.addAttribute("answerList",questionAnswerEntityList);
+        model.addAttribute("questionId",questionId);
+        return "customer/answer/answerlist";
+    }
+
+
+    //댓글등록창 ADMIN
     @GetMapping("question/{questionId}/addanswer")
     public String addAnswer(@PathVariable("questionId")Long questionId,Model model){
         model.addAttribute("answerForm", new AnswerForm());
