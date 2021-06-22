@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 public class ReviewForm {
 
 
-    @NotEmpty(message="리뷰 내용을 입력해주세요.")
+    @NotBlank(message="리뷰 내용을 입력해주세요.")
     private String reviewContent;
     @Min(value = 1,message = "별점을 1이상 주세요")
     private int rating;

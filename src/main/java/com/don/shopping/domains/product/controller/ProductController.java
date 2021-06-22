@@ -58,17 +58,16 @@ public class ProductController {
         model.addAttribute("dto",productResponseDto);
 
         List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
-        model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
         model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
         model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
+        model.addAttribute("id",id);
         List<QuestionEntity> questionEntityList = questionService.findQuestionsByProductId(id);
         model.addAttribute("questionList",questionEntityList); //+무룡파트 해당상품에 대한 질문 출력
         model.addAttribute("questionForm", new QuestionForm()); //+무룡파트 해당 상품에 대한 질문추가 form
-        model.addAttribute("ratingSum",reviewService.ratingSum(id)); //+무룡파트 해당 상품에 대한 별점의 합
+
         model.addAttribute("ratingCount",reviewService.ratingCount(id)); //+무룡파트 해당 상품에 대한 별점의 개수
         model.addAttribute("ratingAve",reviewService.ratingAve(id));//+무룡파트 해당 상품에 대한 별점의 평균
-        System.out.println("reviewService.ratingAve(id)"+reviewService.ratingAve(id));
-        //+무룡파트 해당 상품에 대한 별점의 개수
+
         return "customer/products/product.html";
     }
 
@@ -76,19 +75,24 @@ public class ProductController {
     @PostMapping("/products/{id}")
     public String addProductReviewPost(Model model, @PathVariable Long id, ReviewForm reviewForm, Authentication authentication, QuestionForm questionForm) {
 
-        if(reviewForm!=null) {
+        if(reviewForm.getReviewContent()!=null && reviewForm.getReviewContent()!="") {
+            Long userId = ac.getUserFromAuthentication(authentication).getId();
             ReviewEntity reviewEntity = new ReviewEntity();//리뷰 엔티티생성
+            reviewEntity.setUserName(reviewService.getUserName(userId));
             reviewEntity.setContent(reviewForm.getReviewContent());
             reviewEntity.setRating(reviewForm.getRating());
-            reviewEntity.setProductId(reviewForm.getReviewProductId());
+            reviewEntity.setProductId(id);
+            reviewEntity.setUserId(userId);
             Long reviewId = reviewService.addReview(reviewEntity);
 
         }
-        if(questionForm!=null) {
+        if(questionForm.getQuestionContent()!=null&&questionForm.getQuestionContent()!="") {
             Long userId = ac.getUserFromAuthentication(authentication).getId();// 질문엔티티생성
             QuestionEntity questionEntity = new QuestionEntity();
+            questionEntity.setUserName(questionService.getUserName(userId));
+            questionEntity.setProductName(questionService.getProductName(id));
             questionEntity.setContent(questionForm.getQuestionContent());
-            questionEntity.setProductId(questionForm.getQuestionProductId());
+            questionEntity.setProductId(id);
             questionEntity.setUserId(userId);
             Long questionId = questionService.addQuestion(questionEntity);
         }

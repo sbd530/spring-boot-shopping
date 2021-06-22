@@ -210,7 +210,7 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">상품 아이디</th>
+                    <th scope="col">상품 이름</th>
                     <th scope="col">질문 내용</th>
                     <th scope="col">작성자</th>
                     <th scope="col">작성날짜</th>
@@ -220,9 +220,9 @@
                 <tbody>
                 <tr th:each="question : ${questionLists}">
                     <th scope="row"><div th:text="${question.id}"></div></th>
-                    <td th:text="${question.productId}"></td>
+                    <td th:text="${question.productName}"></td>
                     <td th:text="${question.content}"></td>
-                    <td th:text="${question.userId}"></td>
+                    <td th:text="${question.userName}"></td>
                     <td th:text="${#temporals.format(question.questionTime,'yyyy-MM-dd HH:mm')}"></td>
                     <td><a th:href="@{/question/}+${question.id}+@{/addanswer}" id="btn3">댓글보기</a></td>
                 </tr>
@@ -237,7 +237,7 @@
 
         <br/><br/> <div style="font-size: x-large">질문 등록</div><br/><br/><br/>
 
-        <form role="form" th:action="@{/products/}+${id}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+        <form role="form" th:action="@{/question/add}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
             <div class="form-group">
 
                 <label th:for="content">질문 내용</label>
@@ -246,12 +246,12 @@
                 <p th:if="${#fields.hasErrors('questionContent')}" th:errors="*{questionContent}">Incorrect date</p>
             </div>
 
-            <div class="form-group">
+          <!--  <div class="form-group">
                 <label th:for="productId">상품 아이디</label>
                 <input type="text" th:field="*{questionProductId}" class="form-control" placeholder="상품 아이디를 입력하세요"
                        th:class="${#fields.hasErrors('questionProductId')}? 'form-control fieldError' : 'form-control'">
                 <p th:if="${#fields.hasErrors('questionProductId')}" th:errors="*{questionProductId}">Incorrect date</p>
-            </div>
+            </div>-->
 
 
 

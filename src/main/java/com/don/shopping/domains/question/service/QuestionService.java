@@ -1,9 +1,13 @@
 package com.don.shopping.domains.question.service;
 
+import com.don.shopping.domains.product.domain.ProductEntity;
+import com.don.shopping.domains.product.domain.ProductRepository;
 import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.question.domain.QuestionRepository;
 import com.don.shopping.domains.question.query.QuestionDao;
 import com.don.shopping.domains.review.domain.ReviewEntity;
+import com.don.shopping.domains.user.domain.UserEntity;
+import com.don.shopping.domains.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,8 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionDao questionDao;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
     //질문 등록
     @Transactional
@@ -44,7 +50,17 @@ public class QuestionService {
         return questionDao.findQuestionsByProductId(productId);
 
     }
+    @Transactional
+    public String getUserName(Long userId){
+        UserEntity userEntity = userRepository.getOne(userId);
+        return userEntity.getName();
+    }
 
+    @Transactional
+    public String getProductName(Long productId){
+        ProductEntity productEntity =  productRepository.getOne(productId);
+        return productEntity.getProductName();
+    }
 
 
 

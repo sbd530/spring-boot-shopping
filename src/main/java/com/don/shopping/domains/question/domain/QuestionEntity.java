@@ -21,7 +21,11 @@ public class QuestionEntity {
 
     private Long productId; //질문할 상품id
 
+    private String productName; //상품이름
+
     private Long userId;  //질문 작성한 userId
+
+    private String userName; //userName
 
     private String content;  //질문할 내용
 
@@ -42,10 +46,12 @@ public class QuestionEntity {
     private List<QuestionAnswerEntity> questionAnswerEntity = new ArrayList<>();
 
     @Builder
-    public QuestionEntity(Long id, Long productId, Long userId, String content, LocalDateTime questionTime, List<QuestionAnswerEntity> questionAnswerEntity) {
+    public QuestionEntity(Long id, Long productId, String productName, Long userId, String userName, String content, LocalDateTime questionTime, List<QuestionAnswerEntity> questionAnswerEntity) {
         this.id = id;
         this.productId = productId;
+        this.productName = productName;
         this.userId = userId;
+        this.userName = userName;
         this.content = content;
         this.questionTime = questionTime;
         this.questionAnswerEntity = questionAnswerEntity;

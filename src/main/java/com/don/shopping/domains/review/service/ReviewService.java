@@ -5,6 +5,8 @@ import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.domain.ReviewRepository;
 import com.don.shopping.domains.review.infra.ReviewDaoImpl;
 import com.don.shopping.domains.review.query.ReviewDao;
+import com.don.shopping.domains.user.domain.UserEntity;
+import com.don.shopping.domains.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository; //field injection
     private final ReviewDao reviewDao;
+    private final UserRepository userRepository;
 
     //리뷰 등록
     @Transactional
@@ -56,11 +59,13 @@ public class ReviewService {
     //해당 상품의 리뷰의 총 별점합
     @Transactional(readOnly = true)
     public int ratingSum(Long productId){
+
         return reviewDao.ratingSum(productId);
     }
     //해당 상품의 리뷰의 총 개수
     @Transactional(readOnly = true)
     public int ratingCount(Long productId){
+
         return reviewDao.ratingCount(productId);
     }
     //해당 상품의 리뷰의 별점 평균
@@ -69,5 +74,11 @@ public class ReviewService {
         return reviewDao.ratingAve(productId);
     }
 
+    @Transactional
+    public String getUserName(Long userId){
+        UserEntity userEntity = new UserEntity();
+        userEntity = userRepository.getOne(userId);
+        return userEntity.getName();
+    }
 
 }

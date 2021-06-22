@@ -50,6 +50,7 @@ public class QuestionController {
 
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         QuestionEntity questionEntity = new QuestionEntity();
+        questionEntity.setUserName(questionService.getUserName(userId));
         questionEntity.setContent(questionForm.getQuestionContent());
         questionEntity.setProductId(questionForm.getQuestionProductId());
         questionEntity.setUserId(userId);

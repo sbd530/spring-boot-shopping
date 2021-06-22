@@ -25,8 +25,10 @@ public class ReviewEntity {
 
     private Long userId;  //userId
 
+    private String userName;//userName
+
     private String content;  //리뷰할 내용
-    
+
     private int rating; // 별점
 
     private LocalDateTime reviewTime; //리뷰 작성 시간
@@ -42,10 +44,11 @@ public class ReviewEntity {
 
 
     @Builder
-    public ReviewEntity(Long id, Long productId, Long userId, String content, int rating, LocalDateTime reviewTime) {
+    public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating, LocalDateTime reviewTime) {
         this.id = id;
         this.productId = productId;
         this.userId = userId;
+        this.userName = userName;
         this.content = content;
         this.rating = rating;
         this.reviewTime = reviewTime;
