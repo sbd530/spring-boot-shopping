@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class ProductImageEntity implements Serializable {
+public class ProductImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

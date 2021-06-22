@@ -19,7 +19,7 @@ public class CartEntity {
     // UserEntity 의 id 를 참조합니다.
     private Long userId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cart_id")
     private List<CartLineEntity> cartLineList = new ArrayList<>();
 
@@ -36,6 +36,7 @@ public class CartEntity {
             if (cl.getProduct().getId() == newProductId) {
                 int newOrderAmount = cl.getOrderAmount() + newCartLine.getOrderAmount();
                 newCartLine.setOrderAmount(newOrderAmount);
+
                 this.cartLineList.set(i, newCartLine);
                 return;
             }
