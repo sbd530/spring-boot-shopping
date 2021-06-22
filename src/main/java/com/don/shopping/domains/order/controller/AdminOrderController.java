@@ -4,6 +4,7 @@ import com.don.shopping.domains.order.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,12 +47,12 @@ public class AdminOrderController {
         return mav;
     }
 
-    @PostMapping("/dashboard/orders/{orderId}/delivery")
-    public void sendShipment(@PathVariable Long orderId,
-                                         @ModelAttribute DeliveryForm deliveryForm) {
-
-        adminOrderService.addShipment(orderId, deliveryForm);
-
+    @PostMapping("/dashboard/orders/delivery")
+    public ResponseEntity sendShipment(@ModelAttribute DeliveryForm deliveryForm) {
+        System.out.println(deliveryForm.getOrderId());
+        System.out.println(deliveryForm.getShipment());
+        adminOrderService.addShipment(deliveryForm);
+        return ResponseEntity.ok().build();
     }
 
 

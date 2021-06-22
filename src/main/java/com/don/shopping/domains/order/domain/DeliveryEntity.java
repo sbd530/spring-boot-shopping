@@ -28,6 +28,8 @@ public class DeliveryEntity {
     @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
+    private Long orderId;
+
     @Builder
     public DeliveryEntity(Address address) {
         this.address = address;
@@ -37,5 +39,9 @@ public class DeliveryEntity {
     //배송시 배송에 대한 정보를 shipment 에 저장합니다.
     public void setShipment(Shipment shipment) {
         this.shipment = shipment;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

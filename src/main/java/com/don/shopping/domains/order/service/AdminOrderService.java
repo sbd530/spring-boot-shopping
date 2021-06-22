@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class AdminOrderService {
 
     private OrderRepository orderRepository;
@@ -27,6 +29,7 @@ public class AdminOrderService {
         order.cancelThisOrder();
     }
 
+    @Transactional(readOnly = true)
     public List<AdminOrderDto> getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
 
         // status 문자열이 있으면 valueOf 로 변환
@@ -57,6 +60,7 @@ public class AdminOrderService {
         return adminOrderDtoList;
     }
 
+    @Transactional(readOnly = true)
     public OrderResponseDto getOrderDetail(Long orderId) {
         OrderEntity order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
@@ -76,14 +80,15 @@ public class AdminOrderService {
         return new OrderResponseDto(orderProductDtoList);
     }
 
+    @Transactional(readOnly = true)
     public DeliveryForm getDeliveryForm(Long orderId) {
         OrderEntity order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
         return new DeliveryForm(order);
     }
 
-    public void addShipment(Long orderId, DeliveryForm deliveryForm) {
+    public void addShipment(DeliveryForm deliveryForm) {
 
-        orderDao.updateShipment(orderId, deliveryForm);
+        orderDao.updateShipment(deliveryForm);
     }
 }

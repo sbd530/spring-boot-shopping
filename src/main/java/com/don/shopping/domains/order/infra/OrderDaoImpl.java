@@ -76,22 +76,22 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void updateShipment(Long orderId, DeliveryForm deliveryForm) {
+    public void updateShipment(DeliveryForm deliveryForm) {
         query
-                .update(order)
-                .set(order.delivery.deliveryStatus, DeliveryStatus.DONE)
-                .set(order.delivery.shipment, deliveryForm.getShipment())
+                .update(delivery)
+                .set(delivery.deliveryStatus, DeliveryStatus.DONE)
+                .set(delivery.shipment, deliveryForm.getShipment())
+                .where(delivery.orderId.eq(deliveryForm.getOrderId()))
                 .execute();
     }
 
     @Override
     public List<OrderEntity> findMyOrders(Long userId) {
-        List<OrderEntity> orderEntityList = query
+        return query
                 .select(order)
                 .from(order)
                 .where(order.orderer.id.eq(userId))
                 .fetch();
-        return orderEntityList;
     }
 
     private BooleanExpression eqOrderStatus(OrderStatus orderStatus) {

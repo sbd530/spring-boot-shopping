@@ -108,8 +108,9 @@ public class OrderService {
         cartService.removeCartLines(ordererId, productIdList);
 
         // 주문 정보 저장
-
-        return orderRepository.save(order).getOrderId();
+        Long orderId = orderRepository.save(order).getOrderId();
+        orderRepository.findById(ordererId).get().getDelivery().setOrderId(orderId);
+        return orderId;
     }
 
     // 마이페이지 주문 내역

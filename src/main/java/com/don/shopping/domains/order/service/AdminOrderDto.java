@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class AdminOrderDto {
 
     private Long orderId;
     private String ordererName;
-    private LocalDateTime orderDate;
+    private String orderDate;
 
     private String orderStatus;
     private String deliveryStatus;
@@ -36,7 +37,7 @@ public class AdminOrderDto {
                          OrderStatus orderStatus, DeliveryStatus deliveryStatus) {
         this.orderId = orderId;
         this.ordererName = ordererName;
-        this.orderDate = orderDate;
+        this.orderDate = orderDate.format(DateTimeFormatter.ofPattern("yy-MM-dd"));
         this.orderStatus = orderStatus.getStatus();
         this.deliveryStatus = deliveryStatus.getStatus();
         this.phoneNumber1 = phoneNumber.getPhoneNumber1();
