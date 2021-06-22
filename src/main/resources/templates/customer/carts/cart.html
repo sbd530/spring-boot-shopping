@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
@@ -13,9 +12,12 @@
 $(function () {
 
   $(".plusAmount").on("click", function() {
-    alert("check");
     let productId = $(this).parent().find(".productId").val();
-    let newOrderAmount = $(this).parent().find(".orderAmount").val()+1;
+    let newOrderAmount = parseInt($(this).parent().find(".orderAmount").val())+1;
+    if(newOrderAmount>$(".stock" + productId).val()) {
+      alert("재고가 부족합니다!");
+      return;
+    }
     $(this).parent().find(".orderAmount").val(newOrderAmount);
 
     let formData = new FormData();
@@ -27,17 +29,17 @@ $(function () {
       data: formData,
       processData: false,
       contentType: false,
-      type: 'PUT',
-      success: function(data) {
-        alert(data);
-      }
+      type: 'PUT'
     });
   })
 
   $(".minusAmount").on("click", function() {
-    alert("check");
     let productId = $(this).parent().find(".productId").val();
-    let newOrderAmount = $(this).parent().find(".orderAmount").val() - 1;
+    let newOrderAmount = parseInt($(this).parent().find(".orderAmount").val()) - 1;
+    if(newOrderAmount<1) {
+      alert("1개 이상만 가능합니다.");
+      return;
+    }
     $(this).parent().find(".orderAmount").val(newOrderAmount);
 
     let formData = new FormData();
@@ -49,10 +51,7 @@ $(function () {
       data: formData,
       processData: false,
       contentType: false,
-      type: 'PUT',
-      success: function(data) {
-        alert(data);
-      }
+      type: 'PUT'
     });
   })
 
@@ -153,13 +152,14 @@ $(function () {
                     <input class="productId" type="text" style="display: none;" th:value="${cartLine.productId}" th:name="productId">
 
                     <!-- 상품 수량 -->
+                    <input type="hidden" name="stock" th:class="'stock'+${cartLine.productId}" th:value="${cartLine.stock}">
                     <button tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-up ui-corner-tr ui-button-icon-only minusAmount" role="button"
-                             type="button">-</button>
+                            type="button">-</button>
                     <input th:value="${cartLine.orderAmount}"
                            class="designSettingElement shape ui-spinner-input orderAmount" th:min="1" th:max="${cartLine.stock}"
                            type="number">
                     <button tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-down ui-corner-br ui-button-icon-only plusAmount" role="button"
-                             type="button">+</button>
+                            type="button">+</button>
                   </span>
               </div>
               <div class="QuantityDiv" style="display:inline-block">
