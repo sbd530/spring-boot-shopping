@@ -9,6 +9,7 @@ import com.don.shopping.domains.product.util.ProductImageHandler;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -108,8 +109,8 @@ public class ProductService {
 
     //상품 전체조회
     @Transactional(readOnly = true)
-//    @Cacheable("products")
-    public List<AdminProductListResponseDto> searchAllDesc() {
+    @Cacheable(value = "adminProductList", key = "#pageable")
+    public List<AdminProductListResponseDto> searchAllDesc(Pageable pageable) {
         List<ProductEntity> productEntityList = productRepository.findAll();
         return productEntityList.stream()
                 .map(AdminProductListResponseDto::new)

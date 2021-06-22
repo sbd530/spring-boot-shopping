@@ -10,6 +10,7 @@ import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.service.ReviewService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,8 +109,8 @@ public class ProductController {
 
     //전체 조회(목록)
     @GetMapping("/products")
-    public String searchAll(Model model) {
-        model.addAttribute("productListDtoList",productService.searchAllDesc());
+    public String searchAll(Model model, Pageable pageable) {
+        model.addAttribute("productListDtoList",productService.searchAllDesc(pageable));
         return "customer/products/productList.html";
     }
 

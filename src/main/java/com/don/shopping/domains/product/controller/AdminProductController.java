@@ -5,6 +5,7 @@ import com.don.shopping.domains.product.domain.ProductImageVO;
 import com.don.shopping.domains.product.service.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -36,8 +37,8 @@ public class AdminProductController {
     //전체 조회(목록)
     @GetMapping("/products")
     @ResponseBody
-    public List<AdminProductListResponseDto> getAdminProductListPage() {
-        return productService.searchAllDesc();
+    public List<AdminProductListResponseDto> getAdminProductListPage(Pageable pageable) {
+        return productService.searchAllDesc(pageable);
     }
 
     //상품등록페이지

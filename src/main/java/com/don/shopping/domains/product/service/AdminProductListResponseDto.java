@@ -2,11 +2,20 @@ package com.don.shopping.domains.product.service;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
 import lombok.Getter;
-
-import java.io.Serializable;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 @Getter
-public class AdminProductListResponseDto implements Serializable {
+@Setter
+@RedisHash("adminProductListResponseDto")
+@NoArgsConstructor
+public class AdminProductListResponseDto {
+
+    @Id
+    private Long id;
+
     private Long productId;
     private String productName;
     private Integer rprice;

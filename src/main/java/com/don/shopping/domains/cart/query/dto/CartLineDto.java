@@ -5,11 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @Setter
+@RedisHash("cartLineDto")
 @NoArgsConstructor
 public class CartLineDto {
+
+    @Id
+    private Long id;
 
     private Long productId;
     private String filePath;
