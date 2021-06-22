@@ -89,7 +89,7 @@
                         <div th:each="myQuestion : ${myQuestionList}" id="shopProductMyPosts" class="tb-content">
                             <div class="tb-title designSettingElement shape clearfix">
                                 <span th:text="${#temporals.format(myQuestion.questionTime, 'yy.MM.dd')}" class="date"></span>
-                                <span th:text="${#strings.substring(myQuestion.content,0,9)}" class="title"></span>
+                                <span th:text="${myQuestion.content}" th:maxlength="10" class="title"></span>
                                 <span class="type">질문</span>
                             </div>
                         </div>
