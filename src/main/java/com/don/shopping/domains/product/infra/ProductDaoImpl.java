@@ -43,4 +43,12 @@ public class ProductDaoImpl implements ProductDao {
         return productEntityList;
     }
 
+    @Override
+    public Long countOutOfStock() {
+        return query.select(product.count())
+                .from(product)
+                .where(product.stock.lt(1))
+                .fetchOne();
+    }
+
 }
