@@ -35,6 +35,13 @@ public class OrderController {
         return "customer/orders/order";
     }
 
+    //테스트 후 삭제요함
+    @GetMapping("/orders") //orders페이지 테스트
+    public String get방식실험(Model model) {
+
+        return "customer/orders/order";
+    }
+
     // 상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
     public String getOrderPageByBuyButton(@ModelAttribute OrderRequestDto orderRequestDto, Model model) {

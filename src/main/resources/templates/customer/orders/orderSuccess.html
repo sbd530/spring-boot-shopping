@@ -1,3 +1,4 @@
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
 <head>
@@ -198,65 +199,26 @@
 
     <!-- header -->
     <header th:insert="customer/main/header.html"></header>
+    <!-- 주문 성공 페이지 시작 -->
 
-    <!-- 작성자: 서무룡
-          해당 질문 리스트 출력 -->
-    <div class="container">
 
-        <br/><br/><div style="font-size: x-large">질문 목록</div><br/><br/><br/>
+    <!-- 주문 성공 창-->
+    <!--orderId 주문번호와 orderDate 주문 날짜를 뿌려줌-->
 
-        <div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">상품 이름</th>
-                    <th scope="col">질문 내용</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성날짜</th>
-                    <th scope="col">댓글</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="question : ${questionLists}">
-                    <th scope="row"><div th:text="${question.id}"></div></th>
-                    <td th:text="${question.productName}"></td>
-                    <td th:text="${question.content}"></td>
-                    <td th:text="${question.userName}"></td>
-                    <td th:text="${#temporals.format(question.questionTime,'yyyy-MM-dd HH:mm')}"></td>
-                    <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" id="btn3">댓글보기</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <!-- mypage로 가는 버튼과 shop으로 가는 버튼 -->
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <!-- footer -->
-        <footer th:insert="customer/main/footer.html"></footer>
+    <!-- 주문 성공 페이지 끝 -->
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <!-- footer -->
+    <footer th:insert="customer/main/footer.html"></footer>
 
-    </div></div>
+</div></div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
