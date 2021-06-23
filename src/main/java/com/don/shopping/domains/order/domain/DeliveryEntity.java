@@ -28,8 +28,6 @@ public class DeliveryEntity {
     @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
-    private Long orderId;
-
     @Builder
     public DeliveryEntity(Address address) {
         this.address = address;
@@ -41,7 +39,4 @@ public class DeliveryEntity {
         this.shipment = shipment;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
 }

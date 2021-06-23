@@ -50,7 +50,8 @@ public class OrderService {
 
         OrderLineDto orderLineDto = orderRequestDto.getOrderLineDtoList().get(0);
 
-        ProductEntity productEntity = productRepository.findById(orderLineDto.getProductId()).get();
+        ProductEntity productEntity = productRepository.findById(orderLineDto.getProductId())
+                .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
         OrderProductDto orderProductDto = OrderProductDto.builder()
                 .productId(productEntity.getId())
                 .productName(productEntity.getProductName())
@@ -109,7 +110,6 @@ public class OrderService {
 
         // 주문 정보 저장
         Long orderId = orderRepository.save(order).getOrderId();
-        orderRepository.findById(ordererId).get().getDelivery().setOrderId(orderId);
         return orderId;
     }
 

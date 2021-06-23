@@ -30,11 +30,32 @@ public class AdminOrderService {
     }
 
     @Transactional(readOnly = true)
+    public List<AdminOrderDto> getAllOrders(Pageable pageable) {
+        Page<OrderEntity> filteredOrders = orderDao.findAllOrders(pageable);
+
+        List<AdminOrderDto> adminOrderDtoList =  filteredOrders
+                .stream()
+                .map(order -> AdminOrderDto.builder()
+                        .orderId(order.getOrderId())
+                        .orderDate(order.getCreatedDate())
+                        .ordererName(order.getOrderer().getName())
+                        .phoneNumber(order.getOrderer().getPhoneNumber())
+                        .shipment(order.getDelivery().getShipment())
+                        .orderStatus(order.getOrderStatus())
+                        .deliveryStatus(order.getDelivery().getDeliveryStatus())
+                        .build()
+                ).collect(Collectors.toList());
+        return adminOrderDtoList;
+    }
+
+    @Transactional(readOnly = true)
     public List<AdminOrderDto> getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
 
         // status 문자열이 있으면 valueOf 로 변환
-        OrderStatus orderStatusEnum = OrderStatus.PAYMENT_SUCCESS;
-        DeliveryStatus deliveryStatusEnum = DeliveryStatus.READY;
+//        OrderStatus orderStatusEnum = OrderStatus.PAYMENT_SUCCESS;
+//        DeliveryStatus deliveryStatusEnum = DeliveryStatus.READY;
+        OrderStatus orderStatusEnum = null;
+        DeliveryStatus deliveryStatusEnum = null;
 
         if(orderStatusStr != null && !orderStatusStr.equals(""))
             orderStatusEnum = OrderStatus.valueOf(orderStatusStr);
@@ -53,7 +74,6 @@ public class AdminOrderService {
                         .shipment(order.getDelivery().getShipment())
                         .orderStatus(order.getOrderStatus())
                         .deliveryStatus(order.getDelivery().getDeliveryStatus())
-
                         .build()
                 ).collect(Collectors.toList());
 

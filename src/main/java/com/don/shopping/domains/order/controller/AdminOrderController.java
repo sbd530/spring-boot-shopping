@@ -48,20 +48,18 @@ public class AdminOrderController {
     }
 
     @PostMapping("/dashboard/orders/delivery")
-    public ResponseEntity sendShipment(@ModelAttribute DeliveryForm deliveryForm) {
-        System.out.println(deliveryForm.getOrderId());
-        System.out.println(deliveryForm.getShipment());
+    public ResponseEntity sendShipment(@RequestBody DeliveryForm deliveryForm) {
         adminOrderService.addShipment(deliveryForm);
         return ResponseEntity.ok().build();
     }
 
 
     // 주문 취소
-    @PutMapping("/dashboard/orders/{orderId}/cancel")
-    public String cancelOrder(@PathVariable Long orderId) {
-
+    @PutMapping("/dashboard/orders/cancel")
+    public ResponseEntity cancelOrder(@RequestBody DeliveryForm deliveryForm) {
+        Long orderId = deliveryForm.getOrderId();
         adminOrderService.cancelOrder(orderId);
-        return "redirect:/dashboard/orders";
+        return ResponseEntity.ok().build();
     }
 
 

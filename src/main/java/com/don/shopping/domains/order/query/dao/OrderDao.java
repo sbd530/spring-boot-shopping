@@ -14,6 +14,7 @@ public interface OrderDao {
 
     OrderResponseDto toOrderResponseDtoFromCart(Long userId, List<Long> productIdList);
 
+    Page<OrderEntity> findAllOrders(Pageable pageable);
     Page<OrderEntity> findOrders(OrderStatus orderStatus, DeliveryStatus deliveryStatus, Pageable pageable);
 
     void updateShipment(DeliveryForm deliveryForm);

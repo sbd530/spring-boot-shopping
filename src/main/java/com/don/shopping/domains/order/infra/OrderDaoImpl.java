@@ -57,6 +57,23 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public Page<OrderEntity> findAllOrders(Pageable pageable) {
+        QueryResults<OrderEntity> queryResults = query
+                .select(order)
+                .from(order)
+                .join(order.orderer, user).fetchJoin()
+                .join(order.delivery, delivery).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(order.createdDate.desc())
+                .fetchResults();
+
+        List<OrderEntity> results = queryResults.getResults();
+        long total = queryResults.getTotal();
+        return new PageImpl<>(results, pageable, total);
+    }
+
+    @Override
     public Page<OrderEntity> findOrders(OrderStatus orderStatus, DeliveryStatus deliveryStatus, Pageable pageable) {
         QueryResults<OrderEntity> queryResults = query
                 .select(order)
@@ -77,11 +94,16 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void updateShipment(DeliveryForm deliveryForm) {
+        Long deliveryId = query
+                .selectFrom(order)
+                .where(order.orderId.eq(deliveryForm.getOrderId()))
+                .fetchOne()
+                .getDelivery().getDeliveryId();
         query
                 .update(delivery)
                 .set(delivery.deliveryStatus, DeliveryStatus.DONE)
                 .set(delivery.shipment, deliveryForm.getShipment())
-                .where(delivery.orderId.eq(deliveryForm.getOrderId()))
+                .where(delivery.deliveryId.eq(deliveryId))
                 .execute();
     }
 

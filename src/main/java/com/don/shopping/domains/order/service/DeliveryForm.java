@@ -12,8 +12,16 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class DeliveryForm {
 
-    @NotNull
     private Long orderId;
+    private String ordererName;
+    private String orderDate;
+    private String orderStatus;
+    private String deliveryStatus;
+    private String phoneNumber1;
+    private String phoneNumber2;
+    private String phoneNumber3;
+
+
     private String postNumber;
     private String address1;
     private String address2;
