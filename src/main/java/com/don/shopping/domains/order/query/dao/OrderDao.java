@@ -20,4 +20,9 @@ public interface OrderDao {
     void updateShipment(DeliveryForm deliveryForm);
 
     List<OrderEntity> findMyOrders(Long userId);
+
+    Long countPaymentSuccess();
+    Long countCanceled();
+    Long countReady();
+    Long countDone();
 }

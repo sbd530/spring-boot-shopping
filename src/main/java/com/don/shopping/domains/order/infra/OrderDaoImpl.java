@@ -1,10 +1,14 @@
 package com.don.shopping.domains.order.infra;
 
+import com.don.shopping.domains.cart.domain.CartLineEntity;
+import com.don.shopping.domains.cart.domain.QCartEntity;
+import com.don.shopping.domains.cart.domain.QCartLineEntity;
 import com.don.shopping.domains.order.domain.*;
 import com.don.shopping.domains.order.query.dao.OrderDao;
 import com.don.shopping.domains.order.query.dto.OrderProductDto;
 import com.don.shopping.domains.order.service.DeliveryForm;
 import com.don.shopping.domains.order.service.OrderResponseDto;
+import com.don.shopping.domains.product.domain.QProductEntity;
 import com.don.shopping.domains.user.domain.QUserEntity;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -31,27 +36,26 @@ public class OrderDaoImpl implements OrderDao {
     QUserEntity user = QUserEntity.userEntity;
     QOrderEntity order = QOrderEntity.orderEntity;
     QDeliveryEntity delivery = QDeliveryEntity.deliveryEntity;
+    QCartLineEntity cartLine = QCartLineEntity.cartLineEntity;
 
     @Override
     public OrderResponseDto toOrderResponseDtoFromCart(Long userId, List<Long> productIdList) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT new com.don.shopping.domains.order.query.dto.OrderProductDto");
-        sb.append("(p.id, p.productName, p.rprice, p.dprice, cl.orderAmount");
-        sb.append(" FROM CartEntity c");
-        sb.append(" JOIN c.cart cl");
-        sb.append(" ON c.cartId = cl.cartId");
-        sb.append(" JOIN UserEntity u");
-        sb.append(" ON c.userId = u.userId");
-        sb.append(" JOIN ProductEntity p");
-        sb.append(" ON cl.productId = p.id");
-        sb.append(" WHERE u.id = :userId");
-        sb.append(" AND cl.productId IN :cartProductList");
 
-        List<OrderProductDto> orderProductList = em
-                .createQuery(sb.toString(), OrderProductDto.class)
-                .setParameter("userId", userId)
-                .setParameter("cartProductList", productIdList)
-                .getResultList();
+        List<CartLineEntity> cartLineList = query
+                .selectFrom(cartLine)
+                .where(cartLine.product.id.in(productIdList))
+                .fetch();
+
+        List<OrderProductDto> orderProductList = cartLineList
+                .stream()
+                .map(cl -> OrderProductDto.builder()
+                        .productId(cl.getProduct().getId())
+                        .productName(cl.getProduct().getProductName())
+                        .rprice(cl.getProduct().getRprice())
+                        .dprice(cl.getProduct().getDprice())
+                        .orderAmount(cl.getOrderAmount())
+                        .build()
+                ).collect(Collectors.toList());
 
         return new OrderResponseDto(orderProductList);
     }
@@ -115,6 +119,41 @@ public class OrderDaoImpl implements OrderDao {
                 .where(order.orderer.id.eq(userId))
                 .fetch();
     }
+    @Override
+    public Long countPaymentSuccess() {
+        return query
+                .select(order.count())
+                .from(order)
+                .where(order.orderStatus.eq(OrderStatus.PAYMENT_SUCCESS))
+                .fetchOne();
+    }
+    @Override
+    public Long countCanceled() {
+        return query
+                .select(order.count())
+                .from(order)
+                .where(order.orderStatus.eq(OrderStatus.CANCELED))
+                .fetchOne();
+    }
+    @Override
+    public Long countReady() {
+        return query
+                .select(delivery.count())
+                .from(delivery)
+                .where(delivery.deliveryStatus.eq(DeliveryStatus.READY))
+                .fetchOne();
+    }
+    @Override
+    public Long countDone() {
+        return query
+                .select(delivery.count())
+                .from(delivery)
+                .where(delivery.deliveryStatus.eq(DeliveryStatus.DONE))
+                .fetchOne();
+    }
+
+
+
 
     private BooleanExpression eqOrderStatus(OrderStatus orderStatus) {
         if(orderStatus == null)
@@ -127,4 +166,5 @@ public class OrderDaoImpl implements OrderDao {
             return null;
         return order.delivery.deliveryStatus.eq(deliveryStatus);
     }
+
 }

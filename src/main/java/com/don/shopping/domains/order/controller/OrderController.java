@@ -5,6 +5,7 @@ import com.don.shopping.domains.order.service.OrderResponseDto;
 import com.don.shopping.domains.order.service.OrderService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +25,16 @@ public class OrderController {
     // 장바구니 페이지 -> 구매하기 -> 구매 페이지
     // DTO 에는 각 상품의 productId 와 개수가 있습니다.
     @PostMapping("/orders")
-    public String getOrderPageFromCartPage(Authentication authentication,
-                                           @ModelAttribute OrderRequestDto orderRequestDto, Model model) {
+    @ResponseBody
+    public ResponseEntity getOrderPageFromCartPage(Authentication authentication,
+                                                   @RequestBody OrderRequestDto orderRequestDto, Model model) {
 
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         OrderResponseDto orderResponseDto =
                 orderService.getOrderResponseDtoFromCart(userId, orderRequestDto);
-        model.addAttribute("orderResponseDto", orderResponseDto);
+//        model.addAttribute("orderResponseDto", orderResponseDto);
 
-        return "customer/orders/order";
+        return ResponseEntity.ok(orderResponseDto);
     }
 
     //테스트 후 삭제요함

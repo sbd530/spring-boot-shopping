@@ -30,14 +30,6 @@ public class AdminOrderController {
         return adminOrderDtoList;
     }
 
-    @GetMapping("/dashboard/orders/{orderId}")
-    public OrderResponseDto getOrderDetail(@PathVariable Long orderId) {
-
-        OrderResponseDto orderResponseDto = adminOrderService.getOrderDetail(orderId);
-        orderResponseDto.setOrderId(orderId);
-        return orderResponseDto;
-    }
-
     @GetMapping("/dashboard/orders/{orderId}/delivery")
     public ModelAndView getDeliveryPage(@PathVariable Long orderId) {
 

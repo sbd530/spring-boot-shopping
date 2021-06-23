@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderResponseDto {
 
-    private Long orderId;
     private List<OrderProductDto> orderProductList;
     private int totalPrice;
 
