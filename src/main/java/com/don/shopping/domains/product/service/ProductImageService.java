@@ -8,6 +8,7 @@ import com.don.shopping.domains.product.domain.QProductImageEntity;
 import com.don.shopping.domains.product.query.dao.ProductImageDao;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,8 +76,9 @@ public class ProductImageService {
 
 
     //이미지 전체 조회
+    @Cacheable(value = "productImageResponseDtoList", key = "#productId")
     @Transactional(readOnly = true)
-    public List<ProductImageResponseDto> findAllByProduct(Long productid) {
+    public List<ProductImageResponseDto> findAllByProduct(Long productId) {
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
@@ -84,7 +86,7 @@ public class ProductImageService {
 
         List<ProductImageEntity> productImageEntityList = queryFactory
                 .selectFrom(productImageEntity)
-                .where(productImageEntity.product.id.eq(productid))
+                .where(productImageEntity.product.id.eq(productId))
                 .fetch();
 
         return productImageEntityList.stream()
