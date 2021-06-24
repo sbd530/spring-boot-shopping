@@ -29,19 +29,14 @@ public class OrderController {
     @PostMapping("/orders")
     public ResponseEntity getOrderPageFromCartPage(HttpSession session, Authentication authentication,
                                                  @RequestBody OrderRequestDto orderRequestDto) {
-//        ModelAndView modelAndView = new ModelAndView();
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         OrderResponseDto orderResponseDto =
                 orderService.getOrderResponseDtoFromCart(userId, orderRequestDto);
-        /*model.addAttribute("orderResponseDto", orderResponseDto);*/
-//        modelAndView.setViewName("customer/orders/order");
-//        modelAndView.addObject(orderResponseDto);
 
         session.setAttribute("orderResponseDto", orderResponseDto);
 
         return ResponseEntity.ok().build();
     }
-
     @GetMapping("/orders")
     public ModelAndView getOrderPage(HttpSession session) {
         ModelAndView mav = new ModelAndView();
@@ -49,16 +44,13 @@ public class OrderController {
 
         mav.addObject("orderResponseDto", orderResponseDto);
         mav.setViewName("customer/orders/order");
-
+        session.removeAttribute("orderResponseDto");
         return mav;
     }
 
-    /*//테스트 후 삭제요함
-    @GetMapping("/orders") //orders페이지 테스트
-    public String get방식실험(Model model) {
 
-        return "customer/orders/order";
-    }*/
+
+
 
     // 상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
@@ -70,8 +62,35 @@ public class OrderController {
         return "customer/orders/order";
     }
 
+
+
+
+
+
+
+
+
     // 구매 페이지 -> 결제하기 -> 주문 처리 -> 리다이렉트:주문 완료 페이지
+    @GetMapping("/orders/execute")
+    public ModelAndView executeOrderGet(Authentication authentication, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("customer/orders/orderSuccess");
+        session.removeAttribute("orderRequestDto");
+        return mav;
+    }
     @PostMapping("/orders/execute")
+    public ResponseEntity executeOrder(HttpSession session, Authentication authentication,
+                                                   @RequestBody OrderRequestDto orderRequestDto) {
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+        Long orderId = orderService.order(userId, orderRequestDto);
+//        session.setAttribute("orderRequestDto", orderRequestDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+
+    /*@PostMapping("/orders/execute")
     public String executeOrder(Authentication authentication,
                                @ModelAttribute @Valid OrderRequestDto orderRequestDto) {
 
@@ -79,7 +98,15 @@ public class OrderController {
         Long orderId = orderService.order(userId, orderRequestDto);
 
         return "redirect:/orders/order/success" + orderId;
-    }
+    }*/
+
+
+
+
+
+
+
+
 
     // 주문 완료 페이지
     @GetMapping("/orders/success/{orderId}")
