@@ -9,7 +9,6 @@
 
 <script th:inline="javascript">
 
-
 function updateTotalPrice(price,op) {
     price = parseInt(price);
     let newTotalPrice = $("#cartTotalDiscountAppliedPrice").text();
@@ -143,12 +142,10 @@ function updateTotalPrice(price,op) {
           data: JSON.stringify({"orderLineDtoList" : orderLineDtoList}),
           contentType: 'application/json'
         }).then(function(){
-          href.location="/orders"
+          location.href="/orders"
         })
     })
-
   });
-
 
 </script>
 
@@ -257,7 +254,8 @@ function updateTotalPrice(price,op) {
           </div>
           <div id="cartTotalDiv" class="total">
             <div class="title bold">합 계</div>
-            <div id="cartTotalDiscountAppliedPrice" class="content bold">[[${#numbers.formatInteger(totalPrice, 3, 'COMMA')}]]&nbsp;원</div>
+            <div th:if="${totalPrice>0}" id="cartTotalDiscountAppliedPrice" class="content bold">[[${#numbers.formatInteger(totalPrice, 3, 'COMMA')}]]&nbsp;원</div>
+            <div th:unless="${totalPrice>0}" class="content bold"> - </div>
           </div>
         </div>
       </div>
