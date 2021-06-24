@@ -8,6 +8,7 @@ import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.domains.review.controller.ReviewForm;
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.service.ReviewService;
+import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -110,21 +112,24 @@ public class ProductController {
     //전체 조회(목록)
     @GetMapping("/products")
     public String searchAll(Model model, Pageable pageable) {
-        model.addAttribute("productListDtoList",productService.searchAllDesc(pageable));
+        model.addAttribute("productListDtoList",productService.searchAllDesc(pageable));//어드민
         return "customer/products/productList.html";
     }
 
     //상품조회(키워드기준)
     @GetMapping("/products/search")
-    @ResponseBody
-    public List<ProductListResponseDto> getByKeyword(@RequestParam("keyword") String keyword) {
+    public ModelAndView getByKeyword(@RequestParam(value = "keyword", required = false) String keyword) {
+
+        ModelAndView mav = new ModelAndView();
         List<ProductEntity> productEntityList = productService.findByKeyword(keyword);
-        List<ProductListResponseDto> responseDtoList = new ArrayList<>();
+        List<AdminProductListResponseDto> responseDtoList = new ArrayList<>();
 
         for(ProductEntity productEntity : productEntityList) {
-            ProductListResponseDto productListResponseDto = new ProductListResponseDto(productEntity);
+            AdminProductListResponseDto productListResponseDto = new AdminProductListResponseDto(productEntity);
             responseDtoList.add(productListResponseDto);
         }
-        return responseDtoList;
+        mav.addObject("productListDtoList",responseDtoList);
+        mav.setViewName("customer/products/productList.html");
+        return mav;
     }
 }

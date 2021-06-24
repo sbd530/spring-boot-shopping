@@ -4,7 +4,9 @@ import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.QProductEntity;
 import com.don.shopping.domains.product.query.dao.ProductDao;
 import com.don.shopping.domains.product.query.dto.UpdateProductDto;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,7 +17,7 @@ public class ProductDaoImpl implements ProductDao {
 
     private final JPAQueryFactory query;
     private final QProductEntity product = QProductEntity.productEntity;
-
+    private EntityManager em;
 
     public ProductDaoImpl(EntityManager em) {
         this.query = new JPAQueryFactory(em);

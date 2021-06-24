@@ -1,9 +1,7 @@
 package com.don.shopping.domains.product.service;
 
 import com.don.shopping.domains.product.domain.ProductEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 

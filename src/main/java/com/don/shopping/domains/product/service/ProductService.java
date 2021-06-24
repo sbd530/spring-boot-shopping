@@ -9,6 +9,7 @@ import com.don.shopping.domains.product.util.ProductImageHandler;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,6 +124,7 @@ public class ProductService {
         return productDao.findByKeyword(keyword);
     }
 
+    //상품수정
     @Transactional
     public void updateProduct(Long productId, ProductImageVO productImageVO) throws Exception {
 
