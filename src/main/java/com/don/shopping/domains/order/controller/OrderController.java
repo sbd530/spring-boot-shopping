@@ -10,7 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,24 +27,38 @@ public class OrderController {
     // 장바구니 페이지 -> 구매하기 -> 구매 페이지
     // DTO 에는 각 상품의 productId 와 개수가 있습니다.
     @PostMapping("/orders")
-    @ResponseBody
-    public ResponseEntity getOrderPageFromCartPage(Authentication authentication,
-                                                   @RequestBody OrderRequestDto orderRequestDto, Model model) {
-
+    public ResponseEntity getOrderPageFromCartPage(HttpSession session, Authentication authentication,
+                                                 @RequestBody OrderRequestDto orderRequestDto) {
+//        ModelAndView modelAndView = new ModelAndView();
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         OrderResponseDto orderResponseDto =
                 orderService.getOrderResponseDtoFromCart(userId, orderRequestDto);
-//        model.addAttribute("orderResponseDto", orderResponseDto);
+        /*model.addAttribute("orderResponseDto", orderResponseDto);*/
+//        modelAndView.setViewName("customer/orders/order");
+//        modelAndView.addObject(orderResponseDto);
 
-        return ResponseEntity.ok(orderResponseDto);
+        session.setAttribute("orderResponseDto", orderResponseDto);
+
+        return ResponseEntity.ok().build();
     }
 
-    //테스트 후 삭제요함
+    @GetMapping("/orders")
+    public ModelAndView getOrderPage(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        OrderResponseDto orderResponseDto = (OrderResponseDto) session.getAttribute("orderResponseDto");
+
+        mav.addObject("orderResponseDto", orderResponseDto);
+        mav.setViewName("customer/orders/order");
+
+        return mav;
+    }
+
+    /*//테스트 후 삭제요함
     @GetMapping("/orders") //orders페이지 테스트
     public String get방식실험(Model model) {
 
         return "customer/orders/order";
-    }
+    }*/
 
     // 상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
