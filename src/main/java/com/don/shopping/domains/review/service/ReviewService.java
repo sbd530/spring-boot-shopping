@@ -76,8 +76,7 @@ public class ReviewService {
 
     @Transactional
     public String getUserName(Long userId){
-        UserEntity userEntity = new UserEntity();
-        userEntity = userRepository.getOne(userId);
+        UserEntity userEntity = userRepository.getOne(userId);
         return userEntity.getName();
     }
 
