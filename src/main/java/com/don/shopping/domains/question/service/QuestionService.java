@@ -1,5 +1,6 @@
 package com.don.shopping.domains.question.service;
 
+import com.don.shopping.domains.home.domain.MemoryHomeRepository;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductRepository;
 import com.don.shopping.domains.question.domain.QuestionEntity;
@@ -23,11 +24,19 @@ public class QuestionService {
     private final QuestionDao questionDao;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final MemoryHomeRepository memoryHomeRepository;
 
     //질문 등록
     @Transactional
     public Long addQuestion(QuestionEntity questionEntity){
-        questionRepository.save(questionEntity);
+        String productName = productRepository
+                .findById(questionEntity.getProductId())
+                .orElseThrow(() -> new IllegalArgumentException())
+                .getProductName();
+        questionEntity.setProductName(productName);
+        Long questionId = questionRepository.save(questionEntity).getId();
+        // 답변해야할 질문을 추가합니다. @윤병돈
+        memoryHomeRepository.saveQuestionToAnswer(questionId);
         return questionEntity.getId();
     }
 

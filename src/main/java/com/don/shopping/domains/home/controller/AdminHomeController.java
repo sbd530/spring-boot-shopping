@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AdminHomeController {
 
     private final AdminHomeService homeService;
-    private final RedisUtil redis;
 
     @GetMapping("/dashboard/home")
-    public SummaryDto getHomePage(@RequestBody String key) {
+    public SummaryDto getHomePage() {
 
-        SummaryDto summaryDto = null;
-
-
-        return summaryDto;
+        return homeService.getSummary();
     }
 
 

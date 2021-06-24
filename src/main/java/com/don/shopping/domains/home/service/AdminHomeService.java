@@ -1,5 +1,6 @@
 package com.don.shopping.domains.home.service;
 
+import com.don.shopping.domains.home.domain.MemoryHomeRepository;
 import com.don.shopping.domains.order.domain.OrderRepository;
 import com.don.shopping.domains.order.query.dao.OrderDao;
 import com.don.shopping.domains.product.domain.ProductRepository;
@@ -18,6 +19,7 @@ public class AdminHomeService {
     private final ProductRepository productRepository;
     private final ProductDao productDao;
     private final QuestionRepository questionRepository;
+    private final MemoryHomeRepository memoryHomeRepository;
 
 
     @Transactional(readOnly = true)
@@ -33,10 +35,10 @@ public class AdminHomeService {
                 .done(orderDao.countDone())
                 .onSale(productTotalAmount - outOfStock)
                 .outOfStock(outOfStock)
-
+                .haveToAnswer(memoryHomeRepository.getHaveToAnswer())
                 .build();
 
-        return null;
+        return summaryDto;
     }
 
 

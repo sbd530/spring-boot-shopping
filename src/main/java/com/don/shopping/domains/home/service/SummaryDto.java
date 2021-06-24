@@ -7,20 +7,20 @@ import lombok.*;
 @NoArgsConstructor
 public class SummaryDto {
 
-    private Long paymentSuccess;
-    private Long canceled;
+    private Long paymentSuccess = 0L;
+    private Long canceled = 0L;
 
-    private Long ready;
-    private Long done;
+    private Long ready = 0L;
+    private Long done = 0L;
 
-    private Long onSale;
-    private Long outOfStock;
+    private Long onSale = 0L;
+    private Long outOfStock = 0L;
 
-    private Long haveToAnswer;
+    private Integer haveToAnswer = 0;
 
     @Builder
     public SummaryDto(Long paymentSuccess, Long canceled, Long ready,
-                      Long done, Long onSale, Long outOfStock, Long haveToAnswer) {
+                      Long done, Long onSale, Long outOfStock, Integer haveToAnswer) {
         this.paymentSuccess = paymentSuccess;
         this.canceled = canceled;
         this.ready = ready;

@@ -2,6 +2,7 @@ package com.don.shopping.domains.user.domain;
 
 import com.don.shopping.common.vo.Address;
 import com.don.shopping.common.vo.PhoneNumber;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
 
     @Id

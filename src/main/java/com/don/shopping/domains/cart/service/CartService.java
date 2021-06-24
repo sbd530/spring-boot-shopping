@@ -9,7 +9,6 @@ import com.don.shopping.domains.cart.query.dto.CartLineDto;
 import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final CartDao cartDao;
-    //private final CartMapper cartMapper;
 
 
     public Long createCart(Long userId) {
@@ -52,7 +50,6 @@ public class CartService {
 
     // 유저의 id로 장바구니 페이지에 필요한 리스트를 반환합니다.
     @Transactional(readOnly = true)
-    @Cacheable(value = "cartListCache", key = "#userId")
     public List<CartLineDto> getCartLineDtoListForCartPage(Long userId) {
         List<CartLineDto> cartLineDtoList = cartDao.getCartLineList(userId).stream()
                 .map(cl -> CartLineDto.builder()

@@ -1,5 +1,6 @@
 package com.don.shopping.domains.question.domain;
 
+import com.don.shopping.common.logging.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,40 +14,17 @@ import java.time.LocalDateTime;
 @Getter
 @Setter //setter은 지우는게 좋음
 @NoArgsConstructor
-public class QuestionAnswerEntity {
+public class QuestionAnswerEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue
-    private Long id;   //question_answer 의 id
-
-    private String name; //답변한 사람 (관리자)
-
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id")
-    private QuestionEntity questionEntity;*/
-
-    private Long questionId; //답변할 질문 id
-
-    private String content;  //답변할 내용
-
-    private LocalDateTime questionAnswerTime; //답변한 작성시간
-
-    @PrePersist
-    protected void onReviewTimeCreate(){
-        this.questionAnswerTime = LocalDateTime.now();
-    }
-    @PreUpdate
-    protected  void unReviewTimeUpdate(){
-        this.questionAnswerTime = LocalDateTime.now();
-    }
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long questionId;
+    private String content;
 
     @Builder
-    public QuestionAnswerEntity(Long id, String name, Long questionId, String content, LocalDateTime questionAnswerTime) {
-        this.id = id;
-        this.name = name;
+    public QuestionAnswerEntity(Long questionId, String content) {
         this.questionId = questionId;
         this.content = content;
-        this.questionAnswerTime = questionAnswerTime;
     }
 }

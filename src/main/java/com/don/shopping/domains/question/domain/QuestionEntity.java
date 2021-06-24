@@ -18,17 +18,11 @@ public class QuestionEntity {
 
     @Id @GeneratedValue
     private Long id;   //question 의 id
-
     private Long productId; //질문할 상품id
-
     private String productName; //상품이름
-
     private Long userId;  //질문 작성한 userId
-
     private String userName; //userName
-
     private String content;  //질문할 내용
-
     private LocalDateTime questionTime; //질문문 작성시간
 
     @PrePersist

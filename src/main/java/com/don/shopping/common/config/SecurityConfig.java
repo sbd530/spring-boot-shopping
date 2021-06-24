@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/mypage/**").hasAnyAuthority("USER","ADMIN")
                     // 장바구니
                     .antMatchers("/carts/**").authenticated()
+                    .antMatchers("/orders/**").authenticated()
                     // 상기 외의 어떤 요청도 접근을 허용합니다.
                     .anyRequest().permitAll()
                 .and()
