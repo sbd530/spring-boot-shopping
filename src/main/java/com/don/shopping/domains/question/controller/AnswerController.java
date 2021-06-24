@@ -43,7 +43,8 @@ public class AnswerController {
         model.addAttribute("questionId",questionId);
         return "dashboard/answer/addanswer";
     }
-    //댓글등록창
+
+    // 댓글등록창
     @PostMapping("question/{questionId}/addanswer")
     public String addAnswerPost(@PathVariable("questionId")Long questionId, Model model, @ModelAttribute("answerForm") AnswerForm answerForm){
 

@@ -1,5 +1,6 @@
 package com.don.shopping.domains.user.domain;
 
+import com.don.shopping.common.logging.BaseEntity;
 import com.don.shopping.common.vo.Address;
 import com.don.shopping.common.vo.PhoneNumber;
 import lombok.AccessLevel;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class UserEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

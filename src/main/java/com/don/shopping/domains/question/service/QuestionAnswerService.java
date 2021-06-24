@@ -26,17 +26,13 @@ public class QuestionAnswerService {
         //답변해야할 질문을 제거합니다 @윤병돈
         Long questionId = questionAnswerEntity.getQuestionId();
         memoryHomeRepository.removeQuestionToAnswer(questionId);
-
         return questionAnswerEntity.getId();
     }
 
     //그 질문에 대한 답변 전체 조회
     @Transactional(readOnly = true)
     public List<QuestionAnswerEntity> findAllReviewsByQuestion(Long questionId){
-        List<QuestionAnswerEntity> questionAnswerEntity =
-                questionAnswerDao.findQuestionByQuestionId(questionId);
-
-        return questionAnswerEntity;
+        return questionAnswerDao.findQuestionByQuestionId(questionId);
     }
 
 

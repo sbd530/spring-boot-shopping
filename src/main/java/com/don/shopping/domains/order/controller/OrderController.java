@@ -49,9 +49,6 @@ public class OrderController {
     }
 
 
-
-
-
     // 상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
     public String getOrderPageByBuyButton(@ModelAttribute OrderRequestDto orderRequestDto, Model model) {
@@ -62,14 +59,6 @@ public class OrderController {
         return "customer/orders/order";
     }
 
-
-
-
-
-
-
-
-
     // 구매 페이지 -> 결제하기 -> 주문 처리 -> 리다이렉트:주문 완료 페이지
     @GetMapping("/orders/execute")
     public ModelAndView executeOrderGet(Authentication authentication, HttpSession session) {
@@ -79,34 +68,16 @@ public class OrderController {
         session.removeAttribute("orderRequestDto");
         return mav;
     }
+
     @PostMapping("/orders/execute")
     public ResponseEntity executeOrder(HttpSession session, Authentication authentication,
-                                                   @RequestBody OrderRequestDto orderRequestDto) {
+                                       OrderRequestDto orderRequestDto) {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         Long orderId = orderService.order(userId, orderRequestDto);
 //        session.setAttribute("orderRequestDto", orderRequestDto);
 
         return ResponseEntity.ok().build();
     }
-
-
-    /*@PostMapping("/orders/execute")
-    public String executeOrder(Authentication authentication,
-                               @ModelAttribute @Valid OrderRequestDto orderRequestDto) {
-
-        Long userId = ac.getUserFromAuthentication(authentication).getId();
-        Long orderId = orderService.order(userId, orderRequestDto);
-
-        return "redirect:/orders/order/success" + orderId;
-    }*/
-
-
-
-
-
-
-
-
 
     // 주문 완료 페이지
     @GetMapping("/orders/success/{orderId}")

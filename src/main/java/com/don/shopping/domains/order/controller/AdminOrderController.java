@@ -19,7 +19,6 @@ public class AdminOrderController {
 
     // ?orderStatus={주문상태} &deliveryStatus={배송상태} ( &page={페이지번호} &size={한페이지당주문수})
     @GetMapping("/dashboard/orders")
-    @Transactional(readOnly = true)
     public List<AdminOrderDto> getAdminOrderPage(
             @RequestParam(name = "orderStatus", required = false) String orderStatus,
             @RequestParam(name = "deliveryStatus", required = false) String deliveryStatus,
