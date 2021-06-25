@@ -57,4 +57,14 @@ public class HomeController {
         model.addAttribute("productListDtoList",products);
         return "customer/main/main";
     }
+
+    @GetMapping("/about")
+    public String getAboutPage() {
+        return "customer/main/about";
+    }
+    @GetMapping("/lookbook")
+    public String getLookBookPage() {
+        return "customer/main/lookbook";
+    }
+
 }
