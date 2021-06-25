@@ -193,6 +193,7 @@
               </div>
             </div>
             <!-- Pagination -->
+            <div th:if="${#lists.size(productListDtoList) == 0}" style="display:none;">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${1 == productListDtoList.pageable.pageNumber + 1} ? 'disabled'">
@@ -206,6 +207,7 @@
                 </li>
               </ul>
             </nav>
+            </div>
           </div>
         </section>
       </div>

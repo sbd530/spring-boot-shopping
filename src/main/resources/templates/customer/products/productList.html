@@ -2,6 +2,8 @@
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active" style="height: auto;">
 <head>
 
+  <title>상품리스트</title>
+
   <!-- 윤서추가(jquery) -->
   <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -105,8 +107,9 @@
       <div style="height:200px;"></div>
       <!-- 상품리스트인듯? -->
       <div style="width:100%;" align="center">
-        <div id="productListWrapper" style="height:auto;width:1800px;">
+        <div id="productListWrapper" style="height:auto;min-height:100px;width:1800px;display:table-cell;vertical-align:middle;">
           <!-- 여기에다가 상품추가해랏 -->
+          <div th:if="${#lists.size(productListDtoList) == 0}" style="text-align:center;">등록된 상품이 없습니다.</div>
           <div align="left" style="">
             <div th:each="dto : ${productListDtoList}" style="text-align:center;display:inline-block;">
               <div style="display:inline-block;cursor:pointer" th:onclick="'location.href=\''+ @{/products/} + ${dto.productId} + '\''">
