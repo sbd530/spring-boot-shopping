@@ -60,12 +60,15 @@ public class ProductImageHandler {
 
             //다중 파일 처리
             for(int i=0;i<=3;i++) {
-
                 MultipartFile multipartFile = multipartFiles.get(i);
-
                 //파일의 확장자 추출
                 String fileExt;
-                String contentType = multipartFile.getContentType();
+                String contentType="";
+                try {
+                    contentType = multipartFile.getContentType();
+                } catch (NullPointerException e) {
+
+                }
 
                 //확장자명이 존재하지 않을 경우 처리x
                 if(ObjectUtils.isEmpty(contentType)) {

@@ -6,6 +6,7 @@ import com.don.shopping.domains.product.service.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -50,7 +51,7 @@ public class AdminProductController {
     //상품등록
     @PostMapping("/products/add")
     //@ResponseStatus(HttpStatus.CREATED)
-    public String addProduct(ProductImageVO productImageVO) throws Exception {
+    public ResponseEntity addProduct(ProductImageVO productImageVO) throws Exception {
 
         ProductRequestDto productRequestDto =
                 ProductRequestDto.builder()
@@ -63,7 +64,10 @@ public class AdminProductController {
 
         Long productId= productService.add(productRequestDto, productImageVO.getFiles());
 
-        return "redirect:/dashboard/products/";
+        if (productId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
     //상품수정

@@ -1,5 +1,6 @@
 package com.don.shopping.domains.review.domain;
 
+import com.don.shopping.common.logging.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,42 +17,25 @@ import java.util.Timer;
 @Table(name = "review")
 @Getter @Setter //setter은 지우는게 좋음
 @NoArgsConstructor
-public class ReviewEntity {
+public class ReviewEntity extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;   //review 의 id
-
     private Long productId; //리뷰할 상품id
-
     private Long userId;  //userId
-
     private String userName;//userName
-
     private String content;  //리뷰할 내용
-
     private int rating; // 별점
-
-    private LocalDateTime reviewTime; //리뷰 작성 시간
-
-    @PrePersist
-    protected void onReviewTimeCreate(){
-        this.reviewTime = LocalDateTime.now();
-    }
-    @PreUpdate
-    protected  void unReviewTimeUpdate(){
-        this.reviewTime = LocalDateTime.now();
-    }
 
 
     @Builder
-    public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating, LocalDateTime reviewTime) {
+    public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating) {
         this.id = id;
         this.productId = productId;
         this.userId = userId;
         this.userName = userName;
         this.content = content;
         this.rating = rating;
-        this.reviewTime = reviewTime;
     }
     //==비즈니스 로직==//
 }

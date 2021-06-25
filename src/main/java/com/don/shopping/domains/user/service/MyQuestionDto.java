@@ -17,7 +17,7 @@ public class MyQuestionDto {
     private String content;
 
     public MyQuestionDto(QuestionEntity question) {
-        this.questionTime = question.getQuestionTime();
+        this.questionTime = question.getCreatedDate();
         this.productId = question.getProductId();
         this.content = question.getContent();
     }

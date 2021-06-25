@@ -3,6 +3,7 @@ package com.don.shopping.domains.question.controller;
 import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.don.shopping.domains.question.query.QuestionDao;
+import com.don.shopping.domains.question.service.QuestionResponseDto;
 import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,15 @@ public class QuestionController {
     //전체 질문 조회(custmer)
     @GetMapping("/questions")
     public String listQuestionView(Model model){
-        List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
-        model.addAttribute("questionLists",questionEntityList);
-        model.addAttribute("questionForm", new QuestionForm());
+
+        List<QuestionResponseDto> questionList = questionService.getQuestionList();
+        model.addAttribute("questionLists", questionList);
+//
+//        List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
+//        model.addAttribute("questionLists",questionEntityList);
+//        model.addAttribute("questionForm", new QuestionForm());
         /* return "dashboard/question/questionlist";*/ //대쉬보드 버전
         return "customer/question/addanswer_modal.html";
-
     }
     //전체 질문 조회
     @GetMapping("/questionadmin")
@@ -44,28 +48,23 @@ public class QuestionController {
         model.addAttribute("questionLists",questionEntityList);
         model.addAttribute("questionForm", new QuestionForm());
         return "dashboard/question/questionlist"; //대쉬보드 버전
-
-
     }
     //질문 등록
     @GetMapping("question/add")
     public String addQuestion( Model model){
-
         model.addAttribute("questionForm", new QuestionForm());
-
         return "dashboard/question/addquestion";
-
     }
     //질문 등록
     @PostMapping("/question/add")
     public String addQuestionPost(Authentication authentication,QuestionForm questionForm){
 
         Long userId = ac.getUserFromAuthentication(authentication).getId();
-        QuestionEntity questionEntity = new QuestionEntity();
-        questionEntity.setUserName(questionService.getUserName(userId));
-        questionEntity.setContent(questionForm.getQuestionContent());
-        questionEntity.setProductId(questionForm.getQuestionProductId());
-        questionEntity.setUserId(userId);
+        QuestionEntity questionEntity = QuestionEntity.builder()
+                .userId(userId)
+                .content(questionForm.getQuestionContent())
+                .productId(questionForm.getQuestionProductId())
+                .build();
 
         Long questionId = questionService.addQuestion(questionEntity);
         return "redirect:/questionadmin";
@@ -82,17 +81,6 @@ public class QuestionController {
         model.addAttribute("id",questionId);
         return "dashboard/question/questionupdate";
 
-    }
-    //개별 수정 update
-    @PostMapping("/question/{questionId}/edit")
-    public String updateQuestion(@PathVariable("questionId") Long questionId, @ModelAttribute("questionForm") QuestionForm questionForm){
-        QuestionEntity questionEntity = new QuestionEntity();
-        questionEntity.setId(questionId);
-        questionEntity.setContent(questionForm.getQuestionContent());
-        questionEntity.setProductId(questionForm.getQuestionProductId());
-
-        questionService.addQuestion(questionEntity);
-        return "redirect:/questionadmin";
     }
 
     //개별 삭제 delete

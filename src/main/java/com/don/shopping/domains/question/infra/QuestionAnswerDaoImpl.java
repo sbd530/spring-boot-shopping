@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,10 +22,10 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
 
 
     @Override //댓글하나 조회
-    public QuestionAnswerEntity findOne(Long questionAnswerId) {
-        QuestionAnswerEntity questionAnswerEntity = query.selectFrom(qQuestionAnswerEntity)
+    public Optional<QuestionAnswerEntity> findOne(Long questionAnswerId) {
+        Optional<QuestionAnswerEntity> questionAnswerEntity = Optional.ofNullable(query.selectFrom(qQuestionAnswerEntity)
                 .where(qQuestionAnswerEntity.id.eq(questionAnswerId))
-                .fetchOne();
+                .fetchOne());
         return questionAnswerEntity;
     }
 

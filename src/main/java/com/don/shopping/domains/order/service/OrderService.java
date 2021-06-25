@@ -64,13 +64,13 @@ public class OrderService {
     }
 
     public Long order(Long ordererId, OrderRequestDto orderRequestDto) {
-        // 주문자 정보
-        UserEntity orderer = userService.findUserById(ordererId);
-        logger.info("email : " + orderer.getEmail());
+
         for (OrderLineDto ol : orderRequestDto.getOrderLineDtoList()) {
-            logger.info(ol.getProductId().toString());
+            System.out.println(ol.getProductId());
         }
 
+        // 주문자 정보
+        UserEntity orderer = userService.findUserById(ordererId);
 
         // 배송 정보
         DeliveryEntity delivery = DeliveryEntity.builder()

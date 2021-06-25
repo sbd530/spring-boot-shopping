@@ -68,46 +68,6 @@
     <meta name="twitter:description" content="">
     <meta property="twitter:image" content="https://contents.sixshop.com/uploadedFiles/169271/product/image_1623502557279.gif">
 
-    <!-- 윤서script(0618추가) -->
-    <script th:inline="javascript">
-    function fnCalCount(type, ths){
-        var $input = $(ths).parents("td").find("input[name='pop_out']");
-        var tCount = Number($input.val());
-
-        if(type=='p'){
-            $input.val(Number(tCount)+1);
-
-        }else{
-            if(tCount >0) $input.val(Number(tCount)-1);
-        }
-    }
-
-    function changeImage(url) {
-          const mainImageDiv = document.getElementById("mainImage");
-          mainImageDiv.style.backgroundImage = "url(" + url + ")";
-    }
-
-    function sendToPayment() {
-            const f = document.toCartOrBuyForm;
-            if(f.pop_out.value<1){
-                alert("수량을 입력해주세요.");
-                return;
-            }
-            f.action = "/orders/buy";
-            f.submit();
-        }
-
-    function sendToCart() {
-		const f = document.toCartOrBuyForm;
-		if(f.pop_out.value<1){
-			alert("수량을 입력해주세요.");
-			return;
-		}
-		f.action = "/carts";
-		f.submit();
-	}
-  </script>
-
     <!-- js -->
     <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/ckeditor.js?v=04081515"></script><style>.cke{visibility:hidden;}</style>
     <script src="https://static.sixshop.com/resources/libs/js/jquery-1.12.4.min.js?v=04081515"></script>
@@ -133,65 +93,11 @@
     <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515"></script>
     <!-- 무룡 스크립트-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    $(function(){
-		$("#dialog").hide();
 
-		$("#btn1").click(function(){
-			$("#dialog").dialog();
-		});
-
-		$("#btn2").click(function(){
-			$("#dialog").dialog({
-				height:240,
-				width:300,
-				modal: true
-			});
-		});
-
-		$("#btn3").click(function(){
-			$("<div>").dialog({
-				modal:true,
-				open:function(){
-					$(this).load("addanswer_modal.html");
-				},
-				height:400,
-				width:400,
-				title:"외부파일 창 띄우기"
-			});
-		});
-
-
-	});
-
-  </script>
-    <!-- 무룡 스크립트 end -->
 </head>
 
 
 <body class="display display-home display desktop">
-<!--<![endif]-->
-
-<!--[if lt IE 9]>
-<div id="ie8header">
-    <div style="height:60px;">
-    </div>
-    <div class="banner-wrapper ie">
-        <div class="content">
-            <a class="logo ie">
-            </a>
-            <div class="info">
-                <span class="useBoth">Internet Explorer의 오래된 버전을 사용하고 있습니다. 오래된 버전에서는 사이트가 정상적으로 표시되지 않습니다. 지금 업그레이드하세요.</span>
-            </div>
-            <a class="btn middle" style="background-color: transparent;border-color: #fff;color: #dd4035;"
-               href="http://windows.microsoft.com/ko-kr/internet-explorer/download-ie" target="_blank">
-                업그레이드하기
-            </a>
-        </div>
-    </div>
-</div>
-
-<![endif]-->
 
 <!-- body section -->
 <div id="body" class="body device-desktop systemPage pageLink-product snsBtnType- hero-notUse   productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-size-type-heightRelative hero-style-type-light hero-indexPage-height-type-fullScreen hero-otherPages-height-type-twoThirds hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds hero-indexPage-ratio-type-3to1 hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center hero-navi-type-none productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded shopProductDetail-loaded desktop" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.77" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
@@ -223,7 +129,7 @@
                     <td th:text="${question.productName}"></td>
                     <td th:text="${question.content}"></td>
                     <td th:text="${question.userName}"></td>
-                    <td th:text="${#temporals.format(question.questionTime,'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
                     <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" id="btn3">댓글보기</a></td>
                 </tr>
                 </tbody>

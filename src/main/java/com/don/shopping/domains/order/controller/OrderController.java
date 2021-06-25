@@ -1,5 +1,6 @@
 package com.don.shopping.domains.order.controller;
 
+import com.don.shopping.domains.order.service.OrderLineDto;
 import com.don.shopping.domains.order.service.OrderRequestDto;
 import com.don.shopping.domains.order.service.OrderResponseDto;
 import com.don.shopping.domains.order.service.OrderService;
@@ -32,63 +33,42 @@ public class OrderController {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         OrderResponseDto orderResponseDto =
                 orderService.getOrderResponseDtoFromCart(userId, orderRequestDto);
-
         session.setAttribute("orderResponseDto", orderResponseDto);
-
         return ResponseEntity.ok().build();
     }
     @GetMapping("/orders")
     public ModelAndView getOrderPage(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         OrderResponseDto orderResponseDto = (OrderResponseDto) session.getAttribute("orderResponseDto");
-
         mav.addObject("orderResponseDto", orderResponseDto);
         mav.setViewName("customer/orders/order");
-        session.removeAttribute("orderResponseDto");
         return mav;
     }
-
 
     // 상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
     public String getOrderPageByBuyButton(@ModelAttribute OrderRequestDto orderRequestDto, Model model) {
-
         OrderResponseDto orderResponseDto = orderService.getOrderResponseDtoByOneOrderLine(orderRequestDto);
         model.addAttribute("orderResponseDto", orderResponseDto);
-
         return "customer/orders/order";
     }
 
-    // 구매 페이지 -> 결제하기 -> 주문 처리 -> 리다이렉트:주문 완료 페이지
-    @GetMapping("/orders/execute")
-    public ModelAndView executeOrderGet(Authentication authentication, HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("customer/orders/orderSuccess");
-        session.removeAttribute("orderRequestDto");
-        return mav;
-    }
-
+    // 결제하기 버튼
     @PostMapping("/orders/execute")
-    public ResponseEntity executeOrder(HttpSession session, Authentication authentication,
-                                       OrderRequestDto orderRequestDto) {
+    public String executeOrder(Authentication authentication,
+                                       @RequestBody OrderRequestDto orderRequestDto) {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         Long orderId = orderService.order(userId, orderRequestDto);
-//        session.setAttribute("orderRequestDto", orderRequestDto);
-
-        return ResponseEntity.ok().build();
+        return "customer/orders/orderSuccess";
     }
 
-    // 주문 완료 페이지
-    @GetMapping("/orders/success/{orderId}")
-    public String getOrderSuccessPage(@PathVariable Long orderId, Model model) {
-
-        model.addAttribute("orderId", orderId);
-        String orderDate = LocalDateTime
-                .now().format(DateTimeFormatter.ISO_DATE);
-        model.addAttribute("orderDate", orderDate);
-
-        return "customer/orders/orderSuccess";
+    // 구매 페이지 -> 결제하기 -> 주문 처리 -> 리다이렉트:주문 완료 페이지
+    @GetMapping("/orders/success")
+    public ModelAndView executeOrderGet(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("customer/orders/orderSuccess");
+        session.removeAttribute("orderResponseDto");
+        return mav;
     }
 
 }

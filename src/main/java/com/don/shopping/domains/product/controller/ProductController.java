@@ -8,6 +8,7 @@ import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.domains.review.controller.ReviewForm;
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.service.ReviewService;
+import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.AllArgsConstructor;
@@ -27,87 +28,63 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductImageService productImageService;
     private final ReviewService reviewService;
     private final QuestionService questionService;
     private final AuthenticationConverter ac;
 
-    /*//개별 조회
-    @GetMapping("/products/{id}")
-    public String findById(@PathVariable Long id, Model model) {
-
-        //상품id로 해당 상품 첨부파일 전체 조회
-        List<ProductImageResponseDto> productImageResponseDtoList =
-                productImageService.findAllByProduct(id);
-        //상품 첨부파일 id 담을 List객체 생성
-        List<Long> productimageId = new ArrayList<>();
-        //각 첨부파일 id추가
-        for(ProductImageResponseDto productImageResponseDto : productImageResponseDtoList) {
-            productimageId.add(productImageResponseDto.getFileId());
-        }
-
-        ProductEntity product = productService.searchById(id);
-
-        model.addAttribute("product",productService.findOne(id,productimageId));
-
-        return "customer/products/product11.html";
-    }*/
-
     //개별 조회
-    @GetMapping("/products/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    @GetMapping("/products/{productId}")
+    public String findById(@PathVariable Long productId, Model model) {
 
-        ProductResponseDto productResponseDto = productService.getProductById(id);
+        ProductResponseDto productResponseDto = productService.getProductById(productId);
         model.addAttribute("dto",productResponseDto);
 
-        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
+        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(productId); //+무룡파트 해당 product에 모든 Review 출력
         model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
-        model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
-        model.addAttribute("id",id);
-        List<QuestionEntity> questionEntityList = questionService.findQuestionsByProductId(id);
+        model.addAttribute("reviewListByProduct", reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
+        model.addAttribute("id", productId);
+        List<QuestionEntity> questionEntityList = questionService.findQuestionsByProductId(productId);
         model.addAttribute("questionList",questionEntityList); //+무룡파트 해당상품에 대한 질문 출력
         model.addAttribute("questionForm", new QuestionForm()); //+무룡파트 해당 상품에 대한 질문추가 form
 
-        model.addAttribute("ratingCount",reviewService.ratingCount(id)); //+무룡파트 해당 상품에 대한 별점의 개수
-        model.addAttribute("ratingAve",reviewService.ratingAve(id));//+무룡파트 해당 상품에 대한 별점의 평균
+        model.addAttribute("ratingCount",reviewService.ratingCount(productId)); //+무룡파트 해당 상품에 대한 별점의 개수
+        model.addAttribute("ratingAve",reviewService.ratingAve(productId));//+무룡파트 해당 상품에 대한 별점의 평균
 
-        return "customer/products/product.html";
+        return "customer/products/product";
     }
 
-    //개별 조회(리뷰,후기 작성 후)
-    @PostMapping("/products/{id}")
-    public String addProductReviewPost(Model model, @PathVariable Long id, ReviewForm reviewForm, Authentication authentication, QuestionForm questionForm) {
+    // 리뷰 등록
+    @PostMapping("/products/{productId}/reviews")
+    public String addProductReview(Model model, @PathVariable Long productId,
+                                   @Valid ReviewForm reviewForm, Authentication authentication) {
 
-        if(reviewForm.getReviewContent()!=null && reviewForm.getReviewContent()!="") {
-            Long userId = ac.getUserFromAuthentication(authentication).getId();
-            ReviewEntity reviewEntity = new ReviewEntity();//리뷰 엔티티생성
-            reviewEntity.setUserName(reviewService.getUserName(userId));
-            reviewEntity.setContent(reviewForm.getReviewContent());
-            reviewEntity.setRating(reviewForm.getRating());
-            reviewEntity.setProductId(id);
-            reviewEntity.setUserId(userId);
-            Long reviewId = reviewService.addReview(reviewEntity);
-
-        }
-        if(questionForm.getQuestionContent()!=null&&questionForm.getQuestionContent()!="") {
-            Long userId = ac.getUserFromAuthentication(authentication).getId();// 질문엔티티생성
-            QuestionEntity questionEntity = new QuestionEntity();
-            questionEntity.setUserName(questionService.getUserName(userId));
-            questionEntity.setProductName(questionService.getProductName(id));
-            questionEntity.setContent(questionForm.getQuestionContent());
-            questionEntity.setProductId(id);
-            questionEntity.setUserId(userId);
-            Long questionId = questionService.addQuestion(questionEntity);
-        }
-        ProductResponseDto productResponseDto = productService.getProductById(id);
-        model.addAttribute("dto",productResponseDto);
-
-        List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(id); //+무룡파트 해당 product에 모든 Review 출력
-        model.addAttribute("id",id);//+무룡파트 post방식으로 올때 id
-        model.addAttribute("reviewListByProduct",reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
-
-        return "redirect:/products/" + id;
+        UserEntity user = ac.getUserFromAuthentication(authentication);
+        ReviewEntity reviewEntity = ReviewEntity.builder()
+                    .userId(user.getId())
+                    .userName(user.getName())
+                    .content(reviewForm.getReviewContent())
+                    .rating(reviewForm.getRating())
+                    .productId(productId)
+                    .build();
+        Long reviewId = reviewService.addReview(reviewEntity);
+        return "redirect:/products/" + productId;
     }
+
+    // 질문 등록
+    @PostMapping("/products/{productId}/questions")
+    public String addProductQuestion(@PathVariable Long productId,
+                                       @Valid QuestionForm questionForm, Authentication authentication) {
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+        QuestionEntity questionEntity = QuestionEntity.builder()
+                .userId(userId)
+                .content(questionForm.getQuestionContent())
+                .productId(productId)
+                .build();
+        Long questionId = questionService.addQuestion(questionEntity);
+        return "redirect:/products/" + productId;
+    }
+
+
 
     //전체 조회(목록)
     @GetMapping("/products")
