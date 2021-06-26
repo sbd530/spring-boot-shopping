@@ -127,41 +127,9 @@
   <link rel="stylesheet" href="https://static.sixshop.com/resources/css/common/ie9.css?v=04081515"/>
   <![endif]-->
   <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515"></script>
-<!-- 무룡 스크립트-->
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    $(function(){
-		$("#dialog").hide();
 
-		$("#btn1").click(function(){
-			$("#dialog").dialog();
-		});
-
-		$("#btn2").click(function(){
-			$("#dialog").dialog({
-				height:240,
-				width:300,
-				modal: true
-			});
-		});
-
-		$("#btn3").click(function(){
-			$("<div>").dialog({
-				modal:true,
-				open:function(){
-					$(this).load("addanswer_modal.html");
-				},
-				height:400,
-				width:400,
-				title:"외부파일 창 띄우기"
-			});
-		});
-
-
-	});
-
-  </script>
-  <!-- 무룡 스크립트 end -->
 </head>
 
 
@@ -397,14 +365,15 @@
           <td th:text="${question.content}"></td>
           <td th:text="${question.userName}"></td>
           <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
-          <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" id="btn3">댓글보기</a></td>
+          <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}">댓글보기</a></td>
         </tr>
         </tbody>
       </table>
-
     </div>
 
   </div>
+
+
         <!-- 작성자: 서무룡
            질문 추가 버튼 출력 -->
         <div class="container">

@@ -60,10 +60,25 @@ public class QuestionService {
 
     //해당 상품의 모든 질문
     @Transactional(readOnly = true)
-    public List<QuestionEntity> findQuestionsByProductId(Long productId){
-        return questionDao.findQuestionsByProductId(productId);
-
+    public List<QuestionResponseDto> findQuestionsByProductId(Long productId){
+        List<QuestionResponseDto> questionList = questionRepository.findAllByProductId(productId)
+                .stream()
+                .map(questionEntity -> {
+                    QuestionResponseDto dto = new QuestionResponseDto(questionEntity);
+                    String userName = userRepository.findById(questionEntity.getUserId()).get().getName();
+                    dto.setUserName(userName);
+                    String answer = "";
+                    Optional<QuestionAnswerEntity> answerEntity =
+                            questionAnswerDao.findOne(questionEntity.getId());
+                    if(answer.isEmpty()) answer = "미답변";
+                    else answer = answerEntity.get().getContent();
+                    dto.setAnswer(answer);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return questionList;
     }
+
     @Transactional(readOnly = true)
     public String getUserName(Long userId){
         UserEntity userEntity = userRepository.getOne(userId);
