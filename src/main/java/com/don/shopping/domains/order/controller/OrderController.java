@@ -42,16 +42,31 @@ public class OrderController {
         OrderResponseDto orderResponseDto = (OrderResponseDto) session.getAttribute("orderResponseDto");
         mav.addObject("orderResponseDto", orderResponseDto);
         mav.setViewName("customer/orders/order");
+        session.removeAttribute("orderResponseDto");
         return mav;
     }
 
-    // 상품 페이지 -> 구매하기 -> 구매 페이지
+
+    //상품 페이지 -> 구매하기 -> 구매 페이지
     @PostMapping("/orders/buy")
-    public String getOrderPageByBuyButton(@ModelAttribute OrderRequestDto orderRequestDto, Model model) {
-        OrderResponseDto orderResponseDto = orderService.getOrderResponseDtoByOneOrderLine(orderRequestDto);
-        model.addAttribute("orderResponseDto", orderResponseDto);
-        return "customer/orders/order";
+    public ResponseEntity getOrderPageFromProductPage(HttpSession session, Authentication authentication,
+                                                   @RequestBody OrderRequestDto orderRequestDto) {
+        Long userId = ac.getUserFromAuthentication(authentication).getId();
+        OrderResponseDto orderResponseDto =
+                orderService.getOrderResponseDtoByOneOrderLine(orderRequestDto);
+        session.setAttribute("orderResponseDto", orderResponseDto);
+        return ResponseEntity.ok().build();
     }
+    @GetMapping("/orders/buy")
+    public ModelAndView getOrderPageFromProductPage(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        OrderResponseDto orderResponseDto = (OrderResponseDto) session.getAttribute("orderResponseDto");
+        mav.addObject("orderResponseDto", orderResponseDto);
+        mav.setViewName("customer/orders/order");
+        session.removeAttribute("orderResponseDto");
+        return mav;
+    }
+
 
     // 결제하기 버튼
     @PostMapping("/orders/execute")
