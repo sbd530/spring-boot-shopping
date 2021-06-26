@@ -52,15 +52,14 @@ public class OrderEntity extends BaseEntity {
     }
     private void setTotalAmount() {
         this.totalAmount = this.orderLineList.stream()
-                .mapToInt(orderLine -> orderLine.getOrderAmount())
+                .mapToInt(OrderLineEntity::getOrderAmount)
                 .sum();
     }
 
     public void cancelThisOrder() {
         if(this.delivery.getDeliveryStatus() == DeliveryStatus.DONE)
             throw new IllegalStateException("이미 배송을 완료했습니다");
-        this.orderLineList.stream()
-                .forEach(orderLine -> orderLine.decreaseStock());
+        this.orderLineList.forEach(OrderLineEntity::increaseStock);
         this.orderStatus = OrderStatus.CANCELED;
     }
 

@@ -31,7 +31,6 @@ public class FindPasswordController {
     public @ResponseBody String sendAuthMail(@ModelAttribute FindPasswordRequestDto dto, HttpSession session) {
         String email = dto.getEmail();
 
-        System.out.println(email);
         //이메일 존재 확인
         if (!userService.isExistEmail(email)) return "FAIL";
         //인증코드 이메일 전송

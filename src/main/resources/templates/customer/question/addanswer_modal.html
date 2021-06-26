@@ -124,6 +124,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr th:each="question : ${questionLists}">
                     <th scope="row"><div th:text="${question.id}"></div></th>
                     <td th:text="${question.productName}"></td>
@@ -134,10 +135,20 @@
                 </tr>
                 </tbody>
             </table>
+            <div th:if="${#lists.size(questionLists)==0}" style="text-align:center;">
+                질문이 없습니다.
+            </div>
         </div>
     </div>
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
         <!-- footer -->
         <footer th:insert="customer/main/footer.html"></footer>
 
