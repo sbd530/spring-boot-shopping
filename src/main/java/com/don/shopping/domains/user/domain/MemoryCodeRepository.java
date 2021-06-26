@@ -16,10 +16,13 @@ public class MemoryCodeRepository {
 
     public boolean isValidCode(String email, String inputCode) {
         String code;
+        boolean check = false;
         try {
             code = codeRepository.get(email);
-            codeRepository.remove(email);
-            return code.equals(inputCode);
+            if(code.equals(inputCode)) {
+                codeRepository.remove(email);
+                return true;
+            }else{return false;}
         } catch (NullPointerException | ClassCastException exception) {
             return false;
         }
