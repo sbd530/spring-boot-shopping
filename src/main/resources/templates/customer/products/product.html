@@ -1,40 +1,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
 <head>
-  <!-- 윤서추가(jquery) -->
-<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-
-<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
-<script type="text/javascript" id="www-widgetapi-script" src="https://www.youtube.com/s/player/a7cbbf24/www-widgetapi.vflset/www-widgetapi.js" async=""></script><script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js?v=04081515"></script>
-<script src="https://static.sixshop.com/resources/js/norequire/ssa.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB+Garamond:400%7CPT+Serif:400%7CNanum+Gothic:400%7CNanum+Myeongjo:600,400&amp;subset=korean,korean"><script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
   <!-- css윤서 -->
   <link rel="stylesheet" href="/css/customerProduct.css">
 
-  <meta id="metaTagViewport" name="viewport" content="width=device-width">
-  <meta name="robots" content="noindex">
+  <!-- 윤서추가(jquery) -->
+  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB+Garamond:400%7CPT+Serif:400%7CNanum+Gothic:400%7CNanum+Myeongjo:600,400&amp;subset=korean,korean"><script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
+
   <!-- bootstrap -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <!-- bootstrap end -->
-  <link rel="apple-touch-icon" href="https://contents.sixshop.com">
-  <link rel="apple-touch-icon-precomposed" href="https://contents.sixshop.com">
-  <link rel="canonical" href="https://www.sixshop.com/dhadbs2/product/untitled-1">
+  <!-- js -->
+  <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/ckeditor.js?v=04081515"></script><style>.cke{visibility:hidden;}</style>
+  <script src="https://static.sixshop.com/resources/libs/js/jquery-1.12.4.min.js?v=04081515"></script>
+  <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/adapters/jquery.js?v=04081515"></script>
+  <script src="https://static.sixshop.com/resources/js/norequire/global.js?v=04081515"></script>
+  <script src="https://static.sixshop.com/resources/libs/js/vimeo_player.js?v=04081515"></script>
+  <script src="https://static.sixshop.com/resources/libs/js/sha256.min.js?v=04081515"></script>
+  <script src="https://static.sixshop.com/resources/libs/js/lozad.min.js?v=04081515"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="//cdn.polyfill.io/v3/polyfill.min.js?flags=gated&amp;features=Object.assign%2CIntersectionObserver"></script>
+  <script src="https://static.sixshop.com/resources/build/require-config.js?v=04081515"></script>
+  <script data-main="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/libs/require/require.js?v=04081515"></script>
 
   <title th:text="@{'상품 | ' + ${dto.productName}}"></title>
-
-  <meta name="description" content="">
-  <link rel="image_src" href="https://contents.sixshop.com/uploadedFiles/169271/product/image_1623502557279.gif">
-  <meta property="og:url" content="https://www.sixshop.com/dhadbs2/product/untitled-1">
-  <meta property="og:type" content="product">
-  <meta property="og:title" content="수지1">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="https://contents.sixshop.com/uploadedFiles/169271/product/image_1623502557279.gif">
-  <meta property="twitter:title" content="수지1">
-  <meta name="twitter:description" content="">
-  <meta property="twitter:image" content="https://contents.sixshop.com/uploadedFiles/169271/product/image_1623502557279.gif">
 
   <!-- 윤서script(0618추가) -->
   <script th:inline="javascript">
@@ -88,29 +80,8 @@
 	}
   </script>
 
-  <!-- js -->
-  <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/ckeditor.js?v=04081515"></script><style>.cke{visibility:hidden;}</style>
-  <script src="https://static.sixshop.com/resources/libs/js/jquery-1.12.4.min.js?v=04081515"></script>
-  <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/adapters/jquery.js?v=04081515"></script>
-  <script src="https://static.sixshop.com/resources/js/norequire/global.js?v=04081515"></script>
-  <script src="https://static.sixshop.com/resources/libs/js/vimeo_player.js?v=04081515"></script>
-  <script src="https://static.sixshop.com/resources/libs/js/sha256.min.js?v=04081515"></script>
-  <script src="https://static.sixshop.com/resources/libs/js/lozad.min.js?v=04081515"></script>
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="//cdn.polyfill.io/v3/polyfill.min.js?flags=gated&amp;features=Object.assign%2CIntersectionObserver"></script>
-
-  <!-- require-js -->
   <link href="https://static.sixshop.com/resources/build/display-main-built.css?v=04081515" rel="stylesheet" type="text/css">
-  <script src="https://static.sixshop.com/resources/build/require-config.js?v=04081515"></script>
-  <script data-main="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/libs/require/require.js?v=04081515"></script>
 
-  <!--[if lt IE 9]>
-  <link rel="stylesheet" href="https://static.sixshop.com/resources/css/common/ie8.css?v=04081515"/>
-  <![endif]-->
-  <!--[If IE 9]>
-  <link rel="stylesheet" href="https://static.sixshop.com/resources/css/common/ie9.css?v=04081515"/>
-  <![endif]-->
-  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515" src="https://static.sixshop.com/resources/build/display-main-built.js?v=04081515"></script>
 <!-- 무룡 스크립트-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript">
@@ -148,30 +119,7 @@
   <!-- 무룡 스크립트 end -->
 </head>
 
-
 <body class="display display-home display desktop">
-<!--<![endif]-->
-
-<!--[if lt IE 9]>
-<div id="ie8header">
-  <div style="height:60px;">
-  </div>
-  <div class="banner-wrapper ie">
-    <div class="content">
-      <a class="logo ie">
-      </a>
-      <div class="info">
-        <span class="useBoth">Internet Explorer의 오래된 버전을 사용하고 있습니다. 오래된 버전에서는 사이트가 정상적으로 표시되지 않습니다. 지금 업그레이드하세요.</span>
-      </div>
-      <a class="btn middle" style="background-color: transparent;border-color: #fff;color: #dd4035;"
-         href="http://windows.microsoft.com/ko-kr/internet-explorer/download-ie" target="_blank">
-        업그레이드하기
-      </a>
-    </div>
-  </div>
-</div>
-
-<![endif]-->
 
 <!-- body section -->
  <div id="body" class="body device-desktop systemPage pageLink-product snsBtnType- hero-notUse   productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-size-type-heightRelative hero-style-type-light hero-indexPage-height-type-fullScreen hero-otherPages-height-type-twoThirds hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds hero-indexPage-ratio-type-3to1 hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center hero-navi-type-none productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded shopProductDetail-loaded desktop" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.77" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
@@ -409,15 +357,6 @@
 
           </form>
         </div>
-
-
-
-
-
-
-
-
-
 
 </div>
 <div class="mobile-fixed-buy-button-box designSettingElement entire-background-color">
