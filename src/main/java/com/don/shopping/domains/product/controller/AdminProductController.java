@@ -17,36 +17,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/dashboard")
 public class AdminProductController {
 
     private final ProductService productService;
     private final ProductImageService productImageService;
-    //private final ProductImageHandler productImageHandler;
 
     //개별 조회
-    @GetMapping("/products/{id}")
+    /*@GetMapping("/products/{id}")
     public String getAdminProductPage(@PathVariable Long id, Model model) {
 
         ProductResponseDto productResponseDto = productService.getProductById(id);
         model.addAttribute("dto",productResponseDto);
 
         return "dashboard/products/updateProduct.html";
-    }
+    }*/
 
     //전체 조회(목록)
     @GetMapping("/products")
-    @ResponseBody
     public List<AdminProductListResponseDto> getAdminProductListPage(Pageable pageable) {
         return productService.searchAllDesc(pageable);
     }
 
     //상품등록페이지
-    @GetMapping("/products/add")
+    /*@GetMapping("/products/add")
     public String getAddProductPage() {
         return "dashboard/products/addProduct.html";
-    }
+    }*/
 
     //상품등록
     @PostMapping("/products/add")
@@ -81,9 +79,9 @@ public class AdminProductController {
 
     //상품삭제
     @DeleteMapping("/products/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public ResponseEntity deleteProduct(@PathVariable Long id) {
         productService.delete(id);
-        return "redirect:/dashboard/products";
+        return ResponseEntity.ok().build();
     }
 
     //상품조회(키워드기준)

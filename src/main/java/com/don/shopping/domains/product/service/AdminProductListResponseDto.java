@@ -16,6 +16,7 @@ public class AdminProductListResponseDto {
 
     private Long productId;
     private String productName;
+    private String productInfo;
     private Integer rprice;
     private Integer dprice;
     private Integer stock;
@@ -23,6 +24,7 @@ public class AdminProductListResponseDto {
     public AdminProductListResponseDto(ProductEntity productEntity) {
         this.productId = productEntity.getId();
         this.productName = productEntity.getProductName();
+        this.productInfo = productEntity.getProductInfo();
         this.rprice = productEntity.getRprice();
         this.dprice = productEntity.getDprice();
         this.stock = productEntity.getStock();

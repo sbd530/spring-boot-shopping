@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/auth/login/check")
-    public @ResponseBody String checkUser(@ModelAttribute @Valid LoginRequestDto dto) {
+    public @ResponseBody String checkUser(@RequestBody @Valid LoginRequestDto dto) {
         boolean check = userService.validateLoginData(dto);
         if(userService.validateLoginData(dto))
 

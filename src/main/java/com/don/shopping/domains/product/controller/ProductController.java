@@ -4,12 +4,12 @@ import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.service.*;
 import com.don.shopping.domains.question.controller.QuestionForm;
 import com.don.shopping.domains.question.domain.QuestionEntity;
+import com.don.shopping.domains.question.service.QuestionResponseDto;
 import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.domains.review.controller.ReviewForm;
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.service.ReviewService;
 import com.don.shopping.domains.user.domain.UserEntity;
-import com.don.shopping.domains.user.query.dto.MyPageRequestDto;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +43,7 @@ public class ProductController {
         model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
         model.addAttribute("reviewListByProduct", reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
         model.addAttribute("id", productId);
-        List<QuestionEntity> questionEntityList = questionService.findQuestionsByProductId(productId);
+        List<QuestionResponseDto> questionEntityList = questionService.findQuestionsByProductId(productId);
         model.addAttribute("questionList",questionEntityList); //+무룡파트 해당상품에 대한 질문 출력
         model.addAttribute("questionForm", new QuestionForm()); //+무룡파트 해당 상품에 대한 질문추가 form
 
