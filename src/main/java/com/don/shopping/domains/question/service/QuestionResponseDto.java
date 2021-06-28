@@ -18,6 +18,7 @@ public class QuestionResponseDto {
     private String productName;
     private String content;
     private String userName;
+    private Long userId;
     private LocalDateTime createdDate;
     private String answer;
 
@@ -25,6 +26,7 @@ public class QuestionResponseDto {
     public QuestionResponseDto(QuestionEntity question) {
         this.id = question.getId();
         this.productName = question.getProductName();
+        this.userId = question.getUserId();
         this.content = question.getContent();
         this.createdDate = question.getCreatedDate();
     }

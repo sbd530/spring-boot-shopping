@@ -38,7 +38,7 @@
                 <td style="border: 1px solid #444444" th:text="${answerList.id}"></td>
                 <td style="border: 1px solid #444444" th:text="${answerList.questionId}"></td>
                 <td style="border: 1px solid #444444" th:text="${answerList.content}"></td>
-                <td style="border: 1px solid #444444" th:text="${#temporals.format(answerList.questionAnswerTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td style="border: 1px solid #444444" th:text="${#temporals.format(answerList.createdDate,'yyyy-MM-dd HH:mm')}"></td>
                 <!--<td style="border: 1px solid #444444" ><a th:href="@{/reviews/}+${review.id}+@{/edit}">수정</a></td>-->
                 <!--   <td th:text="${review.reviewTime}"></td>  -->
             </tr>

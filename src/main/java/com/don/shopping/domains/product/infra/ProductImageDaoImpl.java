@@ -34,9 +34,9 @@ public class ProductImageDaoImpl implements ProductImageDao {
     public void updateProductImageByProductId(Long imageId, UpdateProductImageDto updateProductImageDto) {
 
         query.update(productImage)
-                .where(productImage.id.eq(imageId))
                 .set(productImage.saveFileName, updateProductImageDto.getSaveFileName())
-                .set(productImage.fileSize,updateProductImageDto.getFileSize())
+                .set(productImage.fileSize, updateProductImageDto.getFileSize())
+                .where(productImage.id.eq(imageId))
                 .execute();
 
     }

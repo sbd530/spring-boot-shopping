@@ -42,9 +42,8 @@ public class AdminQuestionController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/dashboard/questions")
-    public ResponseEntity deleteQuestion(@RequestBody AdminAnswerDto adminAnswerDto){
-        Long questionId = adminAnswerDto.getQuestionId();
+    @DeleteMapping("/dashboard/questions/{questionId}")
+    public ResponseEntity deleteQuestion(@PathVariable Long questionId){
         questionAnswerDao.deleteQuestionAnswer(questionId);
         questionDao.deleteQuestionOne(questionId);
         return ResponseEntity.ok().build();

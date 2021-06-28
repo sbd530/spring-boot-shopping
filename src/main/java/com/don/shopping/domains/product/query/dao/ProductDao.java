@@ -12,5 +12,5 @@ public interface ProductDao {
     void updateProductById(Long id, UpdateProductDto updateProductDto);
     List<ProductEntity> findByKeyword(String keyword);
     Long countOutOfStock();
-
+    void updateStock(Long productId, Integer newStock);
 }

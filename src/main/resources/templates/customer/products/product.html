@@ -288,14 +288,16 @@
         </tr>
         </thead>
         <tbody>
+
         <tr th:each="question : ${questionList}">
           <th scope="row"><div th:text="${question.id}"></div></th>
           <td th:text="${question.productName}"></td>
           <td th:text="${question.content}"></td>
           <td th:text="${question.userName}"></td>
           <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
-          <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}">댓글보기</a></td>
+          <td><a th:onclick="'showAnswer('+${question.id}+')'">답변 확인</a></td>
         </tr>
+
         </tbody>
       </table>
     </div>

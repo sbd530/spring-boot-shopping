@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -37,7 +38,6 @@ public class ProductService {
     private EntityManager em;
 
     //상품등록
-    @Transactional
     public Long add(ProductRequestDto productRequestDto, List<MultipartFile> files) throws Exception {
         //파일 처리를 위한 ProductEntity 객체 생성
         ProductEntity productEntity = new ProductEntity(
@@ -60,7 +60,6 @@ public class ProductService {
     }
 
     //상품수정
-    @Transactional
     public void update(Long id, ProductRequestDto productRequestDto, List<MultipartFile> files) throws Exception {
 
         ProductEntity productEntity = productRepository.findById(id)
@@ -79,7 +78,6 @@ public class ProductService {
     }
 
     //상품삭제
-    @Transactional
     public void delete(Long id) {
        ProductEntity productEntity = productRepository.findById(id)
                .orElseThrow(()->new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
@@ -93,7 +91,7 @@ public class ProductService {
     }
 
     //상품 개별조회(정보 + 파일)
-    @Transactional
+    @Transactional(readOnly = true)
     public ProductResponseDto getProductById(Long id){
        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()
                -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
@@ -118,6 +116,15 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    // 상품 개별 조회
+    @Transactional(readOnly = true)
+    public AdminProductListResponseDto findOneAdminProduct(Long productId) {
+        ProductEntity productEntity =
+                productRepository.findById(productId)
+                        .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+        return new AdminProductListResponseDto(productEntity);
+    }
+
     //키워드별 상품 전체조회
     @Transactional(readOnly = true)
     public List<ProductEntity> findByKeyword(String keyword) {
@@ -125,7 +132,6 @@ public class ProductService {
     }
 
     //상품수정
-    @Transactional
     public void updateProduct(Long productId, ProductImageVO productImageVO) throws Exception {
 
         //db업데이트
@@ -148,21 +154,23 @@ public class ProductService {
         List<ProductImageEntity> productImageEntityList
                 = productImageHandler.parseFileInfo(product, productImageVO.getFiles());
 
-
-        /*for (ProductImageEntity productImageEntity : productImageEntityList) {
-            System.out.println("여기봐!!" + productImageEntity.getId());
-        }*/
-
         for (ProductImageEntity productImageEntity : productImageEntityList) {
             product.addImage(productImageRepository.save(productImageEntity));//파일을 db에 저장
             //productImageDao.updateProductImageByProductId(new UpdateProductImageDto(productImageEntity));//db상품이미지업데이트
         }
 
-        List<Long> imageIdList = productImageVO.getImageIdList();
+        List<Long> imageIdList = product.getProductImages().stream()
+                .map(image -> image.getId())
+                .collect(Collectors.toList());
         for(int i=0; i<4; i++) {
             if(imageIdList.get(i)!=0) {
-                productImageDao.updateProductImageByProductId(imageIdList.get(i),new UpdateProductImageDto(productImageEntityList.get(i)));
+                productImageDao.updateProductImageByProductId(imageIdList.get(i),
+                        new UpdateProductImageDto(productImageEntityList.get(i)));
             }
         }
+    }
+
+    public void updateStock(Long productId, Integer newStock) {
+        productDao.updateStock(productId, newStock);
     }
 }

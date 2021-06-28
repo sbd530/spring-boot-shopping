@@ -43,8 +43,9 @@ public class ProductController {
         model.addAttribute("reviewForm", new ReviewForm()); //+무룡파트 reviewform형식을 product.html에 뿌려줌
         model.addAttribute("reviewListByProduct", reviewsByProductId); //+무룡파트 해당 product에 모든 Review 출력
         model.addAttribute("id", productId);
-        List<QuestionResponseDto> questionEntityList = questionService.findQuestionsByProductId(productId);
-        model.addAttribute("questionList",questionEntityList); //+무룡파트 해당상품에 대한 질문 출력
+
+        List<QuestionResponseDto> questionList = questionService.findQuestionsByProductId(productId);
+        model.addAttribute("questionList",questionList); //+무룡파트 해당상품에 대한 질문 출력
         model.addAttribute("questionForm", new QuestionForm()); //+무룡파트 해당 상품에 대한 질문추가 form
 
         model.addAttribute("ratingCount",reviewService.ratingCount(productId)); //+무룡파트 해당 상품에 대한 별점의 개수
