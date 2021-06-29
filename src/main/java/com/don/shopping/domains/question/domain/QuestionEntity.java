@@ -23,6 +23,7 @@ public class QuestionEntity extends BaseEntity {
     private String content;  //질문할 내용
     private String answer; //답변
 
+
     @Builder
     public QuestionEntity(Long id, Long productId, String productName, Long userId, String content, String answer) {
         this.id = id;
