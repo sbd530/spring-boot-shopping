@@ -32,6 +32,7 @@ public class ProductController {
     private final QuestionService questionService;
     private final AuthenticationConverter ac;
 
+
     //개별 조회
     @GetMapping("/products/{productId}")
     public String findById(@PathVariable Long productId, Model model) {
@@ -58,15 +59,17 @@ public class ProductController {
     @PostMapping("/products/{productId}/reviews")
     public String addProductReview(Model model, @PathVariable Long productId,
                                    @Valid ReviewForm reviewForm, Authentication authentication) {
+        ProductResponseDto productResponseDto =productService.getProductById(productId);
 
         UserEntity user = ac.getUserFromAuthentication(authentication);
         ReviewEntity reviewEntity = ReviewEntity.builder()
-                    .userId(user.getId())
-                    .userName(user.getName())
-                    .content(reviewForm.getReviewContent())
-                    .rating(reviewForm.getRating())
-                    .productId(productId)
-                    .build();
+                .userId(user.getId())
+                .userName(user.getName())
+                .content(reviewForm.getReviewContent())
+                .rating(reviewForm.getRating())
+                .productId(productId)
+                .productName(productResponseDto.getProductName())
+                .build();
         Long reviewId = reviewService.addReview(reviewEntity);
         return "redirect:/products/" + productId;
     }
@@ -74,7 +77,7 @@ public class ProductController {
     // 질문 등록
     @PostMapping("/products/{productId}/questions")
     public String addProductQuestion(@PathVariable Long productId,
-                                       @Valid QuestionForm questionForm, Authentication authentication) {
+                                     @Valid QuestionForm questionForm, Authentication authentication) {
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         QuestionEntity questionEntity = QuestionEntity.builder()
                 .userId(userId)

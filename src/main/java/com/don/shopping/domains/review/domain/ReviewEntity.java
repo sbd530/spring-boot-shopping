@@ -26,15 +26,16 @@ public class ReviewEntity extends BaseEntity {
     private String userName;//userName
     private String content;  //리뷰할 내용
     private int rating; // 별점
-
+    private String productName; //상품네임
 
     @Builder
-    public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating) {
+    public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating,String productName) {
         this.id = id;
         this.productId = productId;
         this.userId = userId;
         this.userName = userName;
         this.content = content;
         this.rating = rating;
+        this.productName = productName;
     }
 }

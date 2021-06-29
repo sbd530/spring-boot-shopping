@@ -14,6 +14,7 @@ public class AdminReviewDto {
 
     private Long id;
     private Long productId;
+    private String productName;
     private String content;
     private int rating;
     private Long userId;
@@ -21,6 +22,7 @@ public class AdminReviewDto {
     private String reviewTime;
 
     public AdminReviewDto(ReviewEntity review) {
+        this.productName = review.getProductName();
         this.id = review.getId();
         this.productId = review.getProductId();
         this.content = review.getContent();
