@@ -37,5 +37,4 @@ public class ReviewEntity extends BaseEntity {
         this.content = content;
         this.rating = rating;
     }
-    //==비즈니스 로직==//
 }

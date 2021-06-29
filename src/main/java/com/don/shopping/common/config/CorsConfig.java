@@ -10,14 +10,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
-                .addMapping("/**") // URL Pattern : All
-                .allowedOrigins("*") // Origins : All
-                .allowedMethods("*") //HTTP Method : All
-                .maxAge(3600) //pre-flight Caching
+                .addMapping("/**")
+                .allowedOrigins("http://localhost:9090","http://localhost:8081")
+                .allowedMethods("GET","POST","PUT","PATCH","DELETE")
         ;
     }
 }
+

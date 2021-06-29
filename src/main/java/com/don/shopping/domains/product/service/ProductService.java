@@ -6,10 +6,8 @@ import com.don.shopping.domains.product.query.dao.ProductImageDao;
 import com.don.shopping.domains.product.query.dto.UpdateProductDto;
 import com.don.shopping.domains.product.query.dto.UpdateProductImageDto;
 import com.don.shopping.domains.product.util.ProductImageHandler;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

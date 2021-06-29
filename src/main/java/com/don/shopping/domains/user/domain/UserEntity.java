@@ -22,7 +22,7 @@ public class UserEntity extends BaseEntity {
 
     private String email;
     private String name;
-    private  String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
