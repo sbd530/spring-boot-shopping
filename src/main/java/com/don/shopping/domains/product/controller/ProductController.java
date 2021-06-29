@@ -80,6 +80,7 @@ public class ProductController {
                 .userId(userId)
                 .content(questionForm.getQuestionContent())
                 .productId(productId)
+                .answer("미답변")
                 .build();
         Long questionId = questionService.addQuestion(questionEntity);
         return "redirect:/products/" + productId;
