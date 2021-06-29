@@ -9,7 +9,7 @@ public interface QuestionAnswerDao {
 
     Optional<QuestionAnswerEntity> findOne(Long questionId);
 
-    List<QuestionAnswerEntity> findQuestionByQuestionId(Long questionId);
+    QuestionAnswerEntity findAnswerByQuestionId(Long questionId);
 
     void deleteQuestionAnswerOne(Long questionAnswerId);
 

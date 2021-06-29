@@ -31,8 +31,8 @@ public class QuestionAnswerService {
 
     //그 질문에 대한 답변 전체 조회
     @Transactional(readOnly = true)
-    public List<QuestionAnswerEntity> findAllReviewsByQuestion(Long questionId){
-        return questionAnswerDao.findQuestionByQuestionId(questionId);
+    public QuestionAnswerEntity findAnswerByQuestion(Long questionId){
+        return questionAnswerDao.findAnswerByQuestionId(questionId);
     }
 
 
