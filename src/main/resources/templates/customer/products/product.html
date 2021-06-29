@@ -3,6 +3,8 @@
 <head>
   <!-- 윤서추가(jquery) -->
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB+Garamond:400%7CPT+Serif:400%7CNanum+Gothic:400%7CNanum+Myeongjo:600,400&amp;subset=korean,korean"><script>WebFont.load({google:{families:['EB+Garamond:400','PT+Serif:400','Nanum+Gothic:400:korean','Nanum+Myeongjo:600,400:korean']}});</script>
   <!-- css윤서 -->
   <link rel="stylesheet" href="/css/customerProduct.css">
@@ -76,6 +78,27 @@
     })
   });
   </script>
+
+  <!--무룡 작성 스크립트 모달창-->
+  <style>
+ function openPop(questionId){
+    var popup = window.open('http://localhost:8080/questions', '네이버팝업', 'width=700px,height=800px,scrollbars=yes');
+}
+#Qtable {display: table; width: 100%;}
+.Qrow {display: table-row;}
+.Qcell {display: table-cell; padding: 3px; border-bottom: 1px solid #DDD;}
+.Qcol1 { width: 15%;}
+.Qcol2 {width: 15%;}
+.Qcol3 {width: 15%;}
+.Qcol4 {width: 15%;}
+.Qcol5 {width: 15%;}
+.Qcol6 {width: 15%;}
+.Qcol7 {width: 15%;}
+</style>
+
+
+  </script>
+
 
   <!-- js -->
   <script src="https://static.sixshop.com/resources/libs/ckeditor-4.12.1/ckeditor.js?v=04081515"></script><style>.cke{visibility:hidden;}</style>
@@ -272,35 +295,32 @@
   <br/><br/><br/>
         <!-- 작성자: 서무룡
            해당 질문 리스트 출력 -->
-  <div class="container">
+
     <br/><br/><div style="font-size: x-large">질문 목록</div><br/><br/><br/>
 
-    <div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">상품 아이디</th>
-          <th scope="col">질문 내용</th>
-          <th scope="col">작성자</th>
-          <th scope="col">작성날짜</th>
-          <th scope="col">댓글</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div id="Qtable">
+      <div class="Qrow">
+        <span class="Qcell Qcol1">#</span>
+        <span class="Qcell Qcol2">상품 아이디</span>
+        <span class="Qcell Qcol3">질문 내용</span>
+        <span class="Qcell Qcol4">작성자</span>
+        <span class="Qcell Qcol5">작성날짜</span>
+        <span class="Qcell Qcol6">댓글</span>
+        <span class="Qcell Qcol7">댓글내용</span>
+      </div>
+      <div class="Qrow" th:each="question : ${questionList}">
+        <span class="Qcell Qcol1" th:text="${question.id}"></span>
 
-        <tr th:each="question : ${questionList}">
-          <th scope="row"><div th:text="${question.id}"></div></th>
-          <td th:text="${question.productName}"></td>
-          <td th:text="${question.content}"></td>
-          <td th:text="${question.userName}"></td>
-          <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
-          <td><a th:onclick="'showAnswer('+${question.id}+')'">답변 확인</a></td>
-        </tr>
+        <span class="Qcell Qcol2" th:text="${question.productName}"></span>
+        <span class="Qcell Qcol3" th:text="${question.content}"></span>
+        <span class="Qcell Qcol4" th:text="${question.userName}"></span>
+        <span class="Qcell Qcol5" th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></span>
+        <span class="Qcell Qcol6"><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" target="_self">댓글보기</a></span>
+        <span class="Qcell Qcol7" th:text="${question.answer}"></span>
+      </div>
 
-        </tbody>
-      </table>
     </div>
+
   </div>
 
         <!-- 작성자: 서무룡
@@ -324,7 +344,7 @@
         </div>
 </div>
 </div>
-
+<br/><br/><br/><br/><br/><br/>
 <!-- footer -->
 <footer th:insert="customer/main/footer.html"></footer>
 

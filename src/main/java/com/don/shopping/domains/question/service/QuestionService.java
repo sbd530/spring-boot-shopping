@@ -70,8 +70,8 @@ public class QuestionService {
                     String answer = "";
                     Optional<QuestionAnswerEntity> answerEntity =
                             questionAnswerDao.findOne(questionEntity.getId());
-                    if(answer.isEmpty()) answer = "미답변";
-                    else answer = answerEntity.get().getContent();
+                    if(answer == "미답변") ;
+                    else answer = questionEntity.getAnswer();
                     dto.setAnswer(answer);
                     return dto;
                 })

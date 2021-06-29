@@ -24,7 +24,7 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
     @Override //댓글하나 조회
     public Optional<QuestionAnswerEntity> findOne(Long questionAnswerId) {
         Optional<QuestionAnswerEntity> questionAnswerEntity = Optional.ofNullable(query.selectFrom(qQuestionAnswerEntity)
-                .where(qQuestionAnswerEntity.id.eq(questionAnswerId))
+                .where(qQuestionAnswerEntity.questionId.eq(questionAnswerId))
                 .fetchOne());
         return questionAnswerEntity;
     }
