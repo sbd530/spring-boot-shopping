@@ -19,10 +19,9 @@ public class AdminUserController {
 
     @Transactional(readOnly = true)
     @GetMapping("/dashboard/users")
-    public List<AdminUserDto> getAdminUserDtoList(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+    public List<AdminUserDto> getAdminUserDtoList(Pageable pageable) {
         List<AdminUserDto> userList = userService.getUserList(pageable);
         return userList;
     }
-
 
 }

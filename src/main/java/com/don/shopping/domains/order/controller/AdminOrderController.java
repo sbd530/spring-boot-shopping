@@ -22,7 +22,7 @@ public class AdminOrderController {
     public List<AdminOrderDto> getAdminOrderPage(
             @RequestParam(name = "orderStatus", required = false) String orderStatus,
             @RequestParam(name = "deliveryStatus", required = false) String deliveryStatus,
-            @PageableDefault(size = 10, page = 0) Pageable pageable) {
+            Pageable pageable) {
 
         List<AdminOrderDto> adminOrderDtoList =
                 adminOrderService.getFilteredOrders(orderStatus, deliveryStatus, pageable);

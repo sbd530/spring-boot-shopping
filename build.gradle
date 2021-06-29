@@ -53,6 +53,8 @@ dependencies {
 	//Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	//JWT
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -24,12 +24,12 @@ public class LoginController {
     public @ResponseBody String checkUser(@RequestBody @Valid LoginRequestDto dto) {
         boolean check = userService.validateLoginData(dto);
         if(userService.validateLoginData(dto))
-
             return "SUCCESS";
         return "FAIL";
     }
 
     //로그인 과정은 스프링 시큐리티가 처리합니다.
+    //POST: /auth/login
 
     @GetMapping("/auth/login/error")
     public String getLoginErrorPage(Model model) {

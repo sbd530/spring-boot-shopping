@@ -1,5 +1,7 @@
 package com.don.shopping.common.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 /**
@@ -16,9 +19,11 @@ import org.springframework.security.web.header.writers.StaticHeadersWriter;
  */
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
     /**
      * 요청 권한 설정 정보
      *
@@ -58,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .failureUrl("/auth/login/error")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .successHandler(new LoginSuccessHandler())
+                        .successHandler(authenticationSuccessHandler)
                 .and()
                     .logout()
                         .logoutUrl("/logout")
