@@ -41,12 +41,8 @@ public class ProductImageHandler {
                     DateTimeFormatter.ofPattern("yyyyMMdd");
             String currenDate = now.format(dateTimeFormatter);
 
-            //프로젝트 디렉터리 내 저장을 위한 절대 경로 설정
-            //경로 구분자 File.seperator사용
-            //String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
-
             //파일을 저장할 세부 경로 지정
-            String path = "C:" +  File.separator + "productImages";
+            String path = "/home" +  File.separator + "productImages";
             File file = new File(path);
 
             //디렉터리가 존재하지 않을 경우
@@ -134,7 +130,7 @@ public class ProductImageHandler {
 
     public void doFileDelete(String saveFileName) {
         try {
-            String filePath = "C:" +  File.separator + "productImages" + File.separator + saveFileName;
+            String filePath = "/home" +  File.separator + "productImages" + File.separator + saveFileName;
             File f = new File(filePath);
             if(f.exists()) {
                 f.delete();
