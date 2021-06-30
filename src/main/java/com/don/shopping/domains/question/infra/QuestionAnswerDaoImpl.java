@@ -29,13 +29,13 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
         return questionAnswerEntity;
     }
 
-    @Override //그 질문에 대한 답변들 조회
-    public List<QuestionAnswerEntity> findQuestionByQuestionId(Long questionId) {
-        List<QuestionAnswerEntity> questionAnswerEntityList = query.selectFrom(qQuestionAnswerEntity)
+    @Override//그 질문에 대한 답변한개 조회
+    public QuestionAnswerEntity findAnswerByQuestionId(Long questionId) {
+        QuestionAnswerEntity questionAnswerEntity = query.selectFrom(qQuestionAnswerEntity)
                 .where(qQuestionAnswerEntity.questionId.eq(questionId))
-                .fetch();
+                .fetchOne();
 
-        return questionAnswerEntityList;
+        return questionAnswerEntity;
     }
 
     @Override

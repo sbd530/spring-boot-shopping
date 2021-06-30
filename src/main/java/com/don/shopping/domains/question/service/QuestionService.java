@@ -51,10 +51,10 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    //질문 하나 조회(수정창)
+    //질문 하나 조회
     @Transactional(readOnly = true)
-    public QuestionEntity findOneQuestion(Long reviewId){
-        return questionRepository.findById(reviewId).orElseThrow(()
+    public QuestionEntity findOneQuestion(Long questionId){
+        return questionRepository.findById(questionId).orElseThrow(()
                 -> new IllegalArgumentException("해당 질문이 없습니다."));
     }
 
@@ -104,6 +104,15 @@ public class QuestionService {
                             questionAnswerDao.findOne(questionEntity.getId());
                     if(answer.isEmpty()) answer = "미답변";
                     else answer = answerEntity.get().getContent();
+
+                   /* if(answerEntity.isPresent()) {
+                        answer = "미답변";
+                    }else{
+                        answer = answerEntity.get().getContent();
+                    }*/
+
+
+
                     dto.setAnswer(answer);
                     return dto;
                 })

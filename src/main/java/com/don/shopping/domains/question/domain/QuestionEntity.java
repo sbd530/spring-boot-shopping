@@ -22,6 +22,7 @@ public class QuestionEntity extends BaseEntity {
     private Long userId;  //질문 작성한 userId
     private String content;  //질문할 내용
     private String answer; //답변
+    private String userName;
 
 
     @Builder

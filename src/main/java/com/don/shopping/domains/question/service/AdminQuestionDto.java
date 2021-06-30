@@ -20,13 +20,15 @@ public class AdminQuestionDto {
     private String userName;
     private String content;
     private String questionTime;
+    private String answer;
 
     public AdminQuestionDto(QuestionEntity question) {
         this.id = question.getId();
         this.productId = question.getProductId();
         this.productName = question.getProductName();
+        this.answer = question.getAnswer();
         this.userId = question.getUserId();
-//        this.userName = question.getUserName();
+        this.userName = question.getUserName();
         this.content = question.getContent();
         this.questionTime = question
                 .getCreatedDate()
