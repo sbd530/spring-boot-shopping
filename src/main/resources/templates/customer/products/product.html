@@ -123,7 +123,7 @@
 <!-- body section -->
  <div id="body" class="body device-desktop systemPage pageLink-product snsBtnType- hero-notUse   productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-size-type-heightRelative hero-style-type-light hero-indexPage-height-type-fullScreen hero-otherPages-height-type-twoThirds hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds hero-indexPage-ratio-type-3to1 hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center hero-navi-type-none productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded shopProductDetail-loaded desktop" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.77" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
 
-   <header th:insert="customer/main/header_black.html"></header>
+   <div th:replace="customer/users/mypage/head"/>
    <!-- 윤서이미지 -->
   <div id="displayCanvas" class="desktop" data-viewport="desktop">
     <div class="shopProductDetail wrapper">
@@ -243,7 +243,6 @@
       <table class="table">
         <thead>
         <tr>
-          <th scope="col">#</th>
          <!-- <th scope="col">상품 아이디</th>-->
           <th scope="col">리뷰 내용</th>
           <th scope="col">작성자</th>
@@ -253,7 +252,6 @@
         </thead>
         <tbody>
         <tr th:each="review : ${reviewListByProduct}">
-          <th scope="row"><div th:text="${review.id}"></div></th>
          <!-- <td th:text="${review.productId}"></td>-->
           <td th:text="${review.content}"></td>
           <td th:text="${review.userName}"></td>
@@ -296,30 +294,30 @@
         <!-- 작성자: 서무룡
            해당 질문 리스트 출력 -->
 
-    <br/><br/><div style="font-size: x-large">질문 목록</div><br/><br/><br/>
+        <div class="container">
+          <div style="font-size: x-large">질문 목록</div><br/><br/><br/>
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">질문 내용</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성 날짜</th>
+                <th scope="col">댓글</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="question : ${questionList}">
+                <td th:text="${question.content}"></td>
+                <td th:text="${question.userName}"></td>
+                <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
+                <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" target="_self">댓글보기</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div id="Qtable">
-      <div class="Qrow">
-        <span class="Qcell Qcol1">#</span>
-        <span class="Qcell Qcol2">상품 아이디</span>
-        <span class="Qcell Qcol3">질문 내용</span>
-        <span class="Qcell Qcol4">작성자</span>
-        <span class="Qcell Qcol5">작성날짜</span>
-        <span class="Qcell Qcol6">댓글</span>
-      </div>
-      <div class="Qrow" th:each="question : ${questionList}">
-        <span class="Qcell Qcol1" th:text="${question.id}"></span>
-
-        <span class="Qcell Qcol2" th:text="${question.productName}"></span>
-        <span class="Qcell Qcol3" th:text="${question.content}"></span>
-        <span class="Qcell Qcol4" th:text="${question.userName}"></span>
-        <span class="Qcell Qcol5" th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></span>
-        <span class="Qcell Qcol6"><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" target="_self">댓글보기</a></span>
-      </div>
-
-    </div>
-
-  </div>
 
         <!-- 작성자: 서무룡
            질문 추가 버튼 출력 -->
