@@ -10,10 +10,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface UserDao {
-
     void updateUserInfo(String email, MyPageRequestDto dto);
     void modifyPassword(String email, String newPassword);
     List<QuestionEntity> findQuestionsByUserId(Long userId);
-
     Page<UserEntity> findUserList(Pageable pageable);
 }

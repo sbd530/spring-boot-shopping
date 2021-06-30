@@ -4,7 +4,6 @@ import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.query.ReviewDao;
 import com.don.shopping.domains.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +13,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -27,13 +25,8 @@ public class ReviewController {
     @CrossOrigin("*")
     public List<ReviewEntity> listProductViewGet(Model model) {
         List<ReviewEntity> reviewEntityList = reviewService.findAllReviews();
-        //model.addAttribute("reviewlists",reviewEntityList);
         return reviewEntityList;
     }
-    //개별조회
-    //log.info("review Controller");
-
-
 
     //리뷰 등록
     @GetMapping("/reviews/add")
@@ -61,11 +54,8 @@ public class ReviewController {
     //해당 상품의 리뷰
     @GetMapping("/products/{productId}/reviews")
     public String getReviews(Model model, @PathVariable Long productId){
-
         List<ReviewEntity> reviewsByProductId = reviewService.findReviewsByProductId(productId);
-
         model.addAttribute("reviewListByProduct",reviewsByProductId);
-
         return "dashboard/review/reviewlist";
     }
 
@@ -81,6 +71,7 @@ public class ReviewController {
         model.addAttribute("id",reviewId);
         return "dashboard/review/reviewupdate";
     }
+
     //개별 수정 update
     @PostMapping("/reviews/{reviewId}/edit")  //
     public String updateReview(@PathVariable("reviewId") Long reviewId,@ModelAttribute("reviewForm") ReviewForm reviewForm){

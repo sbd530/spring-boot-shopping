@@ -5,14 +5,10 @@ import com.don.shopping.domains.user.service.FindPasswordRequestDto;
 import com.don.shopping.domains.user.service.MailService;
 import com.don.shopping.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 @Controller
 @RequiredArgsConstructor

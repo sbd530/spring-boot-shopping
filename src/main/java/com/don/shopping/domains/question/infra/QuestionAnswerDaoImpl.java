@@ -2,14 +2,12 @@ package com.don.shopping.domains.question.infra;
 
 import com.don.shopping.domains.question.domain.QQuestionAnswerEntity;
 import com.don.shopping.domains.question.domain.QuestionAnswerEntity;
-import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,9 +17,7 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
     private final JPAQueryFactory query;
     private final QQuestionAnswerEntity qQuestionAnswerEntity = QQuestionAnswerEntity.questionAnswerEntity;
 
-
-
-    @Override //댓글하나 조회
+    @Override
     public Optional<QuestionAnswerEntity> findOne(Long questionAnswerId) {
         Optional<QuestionAnswerEntity> questionAnswerEntity = Optional.ofNullable(query.selectFrom(qQuestionAnswerEntity)
                 .where(qQuestionAnswerEntity.questionId.eq(questionAnswerId))
@@ -29,7 +25,7 @@ public class QuestionAnswerDaoImpl implements QuestionAnswerDao {
         return questionAnswerEntity;
     }
 
-    @Override//그 질문에 대한 답변한개 조회
+    @Override
     public QuestionAnswerEntity findAnswerByQuestionId(Long questionId) {
         QuestionAnswerEntity questionAnswerEntity = query.selectFrom(qQuestionAnswerEntity)
                 .where(qQuestionAnswerEntity.questionId.eq(questionId))

@@ -1,9 +1,7 @@
 package com.don.shopping.domains.review.service;
 
-
 import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.review.domain.ReviewRepository;
-import com.don.shopping.domains.review.infra.ReviewDaoImpl;
 import com.don.shopping.domains.review.query.ReviewDao;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
@@ -23,7 +21,6 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     //리뷰 등록
-    @Transactional
     public Long addReview(ReviewEntity reviewEntity){
         return reviewRepository.save(reviewEntity).getId();
     }
@@ -63,7 +60,7 @@ public class ReviewService {
         return reviewDao.ratingAve(productId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public String getUserName(Long userId){
         UserEntity userEntity = userRepository.getOne(userId);
         return userEntity.getName();

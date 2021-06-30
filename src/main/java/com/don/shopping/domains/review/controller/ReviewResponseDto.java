@@ -1,10 +1,8 @@
 package com.don.shopping.domains.review.controller;
 
-import com.don.shopping.domains.review.domain.ReviewEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class ReviewResponseDto {

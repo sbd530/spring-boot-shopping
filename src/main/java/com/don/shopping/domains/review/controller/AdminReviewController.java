@@ -20,7 +20,6 @@ public class AdminReviewController {
     private final ReviewDao reviewDao;
     private final ReviewService reviewService;
 
-    //리뷰를 꺼내는 메소드
     @GetMapping("/dashboard/reviews")
     public List<AdminReviewDto> getReivews(){
         return reviewService

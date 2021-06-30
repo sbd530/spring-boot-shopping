@@ -11,15 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Repository
 @RequiredArgsConstructor
 public class ReviewDaoImpl implements ReviewDao {
 
     private final JPAQueryFactory query;
     private final QReviewEntity qReviewEntity = QReviewEntity.reviewEntity;
-    private final QProductEntity qProductEntity = QProductEntity.productEntity;
-
 
     @Override
     public ReviewEntity findOne(Long reviewid) {
@@ -38,6 +35,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
         return reviewEntityList;
     }
+
     @Transactional
     @Override
     public void deleteReviewOne(Long reviewid) {

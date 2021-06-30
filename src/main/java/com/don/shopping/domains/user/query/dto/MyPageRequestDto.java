@@ -34,19 +34,4 @@ public class MyPageRequestDto {
     public Address getAddress() {
         return new Address(this.postNumber,this.address1,this.address2);
     }
-
-//    public UserEntity toEntity() {
-//        UserEntity newUserInfo = UserEntity.builder()
-//                .name(name)
-//                .phoneNumber(new PhoneNumber(
-//                        phoneNumber1,
-//                        phoneNumber2,
-//                        phoneNumber3
-//                )).address(new Address(
-//                        postNumber,
-//                        address1,
-//                        address2
-//                )).build();
-//        return newUserInfo;
-//    }
 }

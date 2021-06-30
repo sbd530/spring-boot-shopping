@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "question_answer")
 @Getter
-@Setter //setter은 지우는게 좋음
+@Setter
 @NoArgsConstructor
 public class QuestionAnswerEntity extends BaseEntity {
 

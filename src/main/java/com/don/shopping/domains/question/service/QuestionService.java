@@ -8,7 +8,6 @@ import com.don.shopping.domains.question.domain.QuestionEntity;
 import com.don.shopping.domains.question.domain.QuestionRepository;
 import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.don.shopping.domains.question.query.QuestionDao;
-import com.don.shopping.domains.review.domain.ReviewEntity;
 import com.don.shopping.domains.user.domain.UserEntity;
 import com.don.shopping.domains.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +24,12 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final QuestionDao questionDao;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final MemoryHomeRepository memoryHomeRepository;
     private final QuestionAnswerDao questionAnswerDao;
 
     //질문 등록
-    @Transactional
     public Long addQuestion(QuestionEntity questionEntity){
         String productName = productRepository
                 .findById(questionEntity.getProductId())
@@ -104,15 +101,6 @@ public class QuestionService {
                             questionAnswerDao.findOne(questionEntity.getId());
                     if(answer.isEmpty()) answer = "미답변";
                     else answer = answerEntity.get().getContent();
-
-                   /* if(answerEntity.isPresent()) {
-                        answer = "미답변";
-                    }else{
-                        answer = answerEntity.get().getContent();
-                    }*/
-
-
-
                     dto.setAnswer(answer);
                     return dto;
                 })

@@ -13,5 +13,4 @@ public class AdminOrderResponseDto {
 
     private List<AdminOrderDto> orderDtoList;
 
-
 }

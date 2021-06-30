@@ -3,10 +3,8 @@ package com.don.shopping.domains.question.controller;
 import com.don.shopping.domains.question.domain.QuestionAnswerEntity;
 import com.don.shopping.domains.question.query.QuestionAnswerDao;
 import com.don.shopping.domains.question.service.QuestionAnswerService;
-import com.don.shopping.domains.question.service.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class AnswerController {
 

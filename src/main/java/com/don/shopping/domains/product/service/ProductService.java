@@ -164,7 +164,6 @@ public class ProductService {
 
         for (ProductImageEntity productImageEntity : productImageEntityList) {
             product.addImage(productImageRepository.save(productImageEntity));//파일을 db에 저장
-            //productImageDao.updateProductImageByProductId(new UpdateProductImageDto(productImageEntity));//db상품이미지업데이트
         }
 
         List<Long> imageIdList = product.getProductImages().stream()

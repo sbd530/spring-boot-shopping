@@ -3,9 +3,7 @@ package com.don.shopping.domains.order.controller;
 import com.don.shopping.domains.order.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,7 +15,6 @@ public class AdminOrderController {
 
     private final AdminOrderService adminOrderService;
 
-    // ?orderStatus={주문상태} &deliveryStatus={배송상태} ( &page={페이지번호} &size={한페이지당주문수})
     @GetMapping("/dashboard/orders")
     public List<AdminOrderDto> getAdminOrderPage(
             @RequestParam(name = "orderStatus", required = false) String orderStatus,

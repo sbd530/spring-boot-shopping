@@ -19,7 +19,7 @@ import java.io.InputStream;
 @RestController
 @RequiredArgsConstructor
 public class ProductImageController {
-    private final ProductService productService;
+
     private final ProductImageService productImageService;
 
     @GetMapping(

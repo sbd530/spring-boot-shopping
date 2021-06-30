@@ -1,16 +1,13 @@
 package com.don.shopping.domains.product.controller;
 
-import com.don.shopping.domains.product.domain.ProductEntity;
 import com.don.shopping.domains.product.domain.ProductImageVO;
 import com.don.shopping.domains.product.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

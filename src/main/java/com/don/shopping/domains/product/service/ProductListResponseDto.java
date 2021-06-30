@@ -23,9 +23,8 @@ public class ProductListResponseDto {
 
         if(!productEntity.getProductImages().isEmpty()) {//첨부파일이 있으면
             this.thumbnailImage1 = productEntity.getProductImages().get(0).getSaveFileName(); //첫번째 이미지 반환
-            //if (productEntity.getProductImages().get(0).getSaveFileName().isEmpty()) {//첫번째 이미지가 없다면?
             this.thumbnailImage2 = productEntity.getProductImages().get(1).getSaveFileName();//두번째 이미지 반환
-            //}
+
         }
     }
 }

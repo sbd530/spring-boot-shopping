@@ -4,8 +4,6 @@ import com.don.shopping.common.vo.Shipment;
 import com.don.shopping.domains.order.domain.OrderEntity;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @AllArgsConstructor

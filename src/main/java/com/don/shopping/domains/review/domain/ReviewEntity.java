@@ -6,27 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.jdo.annotations.Embedded;
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Timer;
 
 @Entity
 @Table(name = "review")
-@Getter @Setter //setter은 지우는게 좋음
+@Getter @Setter
 @NoArgsConstructor
 public class ReviewEntity extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;   //review 의 id
-    private Long productId; //리뷰할 상품id
-    private Long userId;  //userId
-    private String userName;//userName
-    private String content;  //리뷰할 내용
-    private int rating; // 별점
-    private String productName; //상품네임
+    private Long id;
+    private Long productId;
+    private Long userId;
+    private String userName;
+    private String content;
+    private int rating;
+    private String productName;
 
     @Builder
     public ReviewEntity(Long id, Long productId, Long userId, String userName, String content, int rating,String productName) {

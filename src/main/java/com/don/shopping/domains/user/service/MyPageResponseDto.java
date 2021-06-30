@@ -18,9 +18,6 @@ public class MyPageResponseDto {
     private String phoneNumber3;
     private Address address;
 
-//    private List<MyOrderDto> myOrderList; //주문 내역
-//    private List<MyArticleDto> myArticleList; //내가 쓴 글
-
     public MyPageResponseDto(UserEntity userEntity) {
         this.email = userEntity.getEmail();
         this.name = userEntity.getName();

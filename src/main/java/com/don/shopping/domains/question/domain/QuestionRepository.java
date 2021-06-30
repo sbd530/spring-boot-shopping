@@ -1,6 +1,5 @@
 package com.don.shopping.domains.question.domain;
 
-import com.don.shopping.domains.question.service.QuestionResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

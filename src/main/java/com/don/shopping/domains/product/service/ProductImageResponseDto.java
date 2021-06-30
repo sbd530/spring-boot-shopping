@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class ProductImageResponseDto {
-    private Long fileId;//파일id
-    private ImageUsage imageUsage;//용도
+    private Long fileId;
+    private ImageUsage imageUsage;
 
     public ProductImageResponseDto(ProductImageEntity productImageEntity) {
         this.fileId = productImageEntity.getId();

@@ -51,9 +51,6 @@ public class AdminOrderService {
     @Transactional(readOnly = true)
     public List<AdminOrderDto> getFilteredOrders(String orderStatusStr, String deliveryStatusStr, Pageable pageable) {
 
-        // status 문자열이 있으면 valueOf 로 변환
-//        OrderStatus orderStatusEnum = OrderStatus.PAYMENT_SUCCESS;
-//        DeliveryStatus deliveryStatusEnum = DeliveryStatus.READY;
         OrderStatus orderStatusEnum = null;
         DeliveryStatus deliveryStatusEnum = null;
 

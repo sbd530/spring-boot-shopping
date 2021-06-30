@@ -7,19 +7,16 @@ import com.don.shopping.domains.question.service.QuestionResponseDto;
 import com.don.shopping.domains.question.service.QuestionService;
 import com.don.shopping.util.AuthenticationConverter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class QuestionController {
 
@@ -34,11 +31,6 @@ public class QuestionController {
 
         List<QuestionResponseDto> questionList = questionService.getQuestionList();
         model.addAttribute("questionLists", questionList);
-//
-//        List<QuestionEntity> questionEntityList = questionService.findAllQuestions();
-//        model.addAttribute("questionLists",questionEntityList);
-//        model.addAttribute("questionForm", new QuestionForm());
-        /* return "dashboard/question/questionlist";*/ //대쉬보드 버전
         return "customer/question/addanswer_modal.html";
     }
     //전체 질문 조회
