@@ -7,18 +7,19 @@
 <script th:inline="javascript">
 
 function updateTotalPrice(price,op) {
-    price = parseInt(price);
-    let newTotalPrice = $("#cartTotalDiscountAppliedPrice").text();
-    let indexOfWon = newTotalPrice.indexOf("원");
-    newTotalPrice = newTotalPrice.substring(0,indexOfWon-1);
-    newTotalPrice = newTotalPrice.split(',').join("");
-    newTotalPrice = parseInt(newTotalPrice);
+
+    let priceInt = parseInt(price);
+    let $newTotalPrice = $("#cartTotalDiscountAppliedPrice").text();
+    let indexOfWon = $newTotalPrice.indexOf("원");
+    $newTotalPrice = $newTotalPrice.substring(0,indexOfWon-1);
+    $newTotalPrice = $newTotalPrice.split(',').join("");
+    let newTotalPrice = parseInt($newTotalPrice);
 
     if(op=='+'){
-      newTotalPrice = newTotalPrice+price;
+      newTotalPrice = newTotalPrice + priceInt;
     }
     if(op=='-'){
-      newTotalPrice = newTotalPrice-price;
+      newTotalPrice = newTotalPrice - priceInt;
     }
     let ntp = newTotalPrice.toLocaleString('en');
     $("#cartTotalDiscountAppliedPrice").text(ntp + ' 원');
@@ -196,7 +197,7 @@ function updateTotalPrice(price,op) {
                       <input class="productId" type="hidden" th:value="${cartLine.productId}">
                       <!-- price를 가져오기 -->
                       <input th:if="${cartLine.rprice>cartLine.dprice}" type="hidden" class="price" th:value="${cartLine.dprice}">
-                      <!--<input th:unless="${cartLine.rprice>cartLine.dprice}" type="hidden"  class="price" th:value="${cartLine.rprice}">-->
+                      <input th:unless="${cartLine.rprice>cartLine.dprice}" type="hidden"  class="price" th:value="${cartLine.rprice}">
                       <!-- 상품 수량 -->
                       <input type="hidden" name="stock" th:class="'stock'+${cartLine.productId}" th:value="${cartLine.stock}">
                       <button tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-up ui-corner-tr ui-button-icon-only minusAmount" role="button"
@@ -214,6 +215,7 @@ function updateTotalPrice(price,op) {
                     <input class="productId" type="hidden" th:value="${cartLine.productId}" th:name="productId">
                     <!-- price를 가져오기 -->
                     <input th:if="${cartLine.rprice>cartLine.dprice}" type="hidden" class="price" th:value="${cartLine.dprice}">
+                    <input th:unless="${cartLine.rprice>cartLine.dprice}" type="hidden"  class="price" th:value="${cartLine.rprice}">
                     <button th:class="removeCartItemBtn" id="removeCartItemBtn" type="button">
                       삭제하기
                     </button>
