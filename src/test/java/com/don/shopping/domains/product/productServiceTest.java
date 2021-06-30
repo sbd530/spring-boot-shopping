@@ -38,6 +38,4 @@ public class productServiceTest {
         System.out.println(productImageVO.getFiles().getClass());
     }
 
-
-
 }

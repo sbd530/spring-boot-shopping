@@ -42,7 +42,7 @@ public class ProductImageHandler {
             String currenDate = now.format(dateTimeFormatter);
 
             //파일을 저장할 세부 경로 지정
-            String path = "/home" +  File.separator + "productImages";
+            String path = "C:" + File.separator + "productImages";
             File file = new File(path);
 
             //디렉터리가 존재하지 않을 경우
@@ -130,7 +130,7 @@ public class ProductImageHandler {
 
     public void doFileDelete(String saveFileName) {
         try {
-            String filePath = "/home" +  File.separator + "productImages" + File.separator + saveFileName;
+            String filePath = "C:" + File.separator + "productImages" + File.separator + saveFileName;
             File f = new File(filePath);
             if(f.exists()) {
                 f.delete();
