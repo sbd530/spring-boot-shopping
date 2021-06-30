@@ -145,6 +145,11 @@
                         >
                     </div>
 
+<!-- 주소 검색 모듈 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/daumPostCode.js"></script>
+
+                    <!-- 주소 시작 -->
                     <div class="row post-code">
                         <label for="postNumber" class="title">우편번호</label>
                         <div class="post-code-wrapper clearfix">
@@ -152,20 +157,11 @@
                                    readonly="readonly"
                                    th:value="${user.address?.postNumber}">
                             <button class="designSettingElement button outline"
-                                    onclick="showDaumPostcode(4,'default')">
+                                    onclick="execDaumPostcode()">
                                 검색하기
                             </button>
                         </div>
 
-
-                        <!-- daum postcode -->
-                        <div id="daum_postcode_layer" style="z-index: 1020">
-                            <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" class="hide"
-                                 style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 100;"
-                                 onclick="closeDaumPostcode()" alt="닫기 버튼">
-                        </div>
-<!-- 주소 검색 모듈 -->
-<script src="/js/searchPost.js"></script>
                     </div>
 
                     <div class="row address">

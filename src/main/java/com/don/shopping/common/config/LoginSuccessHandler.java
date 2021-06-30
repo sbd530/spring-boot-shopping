@@ -2,12 +2,9 @@ package com.don.shopping.common.config;
 
 import com.don.shopping.common.vo.Result;
 import com.don.shopping.domains.user.domain.Role;
-import com.don.shopping.domains.user.domain.UserEntity;
-import com.don.shopping.domains.user.domain.UserRepository;
 import com.don.shopping.util.AuthenticationConverter;
 import com.don.shopping.util.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -32,18 +29,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        Result result = Result.successInstance();
-
-        UserEntity user = ac.getUserFromAuthentication(authentication);
-        Role role = user.getRole();
-
-        //Role == ADMIN 인 경우 토큰 발행
-        if(role == Role.ADMIN){
-            String token = jwtService.create("user", user, "user");
-            response.setHeader("Authorization", token);
-            response.setStatus(200);
-            return;
-        }
+//        Result result = Result.successInstance();
+//
+//        UserEntity user = ac.getUserFromAuthentication(authentication);
+//        Role role = user.getRole();
+//
+//        //Role == ADMIN 인 경우 토큰 발행
+//        if(role == Role.ADMIN){
+//            String token = jwtService.create("user", user, "user");
+////            response.setHeader("Authorization", token);
+//            response.getWriter().write(token);
+//            response.setStatus(200);
+//            return;
+//        }
 
         request.getSession().setAttribute("login", true);
         response.sendRedirect("/mypage");

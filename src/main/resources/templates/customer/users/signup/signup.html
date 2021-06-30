@@ -101,7 +101,9 @@
                     <div class="element">-</div>
                     <input id="phoneNumber3" type="tel" class="phoneNumber designSettingElement shape js-inputOnlyNumber" maxlength="4">
                 </div>
-
+<!-- 주소 검색 모듈 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/daumPostCode.js"></script>
                 <!-- 주소 시작 -->
                 <div class="row post-code">
                     <span class="title">우편번호</span>
@@ -109,18 +111,10 @@
                         <input id="postNumber" class="addressInfo designSettingElement shape" type="text"
                                readonly="readonly">
                         <button id="daumPostCode3" class="designSettingElement button outline"
-                                onclick="showDaumPostcode(4,'default')">검색하기
+                                onclick="execDaumPostcode()">검색하기
                         </button>
                     </div>
 
-                    <!-- daum postcode -->
-                    <div id="daum_postcode_layer" style="z-index: 1020">
-                        <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" class="hide"
-                             style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 100;"
-                             onclick="closeDaumPostcode()" alt="닫기 버튼">
-                    </div>
-<!-- 주소 검색 모듈 -->
-<script src="/js/searchPost.js"></script>
                 </div>
 
                 <div class="row address">
@@ -128,7 +122,7 @@
                     <input id="address1" class="addressInfo designSettingElement shape" type="text"
                            readonly="readonly">
                     <input id="address2" class="addressInfo designSettingElement shape" type="text"
-                           style="margin-top: 12px;">
+                           style="margin-top: 12px;" placeholder="상세 주소">
                 </div>
                 <!-- 주소 끝 -->
 
