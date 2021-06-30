@@ -103,15 +103,26 @@ public class ProductService {
             -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
     }
 
-    //상품 전체조회
+    //상품 전체조회 from redis
     @Transactional(readOnly = true)
     @Cacheable(value = "adminProductList", key = "#pageable")
+    public List<AdminProductListResponseDto> searchAllFromRedis(Pageable pageable) {
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        return productEntityList.stream()
+                .map(AdminProductListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    //상품 전체조회
+    @Transactional(readOnly = true)
     public List<AdminProductListResponseDto> searchAllDesc(Pageable pageable) {
         List<ProductEntity> productEntityList = productRepository.findAll();
         return productEntityList.stream()
                 .map(AdminProductListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+
 
     // 상품 개별 조회
     @Transactional(readOnly = true)

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/testschema?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
-    username: suzi
-    password: a123
+    url: jdbc:mysql://localhost:3306/testschema?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password: 123
   redis:
     host: localhost
     port: 6379

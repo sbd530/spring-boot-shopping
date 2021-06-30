@@ -44,6 +44,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 //        }
 
         request.getSession().setAttribute("login", true);
-        response.sendRedirect("/mypage");
+        response.sendRedirect("/home");
     }
 }

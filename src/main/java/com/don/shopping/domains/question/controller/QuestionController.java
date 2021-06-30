@@ -51,13 +51,14 @@ public class QuestionController {
     }
     //질문 등록
     @GetMapping("question/add")
-    public String addQuestion( Model model){
+    public String addQuestion(Model model){
         model.addAttribute("questionForm", new QuestionForm());
         return "dashboard/question/addquestion";
     }
     //질문 등록
     @PostMapping("/question/add")
     public String addQuestionPost(Authentication authentication,QuestionForm questionForm){
+
 
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         QuestionEntity questionEntity = QuestionEntity.builder()

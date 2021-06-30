@@ -306,7 +306,6 @@
         <span class="Qcell Qcol4">작성자</span>
         <span class="Qcell Qcol5">작성날짜</span>
         <span class="Qcell Qcol6">댓글</span>
-        <span class="Qcell Qcol7">댓글내용</span>
       </div>
       <div class="Qrow" th:each="question : ${questionList}">
         <span class="Qcell Qcol1" th:text="${question.id}"></span>
@@ -316,7 +315,6 @@
         <span class="Qcell Qcol4" th:text="${question.userName}"></span>
         <span class="Qcell Qcol5" th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></span>
         <span class="Qcell Qcol6"><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" target="_self">댓글보기</a></span>
-        <span class="Qcell Qcol7" th:text="${question.answer}"></span>
       </div>
 
     </div>

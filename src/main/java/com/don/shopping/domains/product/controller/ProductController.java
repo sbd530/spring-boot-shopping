@@ -58,8 +58,10 @@ public class ProductController {
     @PostMapping("/products/{productId}/reviews")
     public String addProductReview(Model model, @PathVariable Long productId,
                                    @Valid ReviewForm reviewForm, Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/products/" + productId;
+        }
         ProductResponseDto productResponseDto =productService.getProductById(productId);
-
         UserEntity user = ac.getUserFromAuthentication(authentication);
         ReviewEntity reviewEntity = ReviewEntity.builder()
                 .userId(user.getId())
@@ -77,6 +79,9 @@ public class ProductController {
     @PostMapping("/products/{productId}/questions")
     public String addProductQuestion(@PathVariable Long productId,
                                      @Valid QuestionForm questionForm, Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/products/" + productId;
+        }
         Long userId = ac.getUserFromAuthentication(authentication).getId();
         QuestionEntity questionEntity = QuestionEntity.builder()
                 .userId(userId)
@@ -92,7 +97,7 @@ public class ProductController {
     //전체 조회(목록)
     @GetMapping("/products")
     public String searchAll(Model model, Pageable pageable) {
-        model.addAttribute("productListDtoList",productService.searchAllDesc(pageable));//어드민
+        model.addAttribute("productListDtoList",productService.searchAllFromRedis(pageable));//어드민
         return "customer/products/productList.html";
     }
 
