@@ -1,0 +1,72 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=edge">
+
+<div th:replace="customer/users/mypage/head"/>
+
+<script src="js/login.js"></script>
+
+
+
+<body class="display display-home display desktop">
+
+<div id="displayCanvas" class="desktop" data-viewport="desktop">
+
+    <div id="signup" class="login wrapper">
+        <div class="column-wrapper one-column">
+            <div class="signup field">
+                <div class="header designSettingElement text-title">
+                    <span class="title">로그인</span>
+                </div>
+                <div class="content designSettingElement text-body">
+
+                <form id="loginForm" th:action="@{/auth/login}" method="post">
+
+                    <div class="row">
+                        <span class="title">이메일</span>
+                        <input id="email" name="email" type="text" class="designSettingElement shape" autofocus>
+                    </div>
+
+                    <div class="row">
+                        <span class="title">비밀번호</span>
+                        <input id="password" name="password" type="password" class="designSettingElement shape" autocomplete="off">
+                    </div>
+
+
+                    <div class="find-pw">
+                        <a href="/auth/findPassword" class="designSettingElement text-link">
+                            비밀번호를 잊으셨나요?
+                        </a>
+                    </div>
+
+                    <div id="loginSignupErrorMsg" class="error-msg">
+                        <!-- 로그인 실패시 보여줄 메세지 -->
+                    </div>
+
+                    <div class="btn-wrapper">
+                        <button id="loginBtn" class="designSettingElement button"
+                            th:type="button">
+                            로그인하기
+                        </button>
+                    </div>
+                </form>
+                    <div class="btn-wrapper">
+                        <button
+                            class="designSettingElement button outline"
+                            onclick="location.href='http://localhost:8080/auth/signup'"
+                            type="button">
+                            회원 가입하기
+                        </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

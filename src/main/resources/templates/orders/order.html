@@ -1,0 +1,69 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<head>
+
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="js/order.js"></script>
+</head>
+
+<body class="display display-home display desktop">
+
+<!-- body section -->
+<div id="body" class="body device-desktop systemPage pageLink-product snsBtnType- hero-notUse   productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-size-type-heightRelative hero-style-type-light hero-indexPage-height-type-fullScreen hero-otherPages-height-type-twoThirds hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds hero-indexPage-ratio-type-3to1 hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center hero-navi-type-none productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded shopProductDetail-loaded desktop" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.77" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
+
+    <!-- header -->
+    <header th:insert="customer/main/header_black.html"></header>
+
+    <div class="container">
+            <br/><br/><div style="font-size: x-large">주문 목록</div><br/><br/><br/>
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">상품 정보</th>
+                        <th scope="col"></th>
+                        <th scope="col">상품 가격</th>
+                        <th scope="col">주문 수량</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="orderProduct : ${orderResponseDto.orderProductList}">
+                        <td> <div class="img" style="display:inline-block">
+                            <a th:href="@{'/products/' + ${orderProduct.productId}}">
+                                <img th:src="@{/products/}+${orderProduct.productId} + @{/images/THUMBNAIL1}" style="width:80px;height:80px;">
+                            </a>
+                        </div></td>
+                        <input type="hidden" class="productId" th:value="${orderProduct.productId}" th:name="productId">
+                        <input th:value="${orderProduct.orderAmount}" name="orderAmount" th:id="'orderAmount'+${orderProduct.productId}"
+                               class="designSettingElement shape ui-spinner-input orderAmount" type="hidden">
+
+                        <th scope="row"><div th:text="${orderProduct.productName}"></div></th>
+                        <td><div th:if="${orderProduct.rprice==orderProduct.dprice}" th:text="${#numbers.formatInteger(orderProduct.rprice, 3, 'COMMA') + '원'}"></div>
+                            <div th:unless="${orderProduct.rprice==orderProduct.dprice}" th:text="${#numbers.formatInteger(orderProduct.dprice, 3, 'COMMA') + '원'}"></div>
+                        </td>
+                        <td th:text="${orderProduct.orderAmount}"></td>
+                       </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div style="text-align: center;">
+
+    전체 가격: <div th:text="${#numbers.formatInteger(orderResponseDto.totalPrice, 3, 'COMMA') + '원'}"></div><br/>
+    결제하시겠습니까?<br/><br/>
+    <button id="sendToOrder" class="designSettingElement button sendToOrder"
+            style="background-color: #2B2F33 !important;">결제하기</button>
+    <button  class="designSettingElement button"
+            style="background-color: #2B2F33 !important;"
+            onClick="location.href='carts'">취소하기</button>
+    </div>
+
+    <!-- footer -->
+    <footer th:insert="customer/main/footer.html"></footer>
+
+</div></div>
+</body>
+</html>
+
+

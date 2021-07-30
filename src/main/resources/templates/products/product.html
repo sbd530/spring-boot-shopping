@@ -1,0 +1,238 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+<head>
+  <!-- 윤서추가(jquery) -->
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="/css/customerProduct.css">
+<title th:text="@{'상품 | ' + ${dto.productName}}"></title>
+<script src="js/product.js"></script>
+</head>
+
+<body class="display display-home display desktop">
+
+<!-- body section -->
+ <div id="body" class="body device-desktop systemPage pageLink-product snsBtnType- hero-notUse   productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-size-type-heightRelative hero-style-type-light hero-indexPage-height-type-fullScreen hero-otherPages-height-type-twoThirds hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds hero-indexPage-ratio-type-3to1 hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center hero-navi-type-none productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded shopProductDetail-loaded desktop" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.77" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
+
+   <header th:insert="customer/main/header_black.html"></header>
+   <!-- 윤서이미지 -->
+  <div id="displayCanvas" class="desktop" data-viewport="desktop">
+    <div class="shopProductDetail wrapper">
+      <div id="productDetail" class="productDetail wrapper">
+        <div class="top-info clearfix">
+          <div id="shopProductImgsDiv" class="content mainImg productImgType_thumbnails ratio_1to1">
+            <div id="shopProductImgsMainDiv" class="main img-div img lightboxEffect">
+              <div class="shopProductImgMainWrapper type_thumbnails sequence_0 on" data-shopproductsequence="0">
+                <span th:if="${dto.rprice > dto.dprice}" style="position:absolute;top:30px;left:30px;padding:30px;background-color:red;color:white;z-index:100;font-size:18pt;font-weight:700;"> SALE </span>
+                <span th:if="${dto.stock == 0}" style="position:absolute;top:30px;left:30px;padding:30px;background-color:#7B7B7B;color:white;z-index:100;font-size:18pt;font-weight:700;"> SOLD OUT </span>
+                <div class="shopProductImgMain type_thumbnails shopProductImgRatio" id="mainImage"
+                     th:style="'background-image:url(' + @{/products/} + ${dto.productId} + @{/images/THUMBNAIL1}+ ')'"; style="width:100%">
+                </div>
+              </div>
+            </div>
+            <!-- 서브이미지 -->
+            <div id="shopProductImgsThumbDiv" class="sub img-div">
+              <div class="sub img" data-shopproductsequence="0">
+                <div class="shopProductImgRatio" id="thumb1"
+                     th:style="'background-image:url(' + @{/products/} + ${dto.productId} + @{/images/THUMBNAIL1}+ ')'"; style="width:100%"
+                     th:onclick="'changeImage(\'/products/' + ${dto.productId} + '/images/THUMBNAIL1\')'">
+                </div>
+              </div>
+              <div class="sub img" data-shopproductsequence="1">
+                <div class="shopProductImgRatio" id="thumb2"
+                     th:style="'background-image:url(' + @{/products/} + ${dto.productId} + @{/images/THUMBNAIL2}+ ')'"; style="width:100%"
+                     th:onclick="'changeImage(\'/products/' + ${dto.productId} + '/images/THUMBNAIL2\')'">
+                </div>
+              </div>
+              <div class="sub img" data-shopproductsequence="2">
+                <div class="shopProductImgRatio" id="con1"
+                     th:style="'background-image:url(' + @{/products/} + ${dto.productId} + @{/images/CONTENTS1}+ ')'"; style="width:100%"
+                     th:onclick="'changeImage(\'/products/' + ${dto.productId} + '/images/CONTENTS1\')'">
+                </div>
+              </div>
+              <div class="sub img" data-shopproductsequence="3">
+                <div class="shopProductImgRatio" id="con2"
+                     th:style="'background-image:url(' + @{/products/} + ${dto.productId} + @{/images/CONTENTS2}+ ')'"; style="width:100%"
+                     th:onclick="'changeImage(\'/products/' + ${dto.productId} + '/images/CONTENTS2\')'">
+                </div>
+              </div>
+            </div>
+  </div>
+  <div id="shopProductContentInfo" class="content clearfix info align_left">
+    <div id="shopProductNameWrapper" class="row">
+      <h1 id="shopProductName" class="row name designSettingElement productName" th:text="${dto.productName}"></h1>
+      <div id="shopProductReviewElem" class="designSettingElement text-body" data-product-rating-value="3.0">
+
+        <a href="#reviewBoardPost" class="designSettingElement text-assi" data-track-conversion-type="click" data-track-conversion-title="shop-product-info-review-count-click">
+          (별점 평균: <div th:text="${#numbers.formatDecimal(ratingAve,1,2)}"></div>) (<div th:text="${ratingCount}"></div>개의 후기)
+
+        </a>
+      </div>
+    </div>
+    <div style="height:200px;" >
+      <pre><p th:text="${dto.productInfo}" style="line-height:20px;background-color:#fff"></p></pre>
+    </div>
+   <div id="shopProductPrice" class="price row designSettingElement">
+     <span th:if="${dto.rprice == dto.dprice}" th:text="${#numbers.formatInteger(dto.rprice, 0, 'COMMA') + '원'}"></span>
+     <span th:unless="${dto.rprice == dto.dprice}">
+       <span style="font-weight:300;color:red;">[[${#numbers.formatInteger(dto.dprice, 0, 'COMMA')}]]원</span>&nbsp;
+       <span style="text-decoration:line-through">[[${#numbers.formatInteger(dto.rprice, 0, 'COMMA')}]]원</span>
+     </span>
+    </div>
+    <form method="post" name="toCartOrBuyForm">
+    <input type="hidden" th:value="${dto.productId}" name="productId" id="productId">
+    <div id="shopProductQuantityDiv" class="productQuantityDiv row designSettingElement text-body ">
+      <span class="text">수량</span>
+      <table align="center">
+        <tr>
+          <td>
+            <button type="button" style="width:40px;height:40px;margin-right:-5px;border:1px solid #EFEFEF;cursor:pointer;" onclick="fnCalCount('m', this);">-</button>
+            <input type="text" id="orderAmount" name="orderAmount" value="1" style="text-align:center;width:40px;height:40px;border:1px solid #EFEFEF;"/>
+            <button type ="button" style="width:40px;height:40px;margin-left:-5px;border:1px solid #EFEFEF;cursor:pointer;" onclick="fnCalCount('p',this);">+</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </form>
+    <div id="shopProductCartErrorDiv" style="margin-bottom:20px;">
+      <span th:if="${dto.stock<1}" class="text" style="margin-bottom:20px;">품절된 상품입니다.</span>
+    </div>
+    <div id="productActionButtonDiv" class="productActionButtonDiv row">
+      <div class="normalButton">
+        <div class="btn-wrapper buyButton">
+          <button id="sendToOrder" class="designSettingElement button sendToOrder"
+                  style="background-color: #2B2F33 !important;">구매하기</button>
+        </div>
+        <div class="btn-wrapper cartButton">
+          <button id="btn_addToCart" class="addToCart designSettingElement button outline " data-is-mini-cart-available="false"
+                  onclick="sendToCart();">
+            장바구니에 담기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bottom-info designSettingElement shape">
+  <div style="width:800px; height:2000px;">
+
+    <img th:src="@{/products/}+${dto.productId} + @{/images/CONTENTS1}" style="width:800px;height:800px;">
+    <div style="height:100px;"></div>
+    <img th:src="@{/products/}+${dto.productId} + @{/images/CONTENTS2}" style="width:800px;height:800px;">
+
+  </div>
+</div>
+  <br/><br/><br/>
+
+<!-- 리뷰 -->
+  <!-- 작성자: 서무룡
+       리뷰 리스트 출력 -->
+
+  <div class="container">
+    <div style="font-size: x-large">리뷰 목록</div><br/><br/><br/>
+    <div>
+      <table class="table">
+        <thead>
+        <tr>
+         <!-- <th scope="col">상품 아이디</th>-->
+          <th scope="col">리뷰 내용</th>
+          <th scope="col">작성자</th>
+          <th scope="col">별점</th>
+          <th scope="col">리뷰 작성 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviewListByProduct}">
+          <td th:text="${review.content}"></td>
+          <td th:text="${review.userName}"></td>
+          <td th:text="${review.rating}"></td>
+          <td th:text="${#temporals.format(review.createdDate,'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 작성자: 서무룡
+     리뷰 추가 버튼 출력 -->
+  <div class="container">
+
+    <br/><br/><div style="font-size: x-large">리뷰 등록</div><br/><br/><br/>
+
+    <form role="form" th:action="@{/products/}+${id}+@{/reviews}" th:object="${reviewForm}" method="post">
+      <div class="form-group">
+        <label th:for="reviewContent">리뷰내용</label>
+        <input type="text" th:field="*{reviewContent}" class="form-control" placeholder="리뷰 내용을 입력하세요"
+               th:class="${#fields.hasErrors('reviewContent')}? 'form-control fieldError' : 'form-control'">
+        <p th:if="${#fields.hasErrors('reviewContent')}" th:errors="*{reviewContent}">Incorrect date</p>
+      </div>
+      <div class="form-group">
+        <label th:for="rating">별점</label>
+        <select id="rating" class="selectpicker" th:field="*{rating}">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button type="submit"  class="btn btn-dark">리뷰 작성</button>
+    </form>
+  </div>
+
+  <br/><br/><br/>
+        <!-- 작성자: 서무룡
+           해당 질문 리스트 출력 -->
+
+        <div class="container">
+          <div style="font-size: x-large">질문 목록</div><br/><br/><br/>
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">질문 내용</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성 날짜</th>
+                <th scope="col">댓글</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="question : ${questionList}">
+                <td th:text="${question.content}"></td>
+                <td th:text="${question.userName}"></td>
+                <td th:text="${#temporals.format(question.createdDate,'yyyy-MM-dd HH:mm')}"></td>
+                <td><a th:href="@{/question/}+${question.id}+@{/addanswerCustom}" target="_self">댓글보기</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- 작성자: 서무룡
+           질문 추가 버튼 출력 -->
+        <div class="container">
+
+          <br/><br/> <div style="font-size: x-large">질문 등록</div><br/><br/><br/>
+
+          <form role="form" th:action="@{/products/}+${id}+@{/questions}" th:object="${questionForm}" method="post">
+            <div class="form-group">
+
+              <label th:for="content">질문 내용</label>
+              <input type="text" th:field="*{questionContent}" class="form-control" placeholder="내용을 입력하세요"
+                     th:class="${#fields.hasErrors('questionContent')}? 'form-control fieldError' : 'form-control'">
+              <p th:if="${#fields.hasErrors('questionContent')}" th:errors="*{questionContent}">Incorrect date</p>
+            </div>
+
+            <button type="submit" class="btn btn-dark">질문 작성</button>
+
+          </form>
+        </div>
+</div>
+</div>
+<br/><br/><br/><br/><br/><br/>
+<!-- footer -->
+<footer th:insert="customer/main/footer.html"></footer>
+
+</div></div>
+</body>
+</html>

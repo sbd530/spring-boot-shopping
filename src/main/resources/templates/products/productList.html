@@ -1,0 +1,72 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active" style="height: auto;">
+<head>
+  <title>MYFIVE | SHOP</title>
+  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<!-- body section -->
+<div id="body" class="body device-desktop page pageLink-onlinestore snsBtnType- hero-use productSearchMobileNotUse customerMenuMobileNotUse headerSnsNotUse productSearchType-mobile-icon productSearchType-english customerMenuType-english customerMenuType-mobile-icon cartType-english cartType-mobile-icon entire-style-width-type-wide header-style-effect-type-none header-style-effect-mobile-type-none mobile-submenu-type-slide mobile-submenu-borderTop-notUse mobile-submenu-borderBottom-notUse hero-otherPages-height-type-twoThirds hero-otherPages-ratio-type-3to1 logoImageWhenHeaderInHero-use hero-header-position-headerInHero hero-align-center productList-width-type-wide productList-language-english productList-textPosition-underImg productList-filterPosition-top productList-column-desktop-3 productList-column-mobile-1 productList-badge-type-rectangle productList-badge-align-leftTop productList-hoverEffect-secondImg productListSlide-width-type-wide productListSlide-textPosition-underImg productListSlide-column-desktop-3 productListSlide-column-mobile-2 productListSlide-margin-use productListSlide-hoverEffect-brightnessEffect board-language-korean board-lineup-width-type-narrow board-grid-width-type-wide board-grid-hoverEffect-brightnessEffect board-title-align-center board-grid-column-desktop-3 board-grid-column-mobile-2 blog-post-title-align-left blog-language-korean blogGrid-filterPosition-top blog-grid-width-type-wide blog-grid-hoverEffect-none blog-sidebar-use blog-sidebar-position-rightSide gallery-style-dark customSection-width-type-normal button-type-normal button-shape-square moveTopBtn-type-korean moveTopBtn-shape-square moveTopBtn-weight-normal moveTopBtn-border-notUse systemPage-productDetail-width-type-wide systemPage-productDetail-reviewQna-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-relatedProduct-width-type-syncWithProductDetailBottomInfo systemPage-productDetail-buyButton-mobile-fixedPosition-use systemPage-productDetail-bottomInfo-mobile-fixedFontSize-notUse productDetail-mainImg-position-left productDetail-navigation-notUse sitePlan-superTrial logoImage-notExist logoImageWhenHeaderInHero-notExist siteModel-loaded hero-indexPage-ratio-type-3to1 hero-indexPage-height-type-fullScreen designProduct-loaded desktop hero-size-type-heightRelative hero-style-type-light hero-navi-type-none hero-indexPage-height-mobile-type-fullScreen hero-otherPages-height-mobile-type-twoThirds" data-device="desktop" data-viewport="desktop" browser="Chrome" browserversion="91.0.4472.101" browsermajorversion="91" mobile="false" os="Windows" osversion="10">
+
+  <header th:insert="customer/main/header.html"></header>
+
+  <!-- 필수로 있어야댐 -->
+  <div id="displayCanvas" class="desktop" data-viewport="desktop">
+    <div id="page1503505" cid="page1503505" class="page pagepage hero-use page-opened">
+      <div id="hero1503505" class="hero-section section-wrapper desktop sectionWrapper1503505 hero-size-type-heightRelative" hero-indexpage-height-type="fullScreen" hero-otherpages-height-type="twoThirds" hero-indexpage-height-mobile-type="fullScreen" hero-otherpages-height-mobile-type="twoThirds">
+        <div id="heroWrapper1503505" class="heroWrapper desktop none navigation">
+          <div class="heroContent herojs-hero" data-index="0">
+            <!-- productList main -->
+            <div class="heroImgDiv" style="background-image:url(https://blog.kakaocdn.net/dn/dgNW6M/btqYLyZXERm/tkzc3plXRFI2ImAQLOKli1/img.gif);width:100%;height:100%;"></div>
+            <div class="heroBackgroundDiv"></div>
+          </div>
+        </div>
+      </div>
+      <div style="height:200px;"></div>
+
+      <div style="width:100%;" align="center">
+        <div id="productListWrapper" style="height:auto;min-height:100px;width:1800px;display:table-cell;vertical-align:middle;">
+
+          <div th:if="${#lists.size(productListDtoList) == 0}" style="text-align:center;">등록된 상품이 없습니다.</div>
+          <div align="left" style="">
+            <div th:each="dto : ${productListDtoList}" style="text-align:center;display:inline-block;">
+              <div style="display:inline-block;cursor:pointer" th:onclick="'location.href=\''+ @{/products/} + ${dto.productId} + '\''">
+                <div style="width:500px;height:500px;margin:0 40px 30px 40px;" class="thumbnail">
+                  <span th:if="${dto.rprice > dto.dprice}" style="position:absolute;top:20px;left:60px;padding:10px;background-color:red;color:white;z-index:100;font-weight:700;"> SALE </span>
+                  <span th:if="${dto.stock == 0}" style="position:absolute;top:20px;left:60px;padding:10px;background-color:#7B7B7B;color:white;z-index:100;font-weight:700;"> SOLD OUT </span>
+                <img id="thumbnail2" th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL2}" style="width:500px;height:500px;margin:0 40px 30px 40px;">
+                <img id="thumbnail1" th:src="@{/products/}+${dto.productId} + @{/images/THUMBNAIL1}" style="width:500px;height:500px;margin:0 40px 30px 40px;">
+                </div>
+                <span th:text="${dto.productName}" style="font-size:24px;font-family:'Nanum Myeongjo';font-weight:500;"></span><br>
+                <div style="margin-bottom:100px;margin-top:20px;color:#666666">
+                  <span th:if="${dto.rprice == dto.dprice}" th:text="${#numbers.formatInteger(dto.rprice, 0, 'COMMA') + '원'}"></span>
+                  <span th:unless="${dto.rprice == dto.dprice}">
+                    <span style="color:red;">[[${#numbers.formatInteger(dto.dprice, 0, 'COMMA')}]]원</span>&nbsp;
+                    <span style="text-decoration:line-through">[[${#numbers.formatInteger(dto.rprice, 0, 'COMMA')}]]원</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:200px;"></div>
+    </div>
+
+    <!-- footer -->
+    <footer th:insert="customer/main/footer.html"></footer>
+
+    <div id="onePageNavigationDiv">
+      <div id="onePageNavigation">
+      </div>
+    </div>
+
+    <div id="floatingButton" class="floatingButton hide">
+      <div class="floatingButtonImg-wrapper">
+        <img id="floatingButtonImg" src="" alt="floating-button-img">
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

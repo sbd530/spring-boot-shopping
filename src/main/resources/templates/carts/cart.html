@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      class="wf-ebgaramond-n4-active wf-ptserif-n4-active wf-nanumgothic-n4-active wf-nanummyeongjo-n6-active wf-nanummyeongjo-n4-active wf-active">
+
+<div th:replace="customer/users/mypage/head"></div>
+
+<script src="js/cart.js"></script>
+
+<body>
+<div id="displayCanvas" class="desktop" data-viewport="desktop">
+  <div id="shopCartDetail" class="shopCartDetail wrapper">
+    <div id="cart" class="cart wrapper clearfix">
+      <div class="header designSettingElement text-titleWithFontSize">
+        <span class="title">
+          장바구니
+          <span id="cartSize">
+          </span>
+        </span>
+      </div>
+
+      <div class="product field designSettingElement text-body shopCartInfo">
+        <div class="tb-title designSettingElement shape">
+          <div class="item-list-header">
+            <span style="width:31%;">상품 정보</span>
+            <span style="width:8%;">가격</span>
+            <span style="width:40%;text-align:center;">수량</span>
+            <span style=" text-align: center;padding-left:110px;">삭제</span>
+          </div>
+        </div>
+        <div id="cartListDiv" class="tb-content with-delivery-price">
+          <div class="delivery-group-item-list">
+
+            <!-- CartLine Row Start @Don -->
+            <div th:each="cartLine : ${cartLineDtoList}" class="info cartDiv designSettingElement shape"
+                 th:id="'productRow' + ${cartLine.productId}" style="display:inline-block">
+              <div style="display:inline-block;">
+                <div class="product" style="display:inline-block;width:620px;">
+                  <div class="img" style="display:inline-block">
+                    <a th:href="@{'/products/' + ${cartLine.productId}}">
+                      <img th:src="@{/products/}+${cartLine.productId} + @{/images/THUMBNAIL1}" style="width:80px;height:80px;">
+                    </a>
+                  </div>
+                  <div class="text" style="display:inline-block">
+                    <div class="name" style="display:inline-block;width:230px;">
+                      <a th:href="@{'/products/' + ${cartLine.productId}}" th:text="${cartLine.productName}"></a>
+                    </div>
+                    <div class="delete-btn-wrapper" style="display:inline-block">
+                      <div th:if="${cartLine.rprice==cartLine.dprice}" th:text="${#numbers.formatInteger(cartLine.rprice, 3, 'COMMA') + '원'}"></div>
+                      <div th:unless="${cartLine.rprice==cartLine.dprice}" th:text="${#numbers.formatInteger(cartLine.dprice, 3, 'COMMA') + '원'}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="QuantityDiv" style="display:inline-block;padding-left:0;width:120px;">
+                    <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
+                      <!-- productId를 가져오기 위한 필드 -->
+                      <input class="productId" type="hidden" th:value="${cartLine.productId}">
+                      <!-- price를 가져오기 -->
+                      <input th:if="${cartLine.rprice>cartLine.dprice}" type="hidden" class="price" th:value="${cartLine.dprice}">
+                      <input th:unless="${cartLine.rprice>cartLine.dprice}" type="hidden"  class="price" th:value="${cartLine.rprice}">
+                      <!-- 상품 수량 -->
+                      <input type="hidden" name="stock" th:class="'stock'+${cartLine.productId}" th:value="${cartLine.stock}">
+                      <button tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-up ui-corner-tr ui-button-icon-only minusAmount" role="button"
+                              type="button" style="width:40px;height:40px;margin-right:-5px;border:1px solid #EFEFEF;border-radius: 8px;cursor:pointer;">-</button>
+                      <input th:value="${cartLine.orderAmount}" name="orderAmount" th:id="'orderAmount'+${cartLine.productId}"
+                             class="designSettingElement shape ui-spinner-input orderAmount" type="number"><button tabindex="-1" aria-hidden="true" class="ui-button ui-widget ui-spinner-button ui-spinner-down ui-corner-br ui-button-icon-only plusAmount" role="button"
+                              type="button" style="width:40px;height:40px;margin-right:-5px;border:1px solid #EFEFEF;border-radius: 8px;cursor:pointer;">+</button></span>
+                </div>
+
+                <div class="RemoveDiv" style="display:inline-block">
+                  <div class="delete-btn-wrapper" style="display:inline-block">
+                    <!-- productId를 가져오기 위한 필드 -->
+                    <input class="productId" type="hidden" th:value="${cartLine.productId}" th:name="productId">
+                    <!-- price를 가져오기 -->
+                    <input th:if="${cartLine.rprice>cartLine.dprice}" type="hidden" class="price" th:value="${cartLine.dprice}">
+                    <input th:unless="${cartLine.rprice>cartLine.dprice}" type="hidden"  class="price" th:value="${cartLine.rprice}">
+                    <button th:class="removeCartItemBtn" id="removeCartItemBtn" type="button" style="width:150px;height:40px;margin-left:220px;border-radius: 8px;border:1px solid #EFEFEF;cursor:pointer;">
+                      삭제하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- CartLine Row 끝 -->
+          </div>
+          <div class="delivery-group-delivery-price-wrapper designSettingElement shape">
+            <div class="delivery-group-sale-price-info">
+              <div class="delivery-group-sale-price">
+              </div>
+            </div>
+            <div class="delivery-group-delivery-price-info">
+            </div>
+          </div>
+        </div>
+        <div class="tb-total clearfix">
+          <div id="cartInfoDiv" class="info designSettingElement shape">
+            <div class="price">
+              <div class="title">상품 수량</div>
+              <div id="cartTotalProductQuantity" class="content">[[${totalAmount}]] 개</div>
+            </div>
+            <div id="cartDiscountDiv" class="discount">
+              <div class="hide">
+                <span class="icomoon-ic-info designSettingElement text-assi"></span>
+                <span id="cartDiscountList" class=""></span>
+              </div>
+            </div>
+            <div class="price shippingPriceWrapper">
+              <div class="title">배송비</div>
+              <div id="cartTotalDeliveryPrice" class="content">무료</div>
+            </div>
+          </div>
+          <div id="cartTotalDiv" class="total">
+            <div class="title bold">합 계</div>
+            <div th:if="${totalPrice>0}" id="cartTotalDiscountAppliedPrice" class="content bold">[[${#numbers.formatInteger(totalPrice, 3, 'COMMA')}]]&nbsp;원</div>
+            <div th:unless="${totalPrice>0}" class="content bold"> - </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper shopCartInfo">
+        <button id="btn_orderProducts" class="designSettingElement button sendToOrder"
+                style="background-color: #2B2F33 !important;" type="submit">주문하기</button>
+      </div>
+      <div th:if="${#lists.size(cartLineDtoList)==0}" id="no-shopCart-msg" class="field_content no-content-msg designSettingElement text-body">
+        장바구니가 비어 있습니다.
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
